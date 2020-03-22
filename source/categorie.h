@@ -1,26 +1,25 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "bibliotheque.cpp"
+#include "bibliotheque.h"
 using namespace std;
 
-namespace{
+
     class Categorie {
     private:
-        string nom;
-        string description;
-        Bibliotheque bibliotheque;
+        string nomCat;
+        string descriptionCat;
+        Bibliotheque bibliothequeCat;
     public:
         Categorie();
         ~Categorie();
-        Categorie(string nom, string description, Bibliotheque bibliotheque);
-        void print();
-        string getNom();
-        void setNom(string nom);
-        string getDescription();
-        void setDescription(string getDescription);
-        Bibliotheque getBibliotheque();
-        void setBibliotheque(Bibliotheque bibliotheque);
+        Categorie(string, string, Bibliotheque);
+        void printCat();
+        string getNomCat();
+        void setNomCat(string);
+        string getDescriptionCat();
+        void setDescriptionCat(string);
+        Bibliotheque getBibliothequeCat();
+        void setBibliothequeCat(Bibliotheque);
 
     };
-}

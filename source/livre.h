@@ -1,35 +1,41 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "categorie.cpp"
+#include "categorie.h"
+#include <vector>
+#include <sstream>
 using namespace std;
 
-namespace {
     class Livre {
     private:
-        string nom, auteur, editeur, resume, isbn;
+        string nomLivre, auteurLivre, editeurLivre, resumeLivre, isbnLivre;
         bool libre;
-        Categorie cat;
+        Categorie catLivre;
+        size_t compteur;
+        vector<string> liste;
+
 
     public:
         Livre();
         ~Livre();
-        Livre(string nom, string auteur, string editeur, string resume, string isbn, Categorie cat);
-        void print();
-        string getNom();
-        void setNom(string nom);
-        string getAuteur();
-        void setAuteur(string auteur);
-        string getEditeur();
-        void setEditeur(string editeur);
-        string getResume();
-        void setResume(string resume);
-        string getIsbn();
-        void setIsbn(string isbn);
+        Livre(string, string, string, string, string, Categorie);
+        void printLivre();
+        string getNomLivre();
+        void setNomLivre(string);
+        string getAuteurLivre();
+        void setAuteurLivre(string);
+        string getEditeurLivre();
+        void setEditeurLivre(string);
+        string getResumeLivre();
+        void setResumeLivre(string);
+        string getIsbnLivre();
+        void setIsbnLivre(string);
         bool getLibre();
-        void setLibre(bool emprunt);
-        Categorie getCat();
-        void setCat(Categorie cat);
-
+        void setLibre(bool);
+        Categorie getCatLivre();
+        void setCatLivre(Categorie);
+        size_t getOccurence();
+        void afficherListe();
+        friend std::ostream& operator<<(std::ostream& out, Livre l);
+        static string to_string(Livre l);
     };
-}

@@ -1,26 +1,39 @@
 #pragma once
 #include <ctime>
 #include <iostream>
-#include "livre.cpp"
-#include "utilisateur.cpp"
+#include "livre.h"
+#include "utilisateur.h"
 #include <string>
+#include <iterator>
+#include <map>
+
 using namespace std;
 
-namespace {
     class Emprunt {
     private:
-        string datePret;
-        string dateRendre;
-         Adherent adherent;
-        static Livre livre;
-
+        string datePretEmprunt;
+        string dateRendreEmprunt;
+        Adherent adherentEmprunt;
+        Livre livreEmprunt;
+        map<string, string> mapEmprunt;
+        size_t compteur;
+      
     public:
+        Emprunt();
         ~Emprunt();
-        Emprunt(Adherent adh, Livre livre);
-         void print();
-         string getDatePret();
-         void setDatePret(string datePret);
-         string getDateRendre();
-         void setDateRendre(string dateRendre);
+        Emprunt(Adherent, Livre);
+        string getDateNow();
+        string getDatePlusDays(int n);
+        void printEmprunt();
+        string getDatePretEmprunt();
+        void setDatePretEmprunt(string);
+        string getDateRendreEmprunt();
+        void setDateRendreEmprunt(string);
+        Adherent getAdherentEmprunt();
+        void setAdherentEmprunt(Adherent);
+        Livre getLivreEmprunt();
+        void setLivreEmprunt(Livre);
+        void afficherListe();
+        size_t getOccurence();
+        void afficherListe(Adherent a);
     };
-}

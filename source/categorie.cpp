@@ -3,34 +3,34 @@
     Categorie::Categorie() {};
     Categorie::~Categorie(){};
     Categorie::Categorie(string nom, string description, Bibliotheque bibliotheque){
-        this->nom = nom;
-        this->description = description;
-        this->bibliotheque = bibliotheque;
+        this->nomCat = nom;
+        this->descriptionCat = description;
+        this->bibliothequeCat = bibliotheque;
     }
 
-    void Categorie::print(){
-        cout << nom << "(" << description << ") de " << bibliotheque.getNom() << endl;
+    void Categorie::printCat(){
+        cout << nomCat << "(" << descriptionCat << ") de " << bibliothequeCat.getNomBiblio() << endl;
     }
 
-    string Categorie::getNom() {
-    	return nom;
+    string Categorie::getNomCat() {
+    	return nomCat;
     }
-    void Categorie::setNom(string nom) {
-    	this->nom = nom;
-    }
-
-
-    string Categorie::getDescription() {
-    	return description;
-    }
-    void Categorie::setDescription(string description) {
-    	this->description = description;
+    void Categorie::setNomCat(string nom) {
+    	this->nomCat = nom;
     }
 
 
-    Bibliotheque Categorie::getBibliotheque() {
-    	return bibliotheque;
+    string Categorie::getDescriptionCat() {
+    	return descriptionCat;
     }
-    void Categorie::setBibliotheque(Bibliotheque bibliotheque) {
-    	this->bibliotheque = bibliotheque;
+    void Categorie::setDescriptionCat(string description) {
+    	this->descriptionCat = description;
+    }
+
+
+    Bibliotheque Categorie::getBibliothequeCat() {
+    	return bibliothequeCat;
+    }
+    void Categorie::setBibliothequeCat(Bibliotheque bibliotheque) {
+    	this->bibliothequeCat = bibliotheque;
     }

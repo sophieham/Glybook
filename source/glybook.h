@@ -1,12 +1,8 @@
 #pragma once
 #include <iostream>
-#include "emprunt.cpp"
+#include "emprunt.h"
 
 using namespace std;
-namespace {
-
-
 	class Glybook {
 
 	};
-}

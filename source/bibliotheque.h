@@ -3,20 +3,18 @@
 #include <string>
 using namespace std;
 
-namespace {
     class Bibliotheque {
     private:
-        string nom;
-        string type;
-        string adresse;
+        string nomBiblio;
+        string typeBiblio;
+        string adresseBiblio;
 
     public:
         Bibliotheque();
-        Bibliotheque(string nom, string type, string adresse);
+        Bibliotheque(string, string, string);
         ~Bibliotheque();
-        void print();
-        string getNom();
-        string getAdresse();
-        string getType();
+        void printBiblio();
+        string getNomBiblio();
+        string getAdresseBiblio();
+        string getTypeBiblio();
     };
-}
