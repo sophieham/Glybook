@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Glybook</class>
+ <widget class="QMainWindow" name="Glybook">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTableView" name="tableView">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>110</y>
+      <width>221</width>
+      <height>171</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMenu">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="actionAjouter_une_nouvelle_biblioth_que"/>
+    <addaction name="actionAjouter_un_nouveau_livre"/>
+    <addaction name="separator"/>
+    <addaction name="actionG_rer_les_adh_rents"/>
+    <addaction name="actionStatistiques"/>
+   </widget>
+   <widget class="QMenu" name="menuParam_tres">
+    <property name="title">
+     <string>Mon compte</string>
+    </property>
+    <addaction name="actionG_rer_mon_compte"/>
+    <addaction name="actionParam_tres"/>
+    <addaction name="separator"/>
+    <addaction name="actionSe_d_connecter_2"/>
+   </widget>
+   <addaction name="menuMenu"/>
+   <addaction name="menuParam_tres"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAjouter_un_nouveau_livre">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../Downloads/icons8-école-80.png</normaloff>../../Downloads/icons8-école-80.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ajouter un nouveau livre</string>
+   </property>
+  </action>
+  <action name="actionG_rer_les_adh_rents">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../Downloads/icons8-personne-homme-80.png</normaloff>../../Downloads/icons8-personne-homme-80.png</iconset>
+   </property>
+   <property name="text">
+    <string>Gérer les adhérents</string>
+   </property>
+  </action>
+  <action name="actionG_rer_mon_compte">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../Downloads/icons8-personne-homme-80.png</normaloff>../../Downloads/icons8-personne-homme-80.png</iconset>
+   </property>
+   <property name="text">
+    <string>Afficher mon compte</string>
+   </property>
+  </action>
+  <action name="actionStatistiques">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../Downloads/icons8-baissier-100.png</normaloff>../../Downloads/icons8-baissier-100.png</iconset>
+   </property>
+   <property name="text">
+    <string>Statistiques</string>
+   </property>
+  </action>
+  <action name="actionSe_d_connecter">
+   <property name="text">
+    <string>Se déconnecter</string>
+   </property>
+  </action>
+  <action name="actionParam_tres">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../Downloads/icons8-paramètres-256.png</normaloff>../../Downloads/icons8-paramètres-256.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paramètres</string>
+   </property>
+  </action>
+  <action name="actionSe_d_connecter_2">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../Downloads/door-exit.png</normaloff>../../Downloads/door-exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Se déconnecter</string>
+   </property>
+  </action>
+  <action name="actionAjouter_une_nouvelle_biblioth_que">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../Downloads/icons8-bâtiment-scolaire-48.png</normaloff>../../Downloads/icons8-bâtiment-scolaire-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ajouter une nouvelle bibliothèque</string>
+   </property>
+  </action>
+  <action name="actionaa">
+   <property name="text">
+    <string>aa</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

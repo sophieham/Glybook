@@ -2,106 +2,113 @@
 
 
 Utilisateur::Utilisateur() {
-    typeUtilisateur = 0;
+    type = 0;
 };
 Utilisateur::~Utilisateur() {};
-Utilisateur::Utilisateur(string nom, string prenom, int type){
-    this->nomUtilisateur = nom;
-    this->prenomUtilisateur = prenom;
-    this->typeUtilisateur = type;
+Utilisateur::Utilisateur(QString firstName, QString lastName, int type){
+    this->firstName = firstName;
+    this->lastName = lastName;
+    this->type = type;
 }
 
-string Utilisateur::getNomUtilisateur(){
-    return this->nomUtilisateur;
+QString Utilisateur::getFirstName() const{
+    return firstName;
 }
 
-string Utilisateur::getPrenomUtilisateur(){
-    return this->prenomUtilisateur;
+QString Utilisateur::getLastName() const{
+    return lastName;
 }
 
-int Utilisateur::getTypeUtilisateur(){
-    return this->typeUtilisateur;
+int Utilisateur::getType() const{
+    return type;
 }
 
-void Utilisateur::setTypeUtilisateur(int t){
-    this->typeUtilisateur = t;
-}
-
-void Utilisateur::printUtilisateur(){
-    cout << "Nom: " << nomUtilisateur << endl << "Prenom: " << prenomUtilisateur << endl << "Type de compte (1: admin, 2: adh): " << typeUtilisateur << endl;
+void Utilisateur::setType(int t){
+    this->type = t;
 }
 
 
-Administrateur::Administrateur(string nom, string prenom, string username, string password)
-: Utilisateur::Utilisateur(nom, prenom, 1), usernameAdmin(username), passwordAdmin(password)
+Administrateur::Administrateur(QString firstName, QString lastName, QString username, QString password) : Utilisateur::Utilisateur(firstName, lastName, 1)
 {
-    cout << "Bienvenue " << prenom << "! Vous etes administrateur." << endl;
+
+        user = username,
+        pass = password;
+
+    QString("Bienvenue " + firstName + "! Vous etes administrateur.");
 }
 
-Administrateur::~Administrateur(){}
-
-void Administrateur::printAdmin(){
-    this->Utilisateur::printUtilisateur();
-    cout << "Username: " << usernameAdmin << endl << "Pass: " << passwordAdmin << endl;
-}
-    
-string Administrateur::getUsernameAdmin() {
-    return usernameAdmin;
-}
-void Administrateur::setUsernameAdmin(string username) {
-    this->usernameAdmin = username;
-}
+Administrateur::~Administrateur() {}
 
 
-string Administrateur::getPasswordAdmin() {
-    return passwordAdmin;
+QString Administrateur::getUser() const
+{
+    return user;
 }
-void Administrateur::setPasswordAdmin(string password) {
-    this->passwordAdmin = password;
+
+QString Administrateur::getPswd() const
+{
+    return pass;
+}
+
+void Administrateur::setUser(const QString user)
+{
+    this->user = user;
+}
+
+void Administrateur::setPswd(const QString pass)
+{
+    this->pass = pass;
+}
+
+QString Administrateur::print()
+{
+   return QString( user + " " + pass);
 }
 
 
 // implémenter un code de compte (numéro de téléphone) a changer ou pas par l'adherent
 Adherent::Adherent() {
-        nbLivreMaxAdh = 0;
-        Utilisateur::getNomUtilisateur() = "";
-        Utilisateur::getPrenomUtilisateur() = "";
-        this->adresseAdh = "";
-    }
+    maxBooks = 0;
+    address = "";
+}
 Adherent::~Adherent() {};
-Adherent::Adherent(string nom, string prenom, string adresse, string numtel, short nbLivreMax)
-: Utilisateur::Utilisateur(nom, prenom, 2), adresseAdh(adresse), numtelAdh(numtel), nbLivreMaxAdh(nbLivreMax)
+Adherent::Adherent(QString firstName, QString lastName, QString address, QString phone, short maxBooks) : Utilisateur(firstName, lastName, 2)
 {
+
+    this->address = address;
+    this->phone = phone;
+    this->maxBooks = maxBooks;
 }
-void Adherent::print(){
-    this->Utilisateur::printUtilisateur();
-    cout << "Adresse: " << getAdresseAdh() << endl << "Numero: " << getNumTelAdh() << endl <<
-    "Vous pouvez emprunter jusqu'à " << getNbLivreMaxAdh() << " livres." << endl;
+QString Adherent::print() {
+   return QString( "address: " + getAddress() + "Numero: " + getPhoneNo()+
+        "Vous pouvez emprunter jusqu'à " + getMaxBooks() + " livres." );
 }
 
 
-// adresse
-string Adherent::getAdresseAdh() {
-	return this->adresseAdh;
+// address
+QString Adherent::getAddress() const {
+    return address;
 }
-void Adherent::setAdresseAdh(string adresse) {
-	this->adresseAdh = adresse;
+void Adherent::setAddress(QString address) {
+    this->address = address;
 }
 
 // numero de telephone
-string Adherent::getNumTelAdh() {
-    return this->numtelAdh;
+QString Adherent::getPhoneNo() const {
+    return phone;
 }
-void Adherent::setNumTelAdh(string numtel) {
-    this->numtelAdh = numtel;
+void Adherent::setPhoneNo(QString phone) {
+    this->phone = phone;
 }
 
 
 // retourne le nombre de livre max que l'adherent peut emprunter
-short Adherent::getNbLivreMaxAdh() {
-    return this->nbLivreMaxAdh;
+short Adherent::getMaxBooks() const {
+    return maxBooks;
 }
-void Adherent::setNbLivreMaxAdh(short nbLivreMax) {
-    this->nbLivreMaxAdh = nbLivreMax;
+void Adherent::setMaxBooks(short maxBooks) {
+    this->maxBooks = maxBooks;
 }
+
+
 

@@ -1,20 +1,25 @@
-#pragma once
+#ifndef BIBLIOTHEQUE_H
+#define BIBLIOTHEQUE_H
+
 #include <iostream>
-#include <string>
+#include <QString>
 using namespace std;
 
     class Bibliotheque {
     private:
-        string nomBiblio;
-        string typeBiblio;
-        string adresseBiblio;
+        QString nomBiblio;
+        QString typeBiblio;
+        QString adresseBiblio;
 
     public:
         Bibliotheque();
-        Bibliotheque(string, string, string);
+        Bibliotheque(QString, QString, QString);
         ~Bibliotheque();
-        void printBiblio();
-        string getNomBiblio();
-        string getAdresseBiblio();
-        string getTypeBiblio();
+        QString printBiblio() const;
+        QString getNomBiblio() const;
+        QString getAdresseBiblio() const;
+        QString getTypeBiblio() const;
+        void setAdresseBiblio(const QString);
     };
+
+#endif // BIBLIOTHEQUE_H

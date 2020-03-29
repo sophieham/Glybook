@@ -1,8 +1,22 @@
-#pragma once
-#include <iostream>
-#include "emprunt.h"
+#ifndef GLYBOOK_H
+#define GLYBOOK_H
 
-using namespace std;
-	class Glybook {
+#include <QMainWindow>
 
-	};
+namespace Ui {
+class Glybook;
+}
+
+class Glybook : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit Glybook(QWidget *parent = nullptr);
+    ~Glybook();
+
+private:
+    Ui::Glybook *ui;
+};
+
+#endif // GLYBOOK_H

@@ -1,41 +1,42 @@
 #pragma once
 #include <iostream>
-#include <string>
 #include "categorie.h"
-#include <vector>
+#include <QVector>
 #include <sstream>
 using namespace std;
 
     class Livre {
     private:
-        string nomLivre, auteurLivre, editeurLivre, resumeLivre, isbnLivre;
+        QString nomLivre, auteurLivre, editeurLivre, resumeLivre, isbnLivre;
         bool libre;
         Categorie catLivre;
         size_t compteur;
-        vector<string> liste;
+        QVector<QString> liste;
 
 
     public:
         Livre();
         ~Livre();
-        Livre(string, string, string, string, string, Categorie);
+        Livre(QString, QString, QString, QString, QString, Categorie);
         void printLivre();
-        string getNomLivre();
-        void setNomLivre(string);
-        string getAuteurLivre();
-        void setAuteurLivre(string);
-        string getEditeurLivre();
-        void setEditeurLivre(string);
-        string getResumeLivre();
-        void setResumeLivre(string);
-        string getIsbnLivre();
-        void setIsbnLivre(string);
-        bool getLibre();
-        void setLibre(bool);
+        QString getNomLivre() const;
+        void setNomLivre(QString const);
+        QString getAuteurLivre() const;
+        void setAuteurLivre(QString const);
+        QString getEditeurLivre() const;
+        void setEditeurLivre(QString const);
+        QString getResumeLivre() const;
+        void setResumeLivre(QString const);
+        QString getIsbnLivre() const;
+        void setIsbnLivre(QString const);
+        bool getLibre() const;
+        void setLibre(bool const);
         Categorie getCatLivre();
-        void setCatLivre(Categorie);
+        void setCatLivre(Categorie const);
         size_t getOccurence();
-        void afficherListe();
+        void afficherListe() const;
+        /*
         friend std::ostream& operator<<(std::ostream& out, Livre l);
-        static string to_string(Livre l);
+        static QString to_string(Livre const);
+        */
     };

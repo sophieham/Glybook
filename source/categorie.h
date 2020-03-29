@@ -1,25 +1,24 @@
 #pragma once
 #include <iostream>
-#include <string>
 #include "bibliotheque.h"
 using namespace std;
 
 
     class Categorie {
     private:
-        string nomCat;
-        string descriptionCat;
-        Bibliotheque bibliothequeCat;
+        QString nom;
+        QString description;
+        Bibliotheque bibliotheque;
     public:
         Categorie();
         ~Categorie();
-        Categorie(string, string, Bibliotheque);
+        Categorie(QString, QString, Bibliotheque);
         void printCat();
-        string getNomCat();
-        void setNomCat(string);
-        string getDescriptionCat();
-        void setDescriptionCat(string);
-        Bibliotheque getBibliothequeCat();
-        void setBibliothequeCat(Bibliotheque);
+        QString getNom() const;
+        void setNom(QString const);
+        QString getDescription() const;
+        void setDescription(QString const);
+        Bibliotheque getBibliotheque() const;
+        void setBibliotheque(Bibliotheque const);
 
     };

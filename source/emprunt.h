@@ -3,37 +3,36 @@
 #include <iostream>
 #include "livre.h"
 #include "utilisateur.h"
-#include <string>
 #include <iterator>
-#include <map>
+//#include <QMap>
 
 using namespace std;
 
     class Emprunt {
     private:
-        string datePretEmprunt;
-        string dateRendreEmprunt;
-        Adherent adherentEmprunt;
+        QString datePret;
+        QString dateRendre;
+        Adherent adherent;
         Livre livreEmprunt;
-        map<string, string> mapEmprunt;
+        //QMap<Livre, QString> mapEmprunt;
         size_t compteur;
       
     public:
         Emprunt();
         ~Emprunt();
         Emprunt(Adherent, Livre);
-        string getDateNow();
-        string getDatePlusDays(int n);
+        QString getDateNow();
+        QString getDatePlusDays(int n);
         void printEmprunt();
-        string getDatePretEmprunt();
-        void setDatePretEmprunt(string);
-        string getDateRendreEmprunt();
-        void setDateRendreEmprunt(string);
-        Adherent getAdherentEmprunt();
-        void setAdherentEmprunt(Adherent);
-        Livre getLivreEmprunt();
-        void setLivreEmprunt(Livre);
-        void afficherListe();
-        size_t getOccurence();
-        void afficherListe(Adherent a);
+        QString getDatePret() const;
+        void setDatePret(QString const);
+        QString getDateRendre() const;
+        void setDateRendre(QString const);
+        Adherent getAdherent() const;
+        void setAdherent(Adherent const);
+        Livre getLivreEmprunt() const;
+        void setLivreEmprunt(Livre const);
+        void afficherListe() const;
+        size_t getOccurence() const;
+        void afficherListe(Adherent const);
     };

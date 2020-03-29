@@ -1,56 +1,57 @@
 #pragma once
 #include <iostream>
-#include <string>
+#include <QString>
 using namespace std;
 
 	class Utilisateur {
 	private:
-		string nomUtilisateur;
-		string prenomUtilisateur;
-		int typeUtilisateur;
+        QString lastName;
+        QString firstName;
+		int type;
 
 	public:
 		Utilisateur();
 		~Utilisateur();
-		Utilisateur(string, string, int);
-		string getNomUtilisateur();
-		string getPrenomUtilisateur();
-		int getTypeUtilisateur();
-		void setTypeUtilisateur(int);
-		void printUtilisateur();
+        Utilisateur(QString, QString, int);
+        virtual QString getFirstName() const;
+        virtual QString getLastName() const;
+        virtual int getType() const;
+        virtual void setType(int const);
+        virtual QString print()=0;
 		
 	};
 
 	class Administrateur : public Utilisateur {
 	private:
-		string usernameAdmin;
-		string passwordAdmin;
+        QString user;
+        QString pass;
 	public:
-		Administrateur(string, string, string, string);
+        Administrateur(QString firstName, QString LastName, QString user, QString pass);
 		~Administrateur();
+        QString getUser() const;
+        QString getPswd() const;
+        void setUser(const QString);
+        void setPswd(const QString);
 
-		void printAdmin();
-		string getUsernameAdmin();
-		void setUsernameAdmin(string);
-		string getPasswordAdmin();
-		void setPasswordAdmin(string);
+        QString print();
+
 
 	};
 
 	class Adherent : public Utilisateur {
 	private:
-		string adresseAdh;
-		string numtelAdh;
-		short nbLivreMaxAdh;
+        QString address;
+        QString phone;
+        short maxBooks; // le nombre de livres que peut emprunter l'adherent
 	public:
 		Adherent();
 		~Adherent();
-		Adherent(string, string, string, string, short);
-		void print();
-		string getAdresseAdh();
-		void setAdresseAdh(string);
-		string getNumTelAdh();
-		void setNumTelAdh(string);
-		short getNbLivreMaxAdh();
-		void setNbLivreMaxAdh(short);
+        Adherent(QString firstName, QString lastName, QString address, QString phoneNo, short);
+        QString print();
+        QString getAddress() const;
+        void setAddress(QString const);
+        QString getPhoneNo() const;
+        void setPhoneNo(QString const);
+        short getMaxBooks() const;
+        void setMaxBooks(short const);
 	};

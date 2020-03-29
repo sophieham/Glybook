@@ -2,35 +2,35 @@
 
     Categorie::Categorie() {};
     Categorie::~Categorie(){};
-    Categorie::Categorie(string nom, string description, Bibliotheque bibliotheque){
-        this->nomCat = nom;
-        this->descriptionCat = description;
-        this->bibliothequeCat = bibliotheque;
+    Categorie::Categorie(QString nom, QString description, Bibliotheque bibliotheque){
+        this->nom = nom;
+        this->description = description;
+        this->bibliotheque = bibliotheque;
     }
 
     void Categorie::printCat(){
-        cout << nomCat << "(" << descriptionCat << ") de " << bibliothequeCat.getNomBiblio() << endl;
+        QString(nom+ "(" +description + ") de " + bibliotheque.getNomBiblio());
     }
 
-    string Categorie::getNomCat() {
-    	return nomCat;
+    QString Categorie::getNom() const{
+        return nom;
     }
-    void Categorie::setNomCat(string nom) {
-    	this->nomCat = nom;
-    }
-
-
-    string Categorie::getDescriptionCat() {
-    	return descriptionCat;
-    }
-    void Categorie::setDescriptionCat(string description) {
-    	this->descriptionCat = description;
+    void Categorie::setNom(QString nom) {
+        this->nom = nom;
     }
 
 
-    Bibliotheque Categorie::getBibliothequeCat() {
-    	return bibliothequeCat;
+    QString Categorie::getDescription() const {
+        return description;
     }
-    void Categorie::setBibliothequeCat(Bibliotheque bibliotheque) {
-    	this->bibliothequeCat = bibliotheque;
+    void Categorie::setDescription(QString description) {
+        this->description = description;
+    }
+
+
+    Bibliotheque Categorie::getBibliotheque() const{
+        return bibliotheque;
+    }
+    void Categorie::setBibliotheque(Bibliotheque bibliotheque) {
+        this->bibliotheque = bibliotheque;
     }
