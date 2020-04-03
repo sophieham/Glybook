@@ -1,5 +1,5 @@
-#include "dialog.h"
-#include "ui_dialog.h"
+#include "initialization.h"
+#include "ui_initialization.h"
 
 
 Dialog::Dialog(QWidget *parent) :
@@ -8,6 +8,7 @@ Dialog::Dialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setFixedSize(400, 300);
 }
 
 Dialog::~Dialog()

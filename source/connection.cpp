@@ -1,67 +1,70 @@
-#include "connexion.h"
-#include "./ui_connexion.h"
-#include <QMessageBox>
+#include "connection.h"
+#include "./ui_connection.h"
 
-Connexion::Connexion(QWidget *parent)
+
+Login::Login(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::connexion)
 {
     ui->setupUi(this);
 
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("glybook");
-    db.setUserName("root");
-    db.setPassword("");
-    db.open();
+    setFixedSize(800, 600);
+    setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
 
-    QSqlQuery firstTime("SELECT * from utilisateur");
-    if(!firstTime.next()){ // vÃ©rifie s'il y a au moins un compte dans la bdd, sinon affiche de quoi se crÃ©er un compte
+    db.defaultConnection = "connexion";
+    connection.connectToDb(db);
+
+    QSqlQuery firstTime("SELECT * from users");
+    if(!firstTime.next()){ // vérifie s'il y a au moins un compte dans la bdd, sinon affiche de quoi se créer un compte
         Dialog* d = new Dialog(this);
         d->setModal(true);
         d->show();
         connect(d, SIGNAL(sendFirstData(QStringList)), this, SLOT(receiveFirstData(QStringList)));
     }
-}
+ }
 
-Connexion::~Connexion()
+Login::~Login()
 {
+    db.close();
+    db.removeDatabase(db.connectionName());
     delete ui;
 }
 
-void Connexion::receiveFirstData(QStringList data){
+void Login::receiveFirstData(QStringList data){
     QString fName = data[0];
     QString lName = data[1];
     QString user = data[2];
     QString pass = hashPass(data[3]);
 
     QSqlQuery addToDb;
-    addToDb.prepare("INSERT INTO `utilisateur` (`id`, `lastName`, `firstName`, `username`, `pass`, `rank`) VALUES (NULL, :lName, :fName, :user, :pass, 1)");
+    addToDb.prepare("INSERT INTO `users` (`id`, `lastName`, `firstName`, `username`, `pass`, `rank`) VALUES (NULL, :lName, :fName, :user, :pass, 1)");
     addToDb.bindValue(":lName", lName);
     addToDb.bindValue(":fName", fName);
     addToDb.bindValue(":user", user);
     addToDb.bindValue(":pass", pass);
+
+    qDebug() << fName << user;
     if(addToDb.exec()){
-    QMessageBox::information(this, "SuccÃ¨s!", "Vous pouvez Ã  present vous connecter!");
+    QMessageBox::information(this, "Succès!", "Vous pouvez à présent vous connecter!");
     }
 }
 
-QString Connexion::hashPass(QString text){
+QString Login::hashPass(QString text){
     QByteArray hash = QCryptographicHash::hash(text.toUtf8(), QCryptographicHash::Sha256);
     QString pass=hash.toHex();
     return pass;
 }
 
 
-void Connexion::on_btnConnect_clicked()
+void Login::on_btnConnect_clicked()
 {
     QString user =  ui->textUser->text();
     QString pass = hashPass(ui->textPass->text());
 
     if(!user.isEmpty()){
-        QSqlQuery query("SELECT username, pass FROM utilisateur WHERE username= '"+user+"' AND pass = '"+pass+"'");
+        QSqlQuery query("SELECT * FROM `users` WHERE username= '"+user+"' AND pass = '"+pass+"'");
         if(query.next()){
-            Glybook* page = new Glybook();
+            Glybook* page = new Glybook(user);
             page->show();
             this->close();
         }

@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/adherent.png</file>
+        <file>icons/bibliotheque.png</file>
+        <file>icons/compte.png</file>
+        <file>icons/deconnexion.png</file>
+        <file>icons/livre.png</file>
+        <file>icons/parametres.png</file>
+        <file>icons/statistiques.png</file>
+        <file>icons/background.png</file>
+        <file>icons/bg_conf.png</file>
+        <file>icons/icone_user.png</file>
+        <file>icons/user.png</file>
+        <file>icons/cadenas.png</file>
+        <file>icons/glybook.png</file>
+        <file>icons/icon_final.ico</file>
+        <file>icons/glybook_petit.png</file>
+    </qresource>
+</RCC>

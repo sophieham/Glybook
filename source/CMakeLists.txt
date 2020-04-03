@@ -8,7 +8,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
@@ -29,33 +29,46 @@ find_package(Qt5 COMPONENTS Widgets Core Quick Sql REQUIRED)
 if(ANDROID)
   add_library(Glybook SHARED
     main.cpp
-    connexion.cpp
-    connexion.h
-    connexion.ui
+    connection.cpp
+    connection.h
+    connection.ui
 
   )
 else()
   add_executable(Glybook
     main.cpp
-    connexion.cpp
-    connexion.h
-    connexion.ui
-    bibliotheque.cpp
-    bibliotheque.h
-    categorie.cpp
-    categorie.h
-    livre.cpp
-    livre.h
-    utilisateur.cpp
-    utilisateur.h
-    emprunt.cpp
-    emprunt.h
-    dialog.cpp
-    dialog.h
-    dialog.ui
+    dbconnection.cpp
+    dbconnection.h
+    connection.cpp
+    connection.h
+    connection.ui
+    library.cpp
+    library.h
+    genre.cpp
+    genre.h
+    book.cpp
+    book.h
+    user.cpp
+    user.h
+    borrow.cpp
+    borrow.h
+    initialization.cpp
+    initialization.h
+    initialization.ui
     glybook.cpp
     glybook.h
     glybook.ui
+    new_book.cpp
+    new_book.h
+    new_book.ui
+    settings.cpp
+    settings.h
+    settings.ui
+    myAccount.cpp
+    myAccount.h
+    myAccount.ui
+    resource.qrc
+    borrow_dialog.ui
   )
 endif()
 

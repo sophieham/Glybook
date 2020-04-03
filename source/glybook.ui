@@ -2,26 +2,124 @@
 <ui version="4.0">
  <class>Glybook</class>
  <widget class="QMainWindow" name="Glybook">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1400</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Glybook ~ </string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableView" name="tableView">
+   <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>110</y>
-      <width>221</width>
-      <height>171</height>
+      <x>5</x>
+      <y>1</y>
+      <width>1381</width>
+      <height>731</height>
      </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="autoScroll">
+     <bool>false</bool>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>230</number>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>ISBN</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Author</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Genre</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Publisher</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Year of publish</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Summary</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="lbl_connected">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>740</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhLatinOnly</set>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>740</y>
+      <width>1391</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>
@@ -30,55 +128,59 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>25</height>
+     <width>1400</width>
+     <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuMenu">
+   <widget class="QMenu" name="menuAdmin">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="tearOffEnabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Menu</string>
     </property>
-    <addaction name="actionAjouter_une_nouvelle_biblioth_que"/>
-    <addaction name="actionAjouter_un_nouveau_livre"/>
+    <addaction name="actionAddBook"/>
     <addaction name="separator"/>
-    <addaction name="actionG_rer_les_adh_rents"/>
+    <addaction name="actionManageAcc"/>
     <addaction name="actionStatistiques"/>
    </widget>
    <widget class="QMenu" name="menuParam_tres">
     <property name="title">
      <string>Mon compte</string>
     </property>
-    <addaction name="actionG_rer_mon_compte"/>
-    <addaction name="actionParam_tres"/>
+    <addaction name="actionMyAccount"/>
+    <addaction name="actionSettings"/>
     <addaction name="separator"/>
-    <addaction name="actionSe_d_connecter_2"/>
+    <addaction name="actionLogout"/>
    </widget>
-   <addaction name="menuMenu"/>
    <addaction name="menuParam_tres"/>
+   <addaction name="menuAdmin"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionAjouter_un_nouveau_livre">
+  <action name="actionAddBook">
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/icons8-école-80.png</normaloff>../../Downloads/icons8-école-80.png</iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/livre.png</normaloff>:/icons/livre.png</iconset>
    </property>
    <property name="text">
     <string>Ajouter un nouveau livre</string>
    </property>
   </action>
-  <action name="actionG_rer_les_adh_rents">
+  <action name="actionManageAcc">
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/icons8-personne-homme-80.png</normaloff>../../Downloads/icons8-personne-homme-80.png</iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/compte.png</normaloff>:/icons/compte.png</iconset>
    </property>
    <property name="text">
     <string>Gérer les adhérents</string>
    </property>
   </action>
-  <action name="actionG_rer_mon_compte">
+  <action name="actionMyAccount">
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/icons8-personne-homme-80.png</normaloff>../../Downloads/icons8-personne-homme-80.png</iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/compte.png</normaloff>:/icons/compte.png</iconset>
    </property>
    <property name="text">
     <string>Afficher mon compte</string>
@@ -86,51 +188,34 @@
   </action>
   <action name="actionStatistiques">
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/icons8-baissier-100.png</normaloff>../../Downloads/icons8-baissier-100.png</iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/statistiques.png</normaloff>:/icons/statistiques.png</iconset>
    </property>
    <property name="text">
     <string>Statistiques</string>
    </property>
   </action>
-  <action name="actionSe_d_connecter">
-   <property name="text">
-    <string>Se déconnecter</string>
-   </property>
-  </action>
-  <action name="actionParam_tres">
+  <action name="actionSettings">
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/icons8-paramètres-256.png</normaloff>../../Downloads/icons8-paramètres-256.png</iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/parametres.png</normaloff>:/icons/parametres.png</iconset>
    </property>
    <property name="text">
     <string>Paramètres</string>
    </property>
   </action>
-  <action name="actionSe_d_connecter_2">
+  <action name="actionLogout">
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/door-exit.png</normaloff>../../Downloads/door-exit.png</iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/deconnexion.png</normaloff>:/icons/deconnexion.png</iconset>
    </property>
    <property name="text">
     <string>Se déconnecter</string>
    </property>
   </action>
-  <action name="actionAjouter_une_nouvelle_biblioth_que">
-   <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/icons8-bâtiment-scolaire-48.png</normaloff>../../Downloads/icons8-bâtiment-scolaire-48.png</iconset>
-   </property>
-   <property name="text">
-    <string>Ajouter une nouvelle bibliothèque</string>
-   </property>
-  </action>
-  <action name="actionaa">
-   <property name="text">
-    <string>aa</string>
-   </property>
-  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

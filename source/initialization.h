@@ -2,9 +2,6 @@
 #define DIALOG_H
 
 #include <QDialog>
-#include "utilisateur.h"
-#include <QtSql>
-#include <QSqlDatabase>
 #include <QAbstractButton>
 
 namespace Ui {
