@@ -1,28 +1,28 @@
-#include "borrow.h"
+#include "reservation.h"
 #include "dbconnection.h"
 #include <QSqlError>
 
-Borrow::Borrow() {
-    Borrow::counter = 0;
+Reservation::Reservation() {
+    Reservation::counter = 0;
 }
-Borrow::~Borrow(){
+Reservation::~Reservation(){
 }
-Borrow::Borrow(User sub, Book book) {
+Reservation::Reservation(User sub, Book book) {
     //static QMap <Livre, QString> temp;
     static size_t count;
 
-        lendingDate = getDateNow();
-        returnDate = getDatePlusDays(14);
+        startDate = getDateNow();
+        endDate = getDatePlusDays(14);
         subscriber = sub;
         lentBook = book;
         book.setFree(0);
 
         ++count;
-        Borrow::counter = count;
+        Reservation::counter = count;
     }
 
 // affiche la date et l'heure actuelle au format yyyy-mm-dd hh::mm::ss
-QString Borrow::getDateNow() {
+QString Reservation::getDateNow() {
     QString res;
     time_t t = time(nullptr);
     char datePret[20];
@@ -32,7 +32,7 @@ QString Borrow::getDateNow() {
 }
 
 // afficher la date après un nombre de jour donné
-QString Borrow::getDatePlusDays(int n) {
+QString Reservation::getDatePlusDays(int n) {
     QString res;
     time_t t = time(nullptr);
     t = t + (86400 * n); // n: temps de pret
@@ -43,59 +43,59 @@ QString Borrow::getDatePlusDays(int n) {
 }
 
 // retourne le nombre de fois où la classe a été instanciée
-size_t Borrow::getOccurence() const {
+size_t Reservation::getOccurence() const {
     return counter;
 }
 
 // retourne l'objet adherent
-User Borrow::getSubscriber() const {
+User Reservation::getSubscriber() const {
     return subscriber;
 }
 
-void Borrow::setSubscriber(User sub) {
+void Reservation::setSubscriber(User sub) {
     subscriber = sub;
 }
 
 // retourne l'objet livre
-Book Borrow::getLentBook() const {
+Book Reservation::getLentBook() const {
     return lentBook;
 }
 
-void Borrow::setLentBook(Book b) {
+void Reservation::setLentBook(Book b) {
     this->lentBook = b;
 }
 
 // affiche les données liés à l'emprunt
-void Borrow::printBorrow(){
-    QString ("Emprunt: " + lentBook.getName() + " par " + subscriber.getFirstName() + " " + subscriber.getLastName() + " le " + getLendingDate() + ", a rendre avant le " + getReturnDate());
+void Reservation::printBorrow(){
+    QString ("Emprunt: " + lentBook.getName() + " par " + subscriber.getFirstName() + " " + subscriber.getLastName() + " le " + getStartDate() + ", a rendre avant le " + getEndDate());
 }
 
 // retourne la date auquel le livre à été emprunté
-QString Borrow::getLendingDate() const {
-    return returnDate;
+QString Reservation::getStartDate() const {
+    return startDate;
 }
 
-void Borrow::setLendingDate(QString lendingDate) {
-    this->lendingDate = lendingDate;
+void Reservation::setStartDate(QString startDate) {
+    this->startDate = startDate;
 }
 
 // retourne la date limite de pret
-QString Borrow::getReturnDate() const {
-    return returnDate;
+QString Reservation::getEndDate() const {
+    return endDate;
 }
-void Borrow::setReturnDate(QString returnDate) {
-    this->returnDate = returnDate;
+void Reservation::setEndDate(QString endDate) {
+    this->endDate = endDate;
 }
 
 // ajoute l'emprunt a la bdd, rend le livre emprunté et décremente la limite de livre empruntables pour l'emprunteur
-void Borrow::addBorrow()
+void Reservation::addReservation()
 {
     QSqlQuery q;
-    q.prepare("INSERT INTO `borrow` (`lendingID`, `username`, `bookID`, `lending_date`, `return_date`) VALUES (NULL, :user, :book, :lending, :return)  ");
+    q.prepare("INSERT INTO `reservations` (`reservationID`, `username`, `bookID`, `start_date`, `end_date`) VALUES (NULL, :user, :book, :start, :end)  ");
     q.bindValue(":user", subscriber.getUser());
     q.bindValue(":book", lentBook.getIsbn());
-    q.bindValue(":lending", lendingDate);
-    q.bindValue(":return", returnDate);
+    q.bindValue(":start", startDate);
+    q.bindValue(":end", endDate);
     q.exec();
 
     lentBook.setFree(0);

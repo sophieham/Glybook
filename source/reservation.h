@@ -12,29 +12,29 @@
 
 using namespace std;
 
-    class Borrow {
+    class Reservation {
     private:
-        QString lendingDate;
-        QString returnDate;
+        QString startDate;
+        QString endDate;
         User subscriber;
         Book lentBook;
         size_t counter;
-      
+
     public:
-        Borrow();
-        ~Borrow();
-        Borrow(User, Book);
+        Reservation();
+        ~Reservation();
+        Reservation(User, Book);
         QString getDateNow();
         QString getDatePlusDays(int n);
         void printBorrow();
-        QString getLendingDate() const;
-        void setLendingDate(QString const);
-        QString getReturnDate() const;
-        void setReturnDate(QString const);
+        QString getStartDate() const;
+        void setStartDate(QString const);
+        QString getEndDate() const;
+        void setEndDate(QString const);
         User getSubscriber() const;
         void setSubscriber(User const);
         Book getLentBook() const;
         void setLentBook(Book const);
         size_t getOccurence() const;
-        void addBorrow();
+        void addReservation();
     };

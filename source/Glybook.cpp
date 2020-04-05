@@ -3,6 +3,7 @@
 #include "connection.h"
 #include <QPushButton>
 #include <QWidget>
+#include <QKeyEvent>
 
 Glybook::Glybook(const QString &name, QWidget *parent) : QMainWindow(parent), ui(new Ui::Glybook), username(name)
 {
@@ -52,6 +53,7 @@ void Glybook::displayBookList(){
     ui->tableWidget->setRowCount(q.value(0).toInt());
     q.exec("SELECT ISBN, books.name, b_author.name, genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN genre ON genre.genreID = books.genreID WHERE free=1");
     int row = 0;
+
     for(q.first(); q.isValid(); q.next(), ++row){
         ui->tableWidget->setItem(row, 0, new QTableWidgetItem(q.value(0).toString())); // isbn
         ui->tableWidget->setItem(row, 1, new QTableWidgetItem(q.value(1).toString())); // name
@@ -61,6 +63,9 @@ void Glybook::displayBookList(){
         ui->tableWidget->setItem(row, 5, new QTableWidgetItem(q.value(5).toString())); // year
         ui->tableWidget->setItem(row, 6, new QTableWidgetItem(q.value(6).toString())); // summary
     }
+    ui->tableWidget->hideColumn(6);
+
+
 }
 
 Glybook::~Glybook()
@@ -90,21 +95,26 @@ void Glybook::on_tableWidget_doubleClicked(const QModelIndex &index)
     // active la modification des cellules pour les admins
     if(connectedUser->getType()==1){
         ui->tableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);
-        qDebug() << book->getYear();
+        //int answer = QMessageBox::question(this, "Selection", ""
     }
     // affiche un resumé et la possiblité de emprunter si abonné
     else{
         // amélioration: ajouter une photo de la couverture?
-        int reponse = QMessageBox::question(this, "Emprunter "+book->getName(), "Summary:\n"+book->getSummary()+ "\n\nVoulez-vous emprunter ce livre?", QMessageBox::Yes | QMessageBox::No);
-        if(reponse == QMessageBox::Yes){
+        int answer = QMessageBox::question(this, "Emprunter "+book->getName(), "Summary:\n"+book->getSummary()+ "\n\nVoulez-vous réserver ce livre?", QMessageBox::Yes | QMessageBox::No);
+        if(answer == QMessageBox::Yes){
             if (book->getFree() && (connectedUser->getLimit() > 0)) {
-            borrow = new Borrow();
-            borrow->setLentBook(*book);
-            borrow->setSubscriber(*connectedUser);
-            borrow->setReturnDate(borrow->getDatePlusDays(14));
-            borrow->setLendingDate(borrow->getDateNow());
-            borrow->addBorrow();
-            QMessageBox::information(this, "Success!", "Book reserved!");
+                resv = new Reservation();
+                resv->setLentBook(*book);
+                resv->setSubscriber(*connectedUser);
+                resv->setEndDate(resv->getDatePlusDays(14));
+                resv->setStartDate(resv->getDateNow());
+                resv->addReservation();
+
+                // mise à jour du tableau
+                ui->tableWidget->clearContents();
+                displayBookList();
+
+                QMessageBox::information(this, "Success!", "Book reserved!");
             }
             else {
                 QMessageBox::critical(this, "Erreur!", "Vous ne pouvez pas emprunter ce livre, il n'est plus disponible ou alors vous assez trop emprunté");
@@ -121,7 +131,9 @@ void Glybook::on_actionAddBook_triggered()
 
 void Glybook::on_actionManageAcc_triggered()
 {
-    qDebug() << "Ajout prochain! ";
+    ma = new manageAccounts();
+    ma->show();
+
 }
 
 void Glybook::on_actionMyAccount_triggered()

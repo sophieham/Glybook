@@ -8,7 +8,7 @@
 #include <QSqlQuery>
 #include <QCryptographicHash>
 
-#include "borrow.h"
+#include "reservation.h"
 #include "initialization.h"
 #include "glybook.h"
 

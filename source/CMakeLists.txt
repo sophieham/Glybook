@@ -50,8 +50,8 @@ else()
     book.h
     user.cpp
     user.h
-    borrow.cpp
-    borrow.h
+    reservation.cpp
+    reservation.h
     initialization.cpp
     initialization.h
     initialization.ui
@@ -68,7 +68,12 @@ else()
     myAccount.h
     myAccount.ui
     resource.qrc
-    borrow_dialog.ui
+    manageaccounts.cpp
+    manageaccounts.h
+    manageaccounts.ui
+    accountdialog.cpp
+    accountdialog.h
+    accountdialog.ui
   )
 endif()
 

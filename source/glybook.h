@@ -8,7 +8,8 @@
 #include "dbconnection.h"
 #include "user.h"
 #include "book.h"
-#include "borrow.h"
+#include "reservation.h"
+#include "manageaccounts.h"
 
 namespace Ui {
 class Glybook;
@@ -49,8 +50,9 @@ private:
     QString username;
     User *connectedUser;
     Book *book;
-    Borrow *borrow;
-    //Subscriber *connectedUser;
+    Reservation *resv;
+
+    manageAccounts *ma;
 };
 
 #endif // GLYBOOK_H
