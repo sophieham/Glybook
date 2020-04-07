@@ -1,5 +1,5 @@
-#ifndef CONNEXION_H
-#define CONNEXION_H
+#ifndef CONNECTION_H
+#define CONNECTION_H
 
 #include <QMainWindow>
 #include <QSql>
@@ -36,6 +36,7 @@ private:
     QSqlDatabase db;
     Ui::connexion *ui;
 
-    //QString user;
+    Dialog *initialization;
+    Glybook *page;
 };
-#endif // connexion_H
+#endif // CONNECTION_H

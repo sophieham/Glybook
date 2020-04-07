@@ -8,7 +8,7 @@ User::User() {
 };
 User::~User() {
     bLimit=0;
-}
+};
 
 //Administrator
 User::User(QString user, QString pass, QString lName, QString fName, short type)

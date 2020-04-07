@@ -8,12 +8,9 @@ manageAccounts::manageAccounts(QWidget *parent) :
     ui->setupUi(this);
 
     displayAccountList();
-
-
 }
 
-manageAccounts::~manageAccounts()
-{
+manageAccounts::~manageAccounts(){
     delete ui;
 }
 
@@ -33,9 +30,7 @@ void manageAccounts::displayAccountList(){
         ui->accList->setItem(row, 2, new QTableWidgetItem(listAccQ.value(2).toString())); // rank
         ui->accList->setItem(row, 3, new QTableWidgetItem(listAccQ.value(3).toString())); // id
     }
-
     ui->accList->hideColumn(3);
-
 }
 
 // action lors d'un double clic sur une cellule du tableau d'utilisateurs
@@ -43,10 +38,10 @@ void manageAccounts::displayAccountList(){
 void manageAccounts::on_accList_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
-    dialog = new accountDialog(ui->accList->item(row, 3)->text().toInt());
-    dialog->setModal(true);
-    dialog->show();
- // ouvrir une nouvelle page pour modifier le compte et y ajouter un bouton suppression!
+    accountDialog dialog(ui->accList->item(row, 3)->text().toInt());
+    dialog.setModal(true);
+    dialog.show();
+                        // METTRE A JOUR LE TABLEAU UNE FOIS LA MODIFICATION FAITE!!!!
 }
 
 QString manageAccounts::hashPass(QString text){
@@ -83,7 +78,6 @@ void manageAccounts::on_addAccBtn_clicked()
         if (!(addToDb.exec()) && ui->admBtn_2->isChecked())
             QMessageBox::information(this, "Success!", "The new administrator has been added to database!");
 
-
         if(ui->subBtn_2->isChecked() && !(address.isEmpty() && phone.isEmpty())){
         addToDb.prepare("INSERT INTO `u_subscriber` (`subscriber_username`, `address`, `phone`, `max_books`) VALUES (:username, :address, :phone, :limit) ");
         addToDb.bindValue(":username", username);
@@ -92,7 +86,6 @@ void manageAccounts::on_addAccBtn_clicked()
         addToDb.bindValue(":limit", limit);
             if(addToDb.exec())
                 QMessageBox::information(this, "Sucess!", "The new subscriber has been added to the database!");
-
         }
         else
             QMessageBox::critical(this, "Error!", "Please fill all the fields!");

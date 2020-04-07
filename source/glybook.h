@@ -10,6 +10,7 @@
 #include "book.h"
 #include "reservation.h"
 #include "manageaccounts.h"
+#include "bookdialog.h"
 
 namespace Ui {
 class Glybook;
@@ -25,6 +26,9 @@ public:
 
     void setupAccount();
     void displayBookList();
+
+
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_tableWidget_doubleClicked(const QModelIndex &index);
@@ -45,14 +49,14 @@ private:
     Ui::Glybook *ui;
     dbconnection *connection;
     QSqlDatabase db;
-    QSqlTableModel *bookList;
 
     QString username;
     User *connectedUser;
-    Book *book;
-    Reservation *resv;
+    Book book;
+    Reservation resv;
 
-    manageAccounts *ma;
+    manageAccounts ma;
+
 };
 
 #endif // GLYBOOK_H

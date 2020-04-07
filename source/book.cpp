@@ -10,9 +10,9 @@ Book::Book(){
         summary = "";
         isbn = "";
         free = true;
-        counter = 0;
     }
-    Book::~Book() {};
+    Book::~Book() {
+    };
 
     Book::Book(QString name, QString author, QString publisher, QString summary, QString isbn, Genre genre, int year){
         this->name = name;
@@ -23,32 +23,12 @@ Book::Book(){
         this->genre = genre;
         this->year = year;
         free = true;
-        static size_t compte;
-        ++compte;
-        Book::counter = compte;
-        static QVector<QString> listeLivres;
-        QString concat;
-        if (!(name == "" || author == "" | publisher == "")) {
-            concat = name + " - " + author + " - " + publisher + "\n";
-        }
-        listeLivres.push_back(concat);
-        Book::list = listeLivres;
-
     }
 
     // affiche les donn?es du livre
     void Book::printLivre() {
         QString(name + " de " + author + " paru chez " + publisher + " (ISBN: " + isbn + ") Type: " + genre.getName()
         + "Appartient a la bibliotheque " + genre.getLibrary().getName() + "Resume: " + summary);
-    }
-
-    // affiche la liste des livres poss?d?s par la bibliotheque (emprunt?s ou non)
-    void Book::printList() const{
-        cout << "---------------- Liste de tous les livres que poss?de la biblioth?que" << endl;
-        for (int i = 0; i < list.size(); i++)
-        {
-            QString(list.at(i));
-        }
     }
 
     // nom du livre
@@ -120,24 +100,3 @@ Book::Book(){
     {
         this->year = year;
     }
-
-    // le nombre de fois o? la classe a ?t? instanci?e
-    size_t Book::getOccurence() {
-        return Book::counter;
-    }
-
-    /*
-    // r?d?finition de l'affichage de l'objet
-    ostream& operator<<(ostream& out, Livre l)
-    {
-        out << l.getNomLivre() << " (" << l.getAuteurLivre() << " - " << l.getIsbnLivre() << ")";
-        return out;
-    }
-
-    // pour pouvoir l'afficher dans une chaine de caract?re
-    string Livre::to_string(Livre l)
-    {
-        ostringstream ss;
-        ss << l;
-        return ss.str();
-    }*/

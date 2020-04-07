@@ -18,6 +18,7 @@ Glybook::Glybook(const QString &name, QWidget *parent) : QMainWindow(parent), ui
 
     if(connectedUser->getType()==0)
       ui->menuAdmin->menuAction()->setVisible(false); // cache le menu admin
+
 }
 
 // récupère le nom d'utilisateur entré et prépare un objet utilisateur avec les données de son compte
@@ -51,7 +52,7 @@ void Glybook::displayBookList(){
     q.exec("SELECT count(ISBN) FROM books WHERE free=1");
     q.first();
     ui->tableWidget->setRowCount(q.value(0).toInt());
-    q.exec("SELECT ISBN, books.name, b_author.name, genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN genre ON genre.genreID = books.genreID WHERE free=1");
+    q.exec("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID WHERE free=1");
     int row = 0;
 
     for(q.first(); q.isValid(); q.next(), ++row){
@@ -63,52 +64,65 @@ void Glybook::displayBookList(){
         ui->tableWidget->setItem(row, 5, new QTableWidgetItem(q.value(5).toString())); // year
         ui->tableWidget->setItem(row, 6, new QTableWidgetItem(q.value(6).toString())); // summary
     }
-    ui->tableWidget->hideColumn(6);
-
-
+    ui->tableWidget->hideColumn(6); // cache la colonne summary (contenu trop gros)
 }
 
 Glybook::~Glybook()
 {
-    db.removeDatabase("connexion");
     db.close();
+    delete connection;
     delete connectedUser;
-    delete book;
-    db.close();
 
     delete ui;
 }
 
-// actions quand on double clic sur element du tableau
+// gestion de l'appui sur delete pour supprimer un livre du tableau (uniquement pour les admins)
+void Glybook::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Delete && connectedUser->getType()==1){ // si on appuie sur delete et qu'on est admin
+        int row = ui->tableWidget->currentRow();
+        int answer = QMessageBox::warning(this, "Delete a book", "Are you sure to delete "+ui->tableWidget->item(row, 1)->text()+"?", QMessageBox::Yes | QMessageBox::No);
+        if(answer == QMessageBox::Yes){
+            QSqlQuery deleteBook("DELETE FROM books WHERE isbn = '"+ui->tableWidget->item(row, 0)->text()+"'");
+            if(deleteBook.exec()){
+                QMessageBox::information(this, "Success!", "The book "+ui->tableWidget->item(row, 1)->text()+" has been successfully deleted!");
+                ui->tableWidget->clearContents();
+                displayBookList();
+            }
+        }
+    }
+}
+
+// actions lorsqu'on double clic sur un element du tableau
 void Glybook::on_tableWidget_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
-    book = new Book();
-    book->setIsbn(ui->tableWidget->item(row, 0)->text());
-    book->setName(ui->tableWidget->item(row, 1)->text());
-    book->setAuthor(ui->tableWidget->item(row, 2)->text());
-    book->setGenre(ui->tableWidget->item(row, 3)->text());
-    book->setPublisher(ui->tableWidget->item(row, 4)->text());
-    book->setYear(ui->tableWidget->item(row, 5)->text().toInt());
-    book->setSummary(ui->tableWidget->item(row, 6)->text());
+    book.setIsbn(ui->tableWidget->item(row, 0)->text());
+    book.setName(ui->tableWidget->item(row, 1)->text());
+    book.setAuthor(ui->tableWidget->item(row, 2)->text());
+    book.setGenre(ui->tableWidget->item(row, 3)->text());
+    book.setPublisher(ui->tableWidget->item(row, 4)->text());
+    book.setYear(ui->tableWidget->item(row, 5)->text().toInt());
+    book.setSummary(ui->tableWidget->item(row, 6)->text());
 
-    // active la modification des cellules pour les admins
+    // affiche une page pour modifier le livre
     if(connectedUser->getType()==1){
-        ui->tableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);
-        //int answer = QMessageBox::question(this, "Selection", ""
+        bookDialog dialog(book.getIsbn());
+        dialog.setModal(true);
+        dialog.show();
     }
     // affiche un resumé et la possiblité de emprunter si abonné
     else{
         // amélioration: ajouter une photo de la couverture?
-        int answer = QMessageBox::question(this, "Emprunter "+book->getName(), "Summary:\n"+book->getSummary()+ "\n\nVoulez-vous réserver ce livre?", QMessageBox::Yes | QMessageBox::No);
+        int answer = QMessageBox::question(this, "Emprunter "+book.getName(), "Summary:\n"+book.getSummary()+ "\n\nVoulez-vous réserver ce livre?", QMessageBox::Yes | QMessageBox::No);
         if(answer == QMessageBox::Yes){
-            if (book->getFree() && (connectedUser->getLimit() > 0)) {
-                resv = new Reservation();
-                resv->setLentBook(*book);
-                resv->setSubscriber(*connectedUser);
-                resv->setEndDate(resv->getDatePlusDays(14));
-                resv->setStartDate(resv->getDateNow());
-                resv->addReservation();
+            if (book.getFree() && (connectedUser->getLimit() > 0)) {
+                //resv = new Reservation();
+                resv.setLentBook(book);
+                resv.setSubscriber(*connectedUser);
+                resv.setEndDate(resv.getDatePlusDays(14));
+                resv.setStartDate(resv.getDateNow());
+                resv.addReservation();
 
                 // mise à jour du tableau
                 ui->tableWidget->clearContents();
@@ -121,19 +135,20 @@ void Glybook::on_tableWidget_doubleClicked(const QModelIndex &index)
             }
         }
     }
-
 }
 
+// ouvre un formulaire pour ajouter un nouveau livre
 void Glybook::on_actionAddBook_triggered()
 {
-    qDebug() << "Ajout prochain! ";
+    bookDialog bookDialog("");
+    bookDialog.setModal(true);
+    bookDialog.show();
 }
 
+// ouvre une page de gestion d'utilisateurs
 void Glybook::on_actionManageAcc_triggered()
 {
-    ma = new manageAccounts();
-    ma->show();
-
+    ma.show();
 }
 
 void Glybook::on_actionMyAccount_triggered()
@@ -157,3 +172,4 @@ void Glybook::on_actionLogout_triggered()
     logout->show();
     this->close();
 }
+

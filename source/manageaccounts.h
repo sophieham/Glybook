@@ -39,7 +39,6 @@ private slots:
 
 private:
     Ui::manageAccounts *ui;
-    accountDialog *dialog;
 };
 
 #endif // MANAGEACCOUNTS_H

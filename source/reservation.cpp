@@ -6,9 +6,8 @@ Reservation::Reservation() {
     Reservation::counter = 0;
 }
 Reservation::~Reservation(){
-}
+};
 Reservation::Reservation(User sub, Book book) {
-    //static QMap <Livre, QString> temp;
     static size_t count;
 
         startDate = getDateNow();

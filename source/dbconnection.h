@@ -12,9 +12,9 @@ public:
     ~dbconnection();
 
     bool connectToDb(QSqlDatabase);
+    void deleteConnection(QSqlDatabase);
 
 private:
-    //QSqlDatabase dbc;
 
 };
 

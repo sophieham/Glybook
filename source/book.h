@@ -11,8 +11,6 @@ using namespace std;
         QString name, author, publisher, summary, isbn;
         bool free;
         Genre genre;
-        size_t counter;
-        QVector<QString> list;
         int year;
 
 
@@ -37,10 +35,4 @@ using namespace std;
         void setGenre(Genre const);
         int getYear() const;
         void setYear(int const);
-        size_t getOccurence();
-        void printList() const;
-        /*
-        friend std::ostream& operator<<(std::ostream& out, Livre l);
-        static QString to_string(Livre const);
-        */
     };

@@ -11,22 +11,22 @@ Login::Login(QWidget *parent)
     setFixedSize(800, 600);
     setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
 
-    db.defaultConnection = "connexion";
+    db.defaultConnection = "glybook";
     connection.connectToDb(db);
 
     QSqlQuery firstTime("SELECT * from users");
     if(!firstTime.next()){ // vérifie s'il y a au moins un compte dans la bdd, sinon affiche de quoi se créer un compte
-        Dialog* d = new Dialog(this);
-        d->setModal(true);
-        d->show();
-        connect(d, SIGNAL(sendFirstData(QStringList)), this, SLOT(receiveFirstData(QStringList)));
+        initialization = new Dialog(this);
+        initialization->setModal(true);
+        initialization->show();
+        connect(initialization, SIGNAL(sendFirstData(QStringList)), this, SLOT(receiveFirstData(QStringList)));
     }
  }
 
 Login::~Login()
 {
     db.close();
-    db.removeDatabase(db.connectionName());
+    delete page;
     delete ui;
 }
 
@@ -64,7 +64,7 @@ void Login::on_btnConnect_clicked()
     if(!user.isEmpty()){
         QSqlQuery query("SELECT * FROM `users` WHERE username= '"+user+"' AND pass = '"+pass+"'");
         if(query.next()){
-            Glybook* page = new Glybook(user);
+            page = new Glybook(user);
             page->show();
             this->close();
         }

@@ -58,9 +58,9 @@ else()
     glybook.cpp
     glybook.h
     glybook.ui
-    new_book.cpp
-    new_book.h
-    new_book.ui
+    bookdialog.cpp
+    bookdialog.h
+    bookdialog.ui
     settings.cpp
     settings.h
     settings.ui

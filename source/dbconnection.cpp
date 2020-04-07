@@ -2,8 +2,7 @@
 #include "QDebug"
 
 
-dbconnection::dbconnection()
-{
+dbconnection::dbconnection(){
 }
 
 dbconnection::~dbconnection(){
@@ -18,4 +17,8 @@ bool dbconnection::connectToDb(QSqlDatabase dbc){
     dbc.setPassword("");
     dbc.open();
     return dbc.isOpen();
+}
+
+void dbconnection::deleteConnection(QSqlDatabase db){
+    db.removeDatabase(db.connectionName());
 }
