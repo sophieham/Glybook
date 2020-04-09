@@ -31,6 +31,7 @@ void Glybook::setupAccount(){
     connectedUser = new User();
 
     if(dbSession.next()){
+        id = dbSession.value(0).toInt();
         connectedUser->setUser(username);
         connectedUser->setPswd(dbSession.value(4).toString());
         connectedUser->setLastName(dbSession.value(1).toString());
@@ -140,9 +141,9 @@ void Glybook::on_tableWidget_doubleClicked(const QModelIndex &index)
 // ouvre un formulaire pour ajouter un nouveau livre
 void Glybook::on_actionAddBook_triggered()
 {
-    bookDialog bookDialog("");
-    bookDialog.setModal(true);
-    bookDialog.show();
+    bookDialog *dialog = new bookDialog("");
+    dialog->setModal(true);
+    dialog->show();
 }
 
 // ouvre une page de gestion d'utilisateurs
@@ -151,14 +152,21 @@ void Glybook::on_actionManageAcc_triggered()
     ma.show();
 }
 
-void Glybook::on_actionMyAccount_triggered()
+void Glybook::on_actionStatistics_triggered()
 {
-    qDebug() << "Ajout prochain! ";
+    qDebug() << "Ajout prochain!";
 }
 
-void Glybook::on_actionStatistiques_triggered()
+void Glybook::on_actionMyAccount_triggered()
 {
-    qDebug() << "Ajout prochain! ";
+   myAccount *showAccount = new myAccount(connectedUser->getUser());
+   showAccount->show();
+}
+
+void Glybook::on_action_bookReservationsHistory_triggered()
+{
+    accountHistory *history = new accountHistory(id);
+    history->show();
 }
 
 void Glybook::on_actionSettings_triggered()
@@ -172,4 +180,3 @@ void Glybook::on_actionLogout_triggered()
     logout->show();
     this->close();
 }
-

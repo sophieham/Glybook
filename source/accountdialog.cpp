@@ -21,29 +21,30 @@ accountDialog::accountDialog(const int &id, QWidget *parent) :
         ui->lNameEdit->setText(displayQry.value(1).toString());
         ui->fNameEdit->setText(displayQry.value(2).toString());
         ui->userEdit->setText(getUsername());
+        ui->passEdit->setText(displayQry.value(2).toString());
         ui->addressEdit->setText(displayQry.value(7).toString());
         ui->phoneEdit->setText(displayQry.value(8).toString());
         ui->resvLimitEdit->setText(displayQry.value(9).toString());
         if(displayQry.value(5).toInt()==1){
             ui->adm_RB->setChecked(true);
             setRank(1);
+
         }
         else {
             ui->sub_RB->setChecked(true);
             setRank(0);
+            ui->adm_RB->hide();
+            ui->resvLimitEdit->setEnabled(false);
+            ui->removeAccButton->setEnabled(false);
         }
     }
 
 }
 
-
-
 accountDialog::~accountDialog()
 {
     delete ui;
 }
-
-
 
 void accountDialog::on_dialogButton_accepted()
 {
@@ -127,17 +128,16 @@ void accountDialog::on_removeAccButton_clicked()
     int confirmation= QMessageBox::warning(this, "Suppression d'un compte", "Etes vous sûr de vouloir supprimer "+getUsername()+"?", QMessageBox::Yes | QMessageBox::No);
     if(confirmation == QMessageBox::Yes){
 
-    QSqlQuery delAccount;
-    QSqlError err = delAccount.lastError();
-    delAccount.exec("DELETE FROM `u_subscriber` WHERE `u_subscriber`.`subscriber_username` ='"+getUsername()+"'");
-    delAccount.exec("DELETE FROM `users` WHERE `users`.`username` ='"+getUsername()+"'");
-    if(delAccount.exec()){
-        QMessageBox::information(this, "Success!", "This account has been successfully deleted!");
-        setRefresh(true);
-        this->close();
-
+        QSqlQuery delAccount;
+        QSqlError err = delAccount.lastError();
+        delAccount.exec("DELETE FROM `u_subscriber` WHERE `u_subscriber`.`subscriber_username` ='"+getUsername()+"'");
+        delAccount.exec("DELETE FROM `users` WHERE `users`.`username` ='"+getUsername()+"'");
+        if(delAccount.exec()){
+            QMessageBox::information(this, "Success!", "This account has been successfully deleted!");
+            setRefresh(true);
+            this->close();
+        }
     }
-}
 
 }
 

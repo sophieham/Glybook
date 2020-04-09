@@ -154,13 +154,14 @@
     <addaction name="actionAddBook"/>
     <addaction name="separator"/>
     <addaction name="actionManageAcc"/>
-    <addaction name="actionStatistiques"/>
+    <addaction name="actionStatistics"/>
    </widget>
    <widget class="QMenu" name="menuParam_tres">
     <property name="title">
-     <string>Mon compte</string>
+     <string>My account</string>
     </property>
     <addaction name="actionMyAccount"/>
+    <addaction name="action_bookReservationsHistory"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionLogout"/>
@@ -174,7 +175,7 @@
      <normaloff>:/icons/livre.png</normaloff>:/icons/livre.png</iconset>
    </property>
    <property name="text">
-    <string>Ajouter un nouveau livre</string>
+    <string>Add a new book</string>
    </property>
   </action>
   <action name="actionManageAcc">
@@ -183,7 +184,7 @@
      <normaloff>:/icons/compte.png</normaloff>:/icons/compte.png</iconset>
    </property>
    <property name="text">
-    <string>Gérer les adhérents</string>
+    <string>Manage accounts</string>
    </property>
   </action>
   <action name="actionMyAccount">
@@ -192,16 +193,16 @@
      <normaloff>:/icons/compte.png</normaloff>:/icons/compte.png</iconset>
    </property>
    <property name="text">
-    <string>Afficher mon compte</string>
+    <string>Show my account</string>
    </property>
   </action>
-  <action name="actionStatistiques">
+  <action name="actionStatistics">
    <property name="icon">
     <iconset resource="resource.qrc">
      <normaloff>:/icons/statistiques.png</normaloff>:/icons/statistiques.png</iconset>
    </property>
    <property name="text">
-    <string>Statistiques</string>
+    <string>Statistics</string>
    </property>
   </action>
   <action name="actionSettings">
@@ -210,7 +211,7 @@
      <normaloff>:/icons/parametres.png</normaloff>:/icons/parametres.png</iconset>
    </property>
    <property name="text">
-    <string>Paramètres</string>
+    <string>Settings</string>
    </property>
   </action>
   <action name="actionLogout">
@@ -219,7 +220,16 @@
      <normaloff>:/icons/deconnexion.png</normaloff>:/icons/deconnexion.png</iconset>
    </property>
    <property name="text">
-    <string>Se déconnecter</string>
+    <string>Logout</string>
+   </property>
+  </action>
+  <action name="action_bookReservationsHistory">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/clock.png</normaloff>:/icons/clock.png</iconset>
+   </property>
+   <property name="text">
+    <string>Book reservations history</string>
    </property>
   </action>
  </widget>

@@ -20,15 +20,19 @@ void manageAccounts::displayAccountList(){
     listAccQ.first();
 
     ui->accList->setRowCount(listAccQ.value(0).toInt());
-    listAccQ.exec("SELECT lastName, firstName, rank, id FROM users");
+    listAccQ.exec("SELECT lastName, firstName, rank, username FROM users");
 
     int row = 0;
 
     for(listAccQ.first(); listAccQ.isValid(); listAccQ.next(), ++row){
         ui->accList->setItem(row, 0, new QTableWidgetItem(listAccQ.value(0).toString())); // last name
         ui->accList->setItem(row, 1, new QTableWidgetItem(listAccQ.value(1).toString())); // first name
-        ui->accList->setItem(row, 2, new QTableWidgetItem(listAccQ.value(2).toString())); // rank
-        ui->accList->setItem(row, 3, new QTableWidgetItem(listAccQ.value(3).toString())); // id
+        if(listAccQ.value(2).toInt()==0){
+             ui->accList->setItem(row, 2, new QTableWidgetItem("Subscriber"));
+        }
+        else
+            ui->accList->setItem(row, 2, new QTableWidgetItem("Administrator"));
+        ui->accList->setItem(row, 3, new QTableWidgetItem(listAccQ.value(3).toString())); // username
     }
     ui->accList->hideColumn(3);
 }
@@ -38,9 +42,8 @@ void manageAccounts::displayAccountList(){
 void manageAccounts::on_accList_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
-    accountDialog dialog(ui->accList->item(row, 3)->text().toInt());
-    dialog.setModal(true);
-    dialog.show();
+    myAccount *showAccount = new myAccount(ui->accList->item(row, 3)->text());
+    showAccount->show();
                         // METTRE A JOUR LE TABLEAU UNE FOIS LA MODIFICATION FAITE!!!!
 }
 

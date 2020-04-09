@@ -74,6 +74,9 @@ else()
     accountdialog.cpp
     accountdialog.h
     accountdialog.ui
+    accounthistory.cpp
+    accounthistory.h
+    accounthistory.ui
   )
 endif()
 

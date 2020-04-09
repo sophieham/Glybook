@@ -232,7 +232,7 @@
   <widget class="QRadioButton" name="adm_RB">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>220</x>
      <y>90</y>
      <width>111</width>
      <height>20</height>
@@ -245,7 +245,7 @@
   <widget class="QRadioButton" name="sub_RB">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>130</x>
      <y>90</y>
      <width>95</width>
      <height>20</height>

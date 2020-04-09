@@ -11,6 +11,8 @@
 #include "reservation.h"
 #include "manageaccounts.h"
 #include "bookdialog.h"
+#include "accounthistory.h"
+#include "myaccount.h"
 
 namespace Ui {
 class Glybook;
@@ -37,19 +39,22 @@ private slots:
 
     void on_actionManageAcc_triggered();
 
-    void on_actionStatistiques_triggered();
-
     void on_actionLogout_triggered();
 
     void on_actionMyAccount_triggered();
 
     void on_actionSettings_triggered();
 
+    void on_actionStatistics_triggered();
+
+    void on_action_bookReservationsHistory_triggered();
+
 private:
     Ui::Glybook *ui;
     dbconnection *connection;
     QSqlDatabase db;
 
+    int id;
     QString username;
     User *connectedUser;
     Book book;

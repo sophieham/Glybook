@@ -300,11 +300,32 @@
      <height>621</height>
     </rect>
    </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAsNeeded</enum>
+   </property>
+   <property name="columnCount">
+    <number>3</number>
+   </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="horizontalHeaderCascadingSectionResizes">
+    <bool>false</bool>
+   </attribute>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>129</number>
+    <number>123</number>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+    <bool>false</bool>
    </attribute>
    <column>
     <property name="text">
@@ -319,11 +340,6 @@
    <column>
     <property name="text">
      <string>Type of account</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>id</string>
     </property>
    </column>
   </widget>

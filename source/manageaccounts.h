@@ -9,7 +9,7 @@
 
 #include <QMessageBox>
 
-#include "accountdialog.h"
+#include "myaccount.h"
 
 
 namespace Ui {
