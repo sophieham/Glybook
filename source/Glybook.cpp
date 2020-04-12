@@ -98,44 +98,8 @@ void Glybook::keyPressEvent(QKeyEvent *event)
 void Glybook::on_tableWidget_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
-    book.setIsbn(ui->tableWidget->item(row, 0)->text());
-    book.setName(ui->tableWidget->item(row, 1)->text());
-    book.setAuthor(ui->tableWidget->item(row, 2)->text());
-    book.setGenre(ui->tableWidget->item(row, 3)->text());
-    book.setPublisher(ui->tableWidget->item(row, 4)->text());
-    book.setYear(ui->tableWidget->item(row, 5)->text().toInt());
-    book.setSummary(ui->tableWidget->item(row, 6)->text());
-
-    // affiche une page pour modifier le livre
-    if(connectedUser->getType()==1){
-        bookDialog dialog(book.getIsbn());
-        dialog.setModal(true);
-        dialog.show();
-    }
-    // affiche un resumé et la possiblité de emprunter si abonné
-    else{
-        // amélioration: ajouter une photo de la couverture?
-        int answer = QMessageBox::question(this, "Emprunter "+book.getName(), "Summary:\n"+book.getSummary()+ "\n\nVoulez-vous réserver ce livre?", QMessageBox::Yes | QMessageBox::No);
-        if(answer == QMessageBox::Yes){
-            if (book.getFree() && (connectedUser->getLimit() > 0)) {
-                //resv = new Reservation();
-                resv.setLentBook(book);
-                resv.setSubscriber(*connectedUser);
-                resv.setEndDate(resv.getDatePlusDays(14));
-                resv.setStartDate(resv.getDateNow());
-                resv.addReservation();
-
-                // mise à jour du tableau
-                ui->tableWidget->clearContents();
-                displayBookList();
-
-                QMessageBox::information(this, "Success!", "Book reserved!");
-            }
-            else {
-                QMessageBox::critical(this, "Erreur!", "Vous ne pouvez pas emprunter ce livre, il n'est plus disponible ou alors vous assez trop emprunté");
-            }
-        }
-    }
+    bookInformation *info = new bookInformation(*connectedUser, ui->tableWidget->item(row, 0)->text());
+    info->show();
 }
 
 // ouvre un formulaire pour ajouter un nouveau livre
@@ -149,7 +113,8 @@ void Glybook::on_actionAddBook_triggered()
 // ouvre une page de gestion d'utilisateurs
 void Glybook::on_actionManageAcc_triggered()
 {
-    ma.show();
+    manageAccounts *ma = new manageAccounts(*connectedUser);
+    ma->show();
 }
 
 void Glybook::on_actionStatistics_triggered()
@@ -159,13 +124,17 @@ void Glybook::on_actionStatistics_triggered()
 
 void Glybook::on_actionMyAccount_triggered()
 {
-   myAccount *showAccount = new myAccount(connectedUser->getUser());
+   myAccount *showAccount = new myAccount(*connectedUser, connectedUser->getUser());
    showAccount->show();
 }
 
 void Glybook::on_action_bookReservationsHistory_triggered()
 {
-    accountHistory *history = new accountHistory(id);
+    accountHistory *history;
+    if(connectedUser->getType()==1)
+        history = new accountHistory(*connectedUser);
+    else
+        history = new accountHistory(*connectedUser, connectedUser->getUser());
     history->show();
 }
 

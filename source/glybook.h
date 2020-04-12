@@ -7,12 +7,11 @@
 
 #include "dbconnection.h"
 #include "user.h"
-#include "book.h"
-#include "reservation.h"
 #include "manageaccounts.h"
 #include "bookdialog.h"
 #include "accounthistory.h"
 #include "myaccount.h"
+#include "bookinformation.h"
 
 namespace Ui {
 class Glybook;
@@ -57,10 +56,6 @@ private:
     int id;
     QString username;
     User *connectedUser;
-    Book book;
-    Reservation resv;
-
-    manageAccounts ma;
 
 };
 

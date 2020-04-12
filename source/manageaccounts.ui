@@ -309,8 +309,11 @@
    <property name="horizontalScrollBarPolicy">
     <enum>Qt::ScrollBarAsNeeded</enum>
    </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
    <property name="columnCount">
-    <number>3</number>
+    <number>4</number>
    </property>
    <attribute name="horizontalHeaderVisible">
     <bool>true</bool>
@@ -340,6 +343,11 @@
    <column>
     <property name="text">
      <string>Type of account</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Username</string>
     </property>
    </column>
   </widget>

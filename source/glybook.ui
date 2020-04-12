@@ -149,11 +149,12 @@
      <bool>false</bool>
     </property>
     <property name="title">
-     <string>Menu</string>
+     <string>Administration</string>
     </property>
     <addaction name="actionAddBook"/>
     <addaction name="separator"/>
     <addaction name="actionManageAcc"/>
+    <addaction name="actionSettings"/>
     <addaction name="actionStatistics"/>
    </widget>
    <widget class="QMenu" name="menuParam_tres">
@@ -162,7 +163,6 @@
     </property>
     <addaction name="actionMyAccount"/>
     <addaction name="action_bookReservationsHistory"/>
-    <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionLogout"/>
    </widget>

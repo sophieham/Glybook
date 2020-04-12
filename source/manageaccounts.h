@@ -21,7 +21,7 @@ class manageAccounts : public QWidget
     Q_OBJECT
 
 public:
-    explicit manageAccounts(QWidget *parent = nullptr);
+    explicit manageAccounts(const User &connected, QWidget *parent = nullptr);
     ~manageAccounts();
 
     void displayAccountList();
@@ -39,6 +39,8 @@ private slots:
 
 private:
     Ui::manageAccounts *ui;
+
+    User connected;
 };
 
 #endif // MANAGEACCOUNTS_H

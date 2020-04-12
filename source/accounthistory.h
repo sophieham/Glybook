@@ -2,6 +2,17 @@
 #define ACCOUNTHISTORY_H
 
 #include <QWidget>
+#include <QtSql>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+
+#include <QFile>
+#include <QFileDialog>
+#include <QDesktopServices>
+
+#include "bookdialog.h"
+#include "myaccount.h"
+#include "bookinformation.h"
 
 namespace Ui {
 class accountHistory;
@@ -12,13 +23,23 @@ class accountHistory : public QWidget
     Q_OBJECT
 
 public:
-    explicit accountHistory(const int &id, QWidget *parent = nullptr);
+    explicit accountHistory(const User &connected, const QString &user=NULL, QWidget *parent = nullptr);
     ~accountHistory();
+
+    void displayHistory();
+
+private slots:
+    void on_reservationView_cellDoubleClicked(int row, int column);
+
+    void on_exportButton_clicked();
+
+    void on_closeButton_clicked();
 
 private:
     Ui::accountHistory *ui;
 
-    int id;
+    User connected;
+    QString user;
 };
 
 #endif // ACCOUNTHISTORY_H

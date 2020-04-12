@@ -1,9 +1,9 @@
 #include "manageaccounts.h"
 #include "ui_manageaccounts.h"
 
-manageAccounts::manageAccounts(QWidget *parent) :
+manageAccounts::manageAccounts(const User &connected, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::manageAccounts)
+    ui(new Ui::manageAccounts), connected(connected)
 {
     ui->setupUi(this);
 
@@ -27,12 +27,13 @@ void manageAccounts::displayAccountList(){
     for(listAccQ.first(); listAccQ.isValid(); listAccQ.next(), ++row){
         ui->accList->setItem(row, 0, new QTableWidgetItem(listAccQ.value(0).toString())); // last name
         ui->accList->setItem(row, 1, new QTableWidgetItem(listAccQ.value(1).toString())); // first name
+        ui->accList->setItem(row, 3, new QTableWidgetItem(listAccQ.value(3).toString())); // username
         if(listAccQ.value(2).toInt()==0){
              ui->accList->setItem(row, 2, new QTableWidgetItem("Subscriber"));
         }
         else
             ui->accList->setItem(row, 2, new QTableWidgetItem("Administrator"));
-        ui->accList->setItem(row, 3, new QTableWidgetItem(listAccQ.value(3).toString())); // username
+
     }
     ui->accList->hideColumn(3);
 }
@@ -42,7 +43,7 @@ void manageAccounts::displayAccountList(){
 void manageAccounts::on_accList_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
-    myAccount *showAccount = new myAccount(ui->accList->item(row, 3)->text());
+    myAccount *showAccount = new myAccount(connected, ui->accList->item(row, 3)->text());
     showAccount->show();
                         // METTRE A JOUR LE TABLEAU UNE FOIS LA MODIFICATION FAITE!!!!
 }
@@ -70,7 +71,7 @@ void manageAccounts::on_addAccBtn_clicked()
     if(ui->admBtn_2->isChecked())
         rank=1;
 
-    if(!(lName.isEmpty() && fName.isEmpty() && username.isEmpty() && pass.isEmpty())){
+    if(!(lName.isEmpty() && fName.isEmpty() && username.isEmpty())){
         QSqlQuery addToDb;
         addToDb.prepare("INSERT INTO `users` (`id`, `lastName`, `firstName`, `username`, `pass`, `rank`) VALUES (NULL, :lName, :fName, :username, :pass, :rank) ");
         addToDb.bindValue(":lName", lName);
@@ -78,9 +79,9 @@ void manageAccounts::on_addAccBtn_clicked()
         addToDb.bindValue(":username", username);
         addToDb.bindValue(":pass", pass);
         addToDb.bindValue(":rank", rank);
-        if (!(addToDb.exec()) && ui->admBtn_2->isChecked())
+        if (!(addToDb.exec()) && ui->admBtn_2->isChecked()){
             QMessageBox::information(this, "Success!", "The new administrator has been added to database!");
-
+        }
         if(ui->subBtn_2->isChecked() && !(address.isEmpty() && phone.isEmpty())){
         addToDb.prepare("INSERT INTO `u_subscriber` (`subscriber_username`, `address`, `phone`, `max_books`) VALUES (:username, :address, :phone, :limit) ");
         addToDb.bindValue(":username", username);
@@ -90,11 +91,13 @@ void manageAccounts::on_addAccBtn_clicked()
             if(addToDb.exec())
                 QMessageBox::information(this, "Sucess!", "The new subscriber has been added to the database!");
         }
-        else
+        else{
             QMessageBox::critical(this, "Error!", "Please fill all the fields!");
+        }
     }
-    else
+    else{
         QMessageBox::critical(this, "Error!", "Please fill all the fields!");
+    }
 
     ui->accList->clearContents();
     displayAccountList();

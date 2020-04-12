@@ -61,9 +61,6 @@ else()
     bookdialog.cpp
     bookdialog.h
     bookdialog.ui
-    settings.cpp
-    settings.h
-    settings.ui
     myAccount.cpp
     myAccount.h
     myAccount.ui
@@ -77,6 +74,9 @@ else()
     accounthistory.cpp
     accounthistory.h
     accounthistory.ui
+    bookinformation.cpp
+    bookinformation.h
+    bookinformation.ui
   )
 endif()
 

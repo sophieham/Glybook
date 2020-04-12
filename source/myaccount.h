@@ -20,7 +20,7 @@ class myAccount : public QWidget
     Q_OBJECT
 
 public:
-    explicit myAccount(const QString &user, QWidget *parent = nullptr);
+    explicit myAccount(const User &connected, const QString &user = NULL, QWidget *parent = nullptr);
     ~myAccount();
 
 private slots:
@@ -35,6 +35,7 @@ private slots:
 private:
     Ui::myAccount *ui;
 
+    User connected;
     QString user;
     User account;
 

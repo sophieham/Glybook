@@ -1,9 +1,9 @@
 #include "myaccount.h"
 #include "ui_myaccount.h"
 
-myAccount::myAccount(const QString &user, QWidget *parent) :
+myAccount::myAccount(const User &connected, const QString &user, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::myAccount), user(user)
+    ui(new Ui::myAccount), connected(connected), user(user)
 {
     ui->setupUi(this);
 
@@ -21,6 +21,10 @@ myAccount::myAccount(const QString &user, QWidget *parent) :
         ui->address->setText(account.getAddress());
         ui->phone->setText(account.getPhoneNo());
         ui->reservation->setText(QString::number(account.getLimit()));
+    }
+
+    if(account.getType()==1){
+        ui->historyButton->hide();
     }
 }
 
@@ -44,6 +48,7 @@ void myAccount::displayAccount(){
         account.setLimit(new int(query.value(9).toInt()));
         account.setAddress(query.value(7).toString());
         account.setPhoneNo(query.value(8).toString());
+
     }
     else{
         this->close();
@@ -63,7 +68,6 @@ void myAccount::on_closeButton_clicked()
 
 void myAccount::on_historyButton_clicked()
 {
-    accountHistory *history = new accountHistory(id);
+    accountHistory *history = new accountHistory(connected, user);
     history->show();
-    //ouvrir une page historique des livres empruntés
 }
