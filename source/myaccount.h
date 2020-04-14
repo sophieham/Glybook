@@ -2,13 +2,10 @@
 #define MYACCOUNT_H
 
 #include <QWidget>
-
 #include <QtSql>
-#include <QSqlDatabase>
-#include <QSqlQuery>
 
-#include "accountdialog.h"
 #include "user.h"
+#include "accountdialog.h"
 #include "accounthistory.h"
 
 namespace Ui {

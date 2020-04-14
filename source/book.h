@@ -9,7 +9,7 @@ using namespace std;
     class Book {
     private:
         QString name, author, publisher, summary, isbn;
-        bool free;
+        bool booked;
         Genre genre;
         int year;
 
@@ -29,8 +29,9 @@ using namespace std;
         void setSummary(QString const);
         QString getIsbn() const;
         void setIsbn(QString const);
-        bool getFree() const;
-        void setFree(bool const);
+        bool isBooked() const;
+        void setBooked(bool const);
+        void updateBooking(bool const);
         Genre getGenre();
         void setGenre(Genre const);
         int getYear() const;

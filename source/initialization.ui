@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Configuration de Glybook</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
+  </property>
   <widget class="QLabel" name="label_init">
    <property name="geometry">
     <rect>
@@ -127,7 +131,9 @@ background-position: left bottom;</string>
   <zorder>formLayoutWidget</zorder>
   <zorder>pushButton</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton</sender>

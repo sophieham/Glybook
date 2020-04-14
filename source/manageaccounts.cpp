@@ -72,6 +72,15 @@ void manageAccounts::on_addAccBtn_clicked()
         rank=1;
 
     if(!(lName.isEmpty() && fName.isEmpty() && username.isEmpty())){
+        // vérifie si le nom d'utilisateur est pris ou pas
+        QSqlQuery checkUsername;
+        checkUsername.exec("SELECT * FROM users WHERE username = '"+username+"'");
+        if(checkUsername.next()){
+            QMessageBox::critical(this, "Error", "Username is already taken. Please choose another username.");
+            return;
+        }
+
+        // on commence l'ajout dans la base de donnée
         QSqlQuery addToDb;
         addToDb.prepare("INSERT INTO `users` (`id`, `lastName`, `firstName`, `username`, `pass`, `rank`) VALUES (NULL, :lName, :fName, :username, :pass, :rank) ");
         addToDb.bindValue(":lName", lName);
@@ -81,20 +90,26 @@ void manageAccounts::on_addAccBtn_clicked()
         addToDb.bindValue(":rank", rank);
         if (!(addToDb.exec()) && ui->admBtn_2->isChecked()){
             QMessageBox::information(this, "Success!", "The new administrator has been added to database!");
+            return;
         }
+
+        // ajout de la partie abbonné si ça en est un
         if(ui->subBtn_2->isChecked() && !(address.isEmpty() && phone.isEmpty())){
-        addToDb.prepare("INSERT INTO `u_subscriber` (`subscriber_username`, `address`, `phone`, `max_books`) VALUES (:username, :address, :phone, :limit) ");
-        addToDb.bindValue(":username", username);
-        addToDb.bindValue(":address", address);
-        addToDb.bindValue(":phone", phone);
-        addToDb.bindValue(":limit", limit);
-            if(addToDb.exec())
+            addToDb.prepare("INSERT INTO `u_subscriber` (`subscriber_username`, `address`, `phone`, `max_books`) VALUES (:username, :address, :phone, :limit) ");
+            addToDb.bindValue(":username", username);
+            addToDb.bindValue(":address", address);
+            addToDb.bindValue(":phone", phone);
+            addToDb.bindValue(":limit", limit);
+            if(addToDb.exec()){
                 QMessageBox::information(this, "Sucess!", "The new subscriber has been added to the database!");
+            }
         }
+        // si la partie abonné n'est pas bien remplie
         else{
             QMessageBox::critical(this, "Error!", "Please fill all the fields!");
         }
     }
+    // si les autres infos sont mal remplie
     else{
         QMessageBox::critical(this, "Error!", "Please fill all the fields!");
     }

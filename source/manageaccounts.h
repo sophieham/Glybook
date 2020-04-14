@@ -3,10 +3,6 @@
 
 #include <QWidget>
 #include <QtSql>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-
-
 #include <QMessageBox>
 
 #include "myaccount.h"

@@ -2,8 +2,6 @@
 #define GLYBOOK_H
 
 #include <QMainWindow>
-#include <QtSql>
-#include <QSqlDatabase>
 
 #include "dbconnection.h"
 #include "user.h"
@@ -12,6 +10,8 @@
 #include "accounthistory.h"
 #include "myaccount.h"
 #include "bookinformation.h"
+#include "catalog.h"
+#include "settings.h"
 
 namespace Ui {
 class Glybook;
@@ -26,14 +26,12 @@ public:
     ~Glybook();
 
     void setupAccount();
-    void displayBookList();
-
-
-    void keyPressEvent(QKeyEvent *event);
+    void setupLibrary();
+    void fillBookingWidget();
+    void fillRecentWidget();
+    void fillBookmarkWidget();
 
 private slots:
-    void on_tableWidget_doubleClicked(const QModelIndex &index);
-
     void on_actionAddBook_triggered();
 
     void on_actionManageAcc_triggered();
@@ -48,6 +46,14 @@ private slots:
 
     void on_action_bookReservationsHistory_triggered();
 
+    void on_catalogButton_clicked();
+    
+    void on_bookingTable_doubleClicked(const QModelIndex &index);
+
+    void on_recentTable_doubleClicked(const QModelIndex &index);
+
+    void on_bookmarksList_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::Glybook *ui;
     dbconnection *connection;
@@ -56,6 +62,8 @@ private:
     int id;
     QString username;
     User *connectedUser;
+
+    Library *library;
 
 };
 

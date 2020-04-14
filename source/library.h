@@ -19,6 +19,8 @@ using namespace std;
         QString getName() const;
         QString getAddress() const;
         QString getType() const;
+        void setName(const QString);
+        void setType(const QString);
         void setAddress(const QString);
     };
 

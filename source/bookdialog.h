@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QtSql>
-#include <QSqlDatabase>
 #include <QMessageBox>
 #include <QInputDialog>
 
@@ -20,6 +19,7 @@ public:
     ~bookDialog();
 
     void displayBookData();
+
 private slots:
     void on_send_pushButton_clicked();
 

@@ -3,11 +3,9 @@
 
 #include <QWidget>
 #include <QtSql>
-#include <QSqlDatabase>
 #include <QMessageBox>
 
 #include "bookdialog.h"
-#include "book.h"
 #include "reservation.h"
 
 namespace Ui {
@@ -28,6 +26,8 @@ private slots:
     void on_reserveButton_clicked();
 
     void on_closeButton_clicked();
+
+    void on_bookmark_clicked();
 
 private:
     Ui::bookInformation *ui;

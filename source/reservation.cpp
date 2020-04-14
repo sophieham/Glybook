@@ -14,7 +14,7 @@ Reservation::Reservation(User sub, Book book) {
         endDate = getDatePlusDays(14);
         subscriber = sub;
         lentBook = book;
-        book.setFree(0);
+        book.setBooked(1);
 
         ++count;
         Reservation::counter = count;
@@ -97,7 +97,7 @@ void Reservation::addReservation()
     q.bindValue(":end", endDate);
     q.exec();
 
-    lentBook.setFree(0);
+    lentBook.updateBooking(1);
     subscriber.setLimit(new int(subscriber.getLimit()-1));
 
 }

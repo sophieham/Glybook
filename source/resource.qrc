@@ -16,5 +16,8 @@
         <file>icons/icon_final.ico</file>
         <file>icons/glybook_petit.png</file>
         <file>icons/clock.png</file>
+        <file>icons/heart.png</file>
+        <file>icons/plus.png</file>
+        <file>icons/save.png</file>
     </qresource>
 </RCC>

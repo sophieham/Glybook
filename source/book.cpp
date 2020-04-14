@@ -9,7 +9,7 @@ Book::Book(){
         publisher = "";
         summary = "";
         isbn = "";
-        free = true;
+        booked = false;
     }
     Book::~Book() {
     };
@@ -22,7 +22,7 @@ Book::Book(){
         this->isbn = isbn;
         this->genre = genre;
         this->year = year;
-        free = true;
+        booked = false;
     }
 
     // affiche les donn?es du livre
@@ -72,15 +72,19 @@ Book::Book(){
     }
 
     // son ?tat (si il est emprunt? ou non)
-    bool Book::getFree() const{
-        if(free == 1)
-            return "Le livre est disponible a l'emprunt!";
-        else return "Le livre n est actuellement pas disponible.";
+    bool Book::isBooked() const{
+        return booked;
     }
-    void Book::setFree(bool free){
-        QSqlQuery bookToDb("UPDATE `books` SET `free` = '0' WHERE `books`.`ISBN` = '"+getIsbn()+"' ");
-        bookToDb.exec();
-        this->free = free;
+    void Book::setBooked(bool booked){
+        this->booked = booked;
+    }
+
+    void Book::updateBooking(bool b){
+        if(b){
+            QSqlQuery bookToDb("UPDATE `books` SET `booked` = '1' WHERE `books`.`ISBN` = '"+getIsbn()+"' ");
+            bookToDb.exec();
+            setBooked(b);
+        }
     }
 
     // son genre

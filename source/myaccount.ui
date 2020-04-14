@@ -3,7 +3,7 @@
  <class>myAccount</class>
  <widget class="QWidget" name="myAccount">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::ApplicationModal</enum>
   </property>
   <property name="enabled">
    <bool>true</bool>
@@ -17,7 +17,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Glybook ~ Account information</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -155,7 +159,7 @@
    <property name="geometry">
     <rect>
      <x>23</x>
-     <y>640</y>
+     <y>620</y>
      <width>621</width>
      <height>80</height>
     </rect>
@@ -199,7 +203,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>

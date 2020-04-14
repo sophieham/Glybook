@@ -1,9 +1,6 @@
 #include "glybook.h"
 #include "ui_glybook.h"
 #include "connection.h"
-#include <QPushButton>
-#include <QWidget>
-#include <QKeyEvent>
 
 Glybook::Glybook(const QString &name, QWidget *parent) : QMainWindow(parent), ui(new Ui::Glybook), username(name)
 {
@@ -11,14 +8,33 @@ Glybook::Glybook(const QString &name, QWidget *parent) : QMainWindow(parent), ui
     setFixedSize(1400, 800);
     setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
 
+    setupLibrary();
+    ui->title->setText(library->getType()+" library "+library->getName());
+    ui->address->setText(library->getAddress());
+
     setupAccount();
     ui->lbl_connected->setText("Connected: "+connectedUser->getUser());
-
-    displayBookList();
 
     if(connectedUser->getType()==0)
       ui->menuAdmin->menuAction()->setVisible(false); // cache le menu admin
 
+    fillBookingWidget();
+    fillRecentWidget();
+    fillBookmarkWidget();
+}
+
+void Glybook::setupLibrary(){
+    library = new Library();
+
+    QSqlQuery query;
+    query.exec("SELECT * FROM settings");
+    query.last();
+
+    library->setName(query.value(1).toString());
+    library->setType(query.value(3).toString());
+    library->setAddress(query.value(2).toString());
+
+    ui->message->setText(query.value(4).toString());
 }
 
 // récupère le nom d'utilisateur entré et prépare un objet utilisateur avec les données de son compte
@@ -45,61 +61,60 @@ void Glybook::setupAccount(){
     }
 }
 
-//affiche la liste des livres disponibles
-void Glybook::displayBookList(){
-    // amélioration: barre de recherche par nom/auteur et tri par catégorie
-    // mettre a jour le tableau une fois les actions faites
-    QSqlQuery q(db);
-    q.exec("SELECT count(ISBN) FROM books WHERE free=1");
-    q.first();
-    ui->tableWidget->setRowCount(q.value(0).toInt());
-    q.exec("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID WHERE free=1");
-    int row = 0;
-
-    for(q.first(); q.isValid(); q.next(), ++row){
-        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(q.value(0).toString())); // isbn
-        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(q.value(1).toString())); // name
-        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(q.value(2).toString())); // author
-        ui->tableWidget->setItem(row, 3, new QTableWidgetItem(q.value(3).toString())); // genre
-        ui->tableWidget->setItem(row, 4, new QTableWidgetItem(q.value(4).toString())); // publisher
-        ui->tableWidget->setItem(row, 5, new QTableWidgetItem(q.value(5).toString())); // year
-        ui->tableWidget->setItem(row, 6, new QTableWidgetItem(q.value(6).toString())); // summary
+void Glybook::fillBookingWidget(){
+    ui->bookingTable->verticalHeader()->setVisible(false);
+    ui->bookingTable->setRowCount(3);
+    QSqlQuery query;
+    if(!connectedUser->getType()){
+        query.prepare("SELECT bookID, books.name, end_date, username FROM `reservations` INNER JOIN books ON books.ISBN = reservations.bookID WHERE username=:user ORDER BY reservationID desc LIMIT 3 ");
+        query.bindValue(":user", connectedUser->getUser());
+        ui->bookingTable->hideColumn(3);
     }
-    ui->tableWidget->hideColumn(6); // cache la colonne summary (contenu trop gros)
+    else query.prepare("SELECT bookID, books.name, end_date, username FROM `reservations` INNER JOIN books ON books.ISBN = reservations.bookID ORDER BY reservationID desc LIMIT 3");
+    query.exec();
+    int row=0;
+    while(query.next()){
+        ui->bookingTable->setItem(row, 0, new QTableWidgetItem(query.value(0).toString())); // isbn
+        ui->bookingTable->setItem(row, 1, new QTableWidgetItem(query.value(1).toString())); // name
+        ui->bookingTable->setItem(row, 2, new QTableWidgetItem(query.value(2).toString())); // limit date
+        ui->bookingTable->setItem(row, 3, new QTableWidgetItem(query.value(3).toString()));
+        ++row;
+    }
+    ui->bookingTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+
 }
 
-Glybook::~Glybook()
-{
-    db.close();
-    delete connection;
-    delete connectedUser;
+void Glybook::fillRecentWidget(){
+    ui->recentTable->verticalHeader()->setVisible(false);
+    ui->recentTable->setRowCount(10);
+    QSqlQuery query("SELECT ISBN, books.name, b_genre.name FROM `books` INNER JOIN b_genre ON b_genre.genreID = books.genreID ORDER BY timestamp DESC LIMIT 10 ");
+    query.exec();
 
-    delete ui;
+    int row=0;
+    while(query.next()){
+        ui->recentTable->setItem(row, 0, new QTableWidgetItem(query.value(0).toString())); // isbn
+        ui->recentTable->setItem(row, 1, new QTableWidgetItem(query.value(1).toString())); // name
+        ui->recentTable->setItem(row, 2, new QTableWidgetItem(query.value(2).toString())); // genre
+        ++row;
+    }
+    ui->recentTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    ui->recentTable->hideColumn(0);
 }
 
-// gestion de l'appui sur delete pour supprimer un livre du tableau (uniquement pour les admins)
-void Glybook::keyPressEvent(QKeyEvent *event)
-{
-    if(event->key() == Qt::Key_Delete && connectedUser->getType()==1){ // si on appuie sur delete et qu'on est admin
-        int row = ui->tableWidget->currentRow();
-        int answer = QMessageBox::warning(this, "Delete a book", "Are you sure to delete "+ui->tableWidget->item(row, 1)->text()+"?", QMessageBox::Yes | QMessageBox::No);
-        if(answer == QMessageBox::Yes){
-            QSqlQuery deleteBook("DELETE FROM books WHERE isbn = '"+ui->tableWidget->item(row, 0)->text()+"'");
-            if(deleteBook.exec()){
-                QMessageBox::information(this, "Success!", "The book "+ui->tableWidget->item(row, 1)->text()+" has been successfully deleted!");
-                ui->tableWidget->clearContents();
-                displayBookList();
-            }
-        }
+void Glybook::fillBookmarkWidget(){
+    QSqlQuery query;
+    query.prepare("SELECT books.name, bookID FROM `b_bookmarks` INNER JOIN books ON books.ISBN = b_bookmarks.bookID WHERE userID=:user");
+    query.bindValue(":user", connectedUser->getUser());
+    query.exec();
+    while(query.next()){
+    ui->bookmarksList->addItem(query.value(0).toString()+" (ISBN: "+query.value(1).toString()+")");
     }
 }
 
-// actions lorsqu'on double clic sur un element du tableau
-void Glybook::on_tableWidget_doubleClicked(const QModelIndex &index)
+void Glybook::on_catalogButton_clicked()
 {
-    int row = index.row();
-    bookInformation *info = new bookInformation(*connectedUser, ui->tableWidget->item(row, 0)->text());
-    info->show();
+    Catalog *catalog = new Catalog(*connectedUser);
+    catalog->show();
 }
 
 // ouvre un formulaire pour ajouter un nouveau livre
@@ -140,7 +155,8 @@ void Glybook::on_action_bookReservationsHistory_triggered()
 
 void Glybook::on_actionSettings_triggered()
 {
-    qDebug() << "Ajout prochain! ";
+    settings *settingsPage = new settings();
+    settingsPage->show();
 }
 
 void Glybook::on_actionLogout_triggered()
@@ -148,4 +164,37 @@ void Glybook::on_actionLogout_triggered()
     Login *logout = new Login();
     logout->show();
     this->close();
+}
+
+Glybook::~Glybook()
+{
+    db.close();
+    delete connection;
+    delete connectedUser;
+
+    delete ui;
+}
+
+
+void Glybook::on_bookingTable_doubleClicked(const QModelIndex &index)
+{
+    int row = index.row();
+    accountHistory *history = new accountHistory(*connectedUser, ui->bookingTable->item(row, 3)->text());
+    history->show();
+}
+
+void Glybook::on_recentTable_doubleClicked(const QModelIndex &index)
+{
+    int row = index.row();
+    bookInformation *book = new bookInformation(*connectedUser, ui->recentTable->item(row, 0)->text());
+    book->show();
+}
+
+void Glybook::on_bookmarksList_doubleClicked(const QModelIndex &index)
+{
+    QStringList splitIsbn = ui->bookmarksList->item(index.row())->text().split("(ISBN: ");
+    QString isbn = splitIsbn[1].remove(")");
+
+    bookInformation *bookmarked = new bookInformation(*connectedUser, isbn);
+    bookmarked->show();
 }

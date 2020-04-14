@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>accountHistory</class>
  <widget class="QWidget" name="accountHistory">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +14,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Glybook ~ Booking history</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
@@ -44,7 +51,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Book reservation history</string>
+       <string>Booking history</string>
       </property>
      </widget>
     </item>
@@ -81,7 +88,10 @@
     <set>QAbstractItemView::NoEditTriggers</set>
    </property>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>165</number>
+    <number>179</number>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
    </attribute>
    <column>
     <property name="text">
@@ -179,6 +189,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
