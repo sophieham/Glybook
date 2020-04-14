@@ -8,9 +8,9 @@ using namespace std;
 
     class Livre {
     private:
-        string nomLivre, auteurLivre, editeurLivre, resumeLivre, isbnLivre;
+        string nom, auteur, editeur, resume, isbn;
         bool libre;
-        Categorie catLivre;
+        Categorie cat;
         size_t compteur;
         vector<string> liste;
 
@@ -18,24 +18,24 @@ using namespace std;
     public:
         Livre();
         ~Livre();
-        Livre(string, string, string, string, string, Categorie);
-        void printLivre();
-        string getNomLivre();
-        void setNomLivre(string);
-        string getAuteurLivre();
-        void setAuteurLivre(string);
-        string getEditeurLivre();
-        void setEditeurLivre(string);
-        string getResumeLivre();
-        void setResumeLivre(string);
-        string getIsbnLivre();
-        void setIsbnLivre(string);
-        bool getLibre();
-        void setLibre(bool);
-        Categorie getCatLivre();
-        void setCatLivre(Categorie);
+        Livre(const string&, const string&, const string&, const string&, const string&, const Categorie&);
+        void printLivre() const;
+        string getNom() const;
+        void setNom(const string&);
+        string getAuteur() const;
+        void setAuteur(const string&);
+        string getEditeur() const;
+        void setEditeur(const string&);
+        string getResume() const;
+        void setResume(const string&);
+        string getIsbn() const;
+        void setIsbn(const string&);
+        bool getLibre() const;
+        void setLibre(const bool&);
+        Categorie getCat() const;
+        void setCat(const Categorie&);
         size_t getOccurence();
         void afficherListe();
         friend std::ostream& operator<<(std::ostream& out, Livre l);
-        static string to_string(Livre l);
+        static string to_string(const Livre &l);
     };

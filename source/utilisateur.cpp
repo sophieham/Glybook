@@ -2,106 +2,118 @@
 
 
 Utilisateur::Utilisateur() {
-    typeUtilisateur = 0;
+    type = 0;
 };
 Utilisateur::~Utilisateur() {};
-Utilisateur::Utilisateur(string nom, string prenom, int type){
-    this->nomUtilisateur = nom;
-    this->prenomUtilisateur = prenom;
-    this->typeUtilisateur = type;
+Utilisateur::Utilisateur(const string &nom, const string &prenom, int type){
+    this->nom = nom;
+    this->prenom = prenom;
+    this->type = type;
 }
 
-string Utilisateur::getNomUtilisateur(){
-    return this->nomUtilisateur;
+string Utilisateur::getNom() const {
+    return nom;
 }
 
-string Utilisateur::getPrenomUtilisateur(){
-    return this->prenomUtilisateur;
+void Utilisateur::setNom(const string& nom) {
+    this->nom = nom;
 }
 
-int Utilisateur::getTypeUtilisateur(){
-    return this->typeUtilisateur;
+string Utilisateur::getPrenom() const {
+    return prenom;
 }
 
-void Utilisateur::setTypeUtilisateur(int t){
-    this->typeUtilisateur = t;
+void Utilisateur::setPrenom(const string& prenom) {
+    this->prenom = prenom;
 }
 
-void Utilisateur::printUtilisateur(){
-    cout << "Nom: " << nomUtilisateur << endl << "Prenom: " << prenomUtilisateur << endl << "Type de compte (1: admin, 2: adh): " << typeUtilisateur << endl;
+int Utilisateur::getType(){
+    return type;
+}
+
+void Utilisateur::setType(int t){
+    this->type = t;
 }
 
 
-Administrateur::Administrateur(string nom, string prenom, string username, string password)
-: Utilisateur::Utilisateur(nom, prenom, 1), usernameAdmin(username), passwordAdmin(password)
+Administrateur::Administrateur(const string &nom, const string &prenom, const string &identifiant, const string &pass) : Utilisateur::Utilisateur(nom, prenom, 1)
 {
+    this->identifiant = identifiant,
+    this->pass = pass;
+
     cout << "Bienvenue " << prenom << "! Vous etes administrateur." << endl;
 }
 
-Administrateur::~Administrateur(){}
+Administrateur::~Administrateur() {}
 
-void Administrateur::printAdmin(){
-    this->Utilisateur::printUtilisateur();
-    cout << "Username: " << usernameAdmin << endl << "Pass: " << passwordAdmin << endl;
-}
-    
-string Administrateur::getUsernameAdmin() {
-    return usernameAdmin;
-}
-void Administrateur::setUsernameAdmin(string username) {
-    this->usernameAdmin = username;
-}
-
-
-string Administrateur::getPasswordAdmin() {
-    return passwordAdmin;
-}
-void Administrateur::setPasswordAdmin(string password) {
-    this->passwordAdmin = password;
-}
-
-
-// implémenter un code de compte (numéro de téléphone) a changer ou pas par l'adherent
-Adherent::Adherent() {
-        nbLivreMaxAdh = 0;
-        Utilisateur::getNomUtilisateur() = "";
-        Utilisateur::getPrenomUtilisateur() = "";
-        this->adresseAdh = "";
-    }
-Adherent::~Adherent() {};
-Adherent::Adherent(string nom, string prenom, string adresse, string numtel, short nbLivreMax)
-: Utilisateur::Utilisateur(nom, prenom, 2), adresseAdh(adresse), numtelAdh(numtel), nbLivreMaxAdh(nbLivreMax)
+string Administrateur::getIdentifiant() const
 {
+    return identifiant;
 }
-void Adherent::print(){
-    this->Utilisateur::printUtilisateur();
-    cout << "Adresse: " << getAdresseAdh() << endl << "Numero: " << getNumTelAdh() << endl <<
-    "Vous pouvez emprunter jusqu'à " << getNbLivreMaxAdh() << " livres." << endl;
+
+string Administrateur::getPass() const
+{
+    return pass;
+}
+
+void Administrateur::setIdentifiant(const string &identifiant)
+{
+    this->identifiant = identifiant;
+}
+
+void Administrateur::setPass(const string &pass)
+{
+    this->pass = pass;
+}
+
+void Administrateur::print()
+{
+    cout << identifiant << " " << pass << endl;
+}
+
+
+Abonne::Abonne() {
+    nbLivreMax = 0;
+    adresse = "";
+}
+Abonne::~Abonne() {};
+Abonne::Abonne(const string &nom, const string &prenom, const string &adresse, const string &numtel, short nbLivreMax) : Utilisateur(nom, prenom, 2)
+{
+
+    this->adresse = adresse;
+    this->numtel = numtel;
+    this->nbLivreMax = nbLivreMax;
+}
+void Abonne::print() {
+    cout << "Adresse: " << getAdresse() << endl << "Numero: " << getNumTel() << endl <<
+        "Vous pouvez emprunter jusqu'à " << getNbLivreMax() << " livres." << endl;
 }
 
 
 // adresse
-string Adherent::getAdresseAdh() {
-	return this->adresseAdh;
+string Abonne::getAdresse() const {
+    return adresse;
 }
-void Adherent::setAdresseAdh(string adresse) {
-	this->adresseAdh = adresse;
+void Abonne::setAdresse(const string &adresse) {
+    this->adresse = adresse;
 }
 
 // numero de telephone
-string Adherent::getNumTelAdh() {
-    return this->numtelAdh;
+string Abonne::getNumTel() const {
+    return numtel;
 }
-void Adherent::setNumTelAdh(string numtel) {
-    this->numtelAdh = numtel;
+void Abonne::setNumTel(const string &numtel) {
+    this->numtel = numtel;
 }
 
 
-// retourne le nombre de livre max que l'adherent peut emprunter
-short Adherent::getNbLivreMaxAdh() {
-    return this->nbLivreMaxAdh;
+// retourne le nombre de livre max que l'abonné peut réserver
+short Abonne::getNbLivreMax() {
+    return nbLivreMax;
 }
-void Adherent::setNbLivreMaxAdh(short nbLivreMax) {
-    this->nbLivreMaxAdh = nbLivreMax;
+void Abonne::setNbLivreMax(short nbLivreMax) {
+    this->nbLivreMax = nbLivreMax;
 }
+
+
 

@@ -2,26 +2,42 @@
 
     Bibliotheque::Bibliotheque(){};
     Bibliotheque::~Bibliotheque() {};
-    Bibliotheque::Bibliotheque(string nom, string type, string adresse){
-        this->nomBiblio = nom;
-        this->adresseBiblio = adresse;
+    Bibliotheque::Bibliotheque(const string &nom, const string &type, const string &adresse){
+        this->nom = nom;
+        this->adresse = adresse;
         if (type=="municipale" || "mediatheque" || "universitaire"){
-            this->typeBiblio = type;
+            this->type = type;
         }
-        else this->typeBiblio = "inconnu";
+        else this->type = "inconnu";
     }
 
-    void Bibliotheque::printBiblio(){
-        cout << "Bibliotheque (" << getTypeBiblio() << ") " << getNomBiblio() << " situee " << getAdresseBiblio() << endl;
-    }
-    string Bibliotheque::getNomBiblio(){
-        return nomBiblio;
+    void Bibliotheque::print(){
+        cout << "Bibliotheque (" << type << ") " << nom << " situee " << adresse << endl;
     }
 
-    string Bibliotheque::getAdresseBiblio(){
-        return adresseBiblio;
+    string Bibliotheque::getNom() const {
+        return nom;
     }
 
-    string Bibliotheque::getTypeBiblio(){
-        return typeBiblio;
+	void Bibliotheque::setNom(const string &nom)
+	{
+        this->nom = nom;
+	}
+
+    string Bibliotheque::getAdresse() const {
+        return adresse;
     }
+
+    void Bibliotheque::setAdresse(const string& adresse)
+    {
+        this->adresse = adresse;
+    }
+
+    string Bibliotheque::getType() const {
+        return type;
+    }
+
+	void Bibliotheque::setType(const string &type)
+	{
+        this->type = type;
+	}

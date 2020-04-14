@@ -5,16 +5,19 @@ using namespace std;
 
     class Bibliotheque {
     private:
-        string nomBiblio;
-        string typeBiblio;
-        string adresseBiblio;
+        string nom;
+        string type;
+        string adresse;
 
     public:
         Bibliotheque();
-        Bibliotheque(string, string, string);
+        Bibliotheque(const string&, const string&, const string&);
         ~Bibliotheque();
-        void printBiblio();
-        string getNomBiblio();
-        string getAdresseBiblio();
-        string getTypeBiblio();
+        void print();
+        string getNom() const;
+        void setNom(const string&);
+        string getAdresse() const;
+        void setAdresse(const string&);
+        string getType() const;
+        void setType(const string&);
     };

@@ -5,52 +5,54 @@ using namespace std;
 
 	class Utilisateur {
 	private:
-		string nomUtilisateur;
-		string prenomUtilisateur;
-		int typeUtilisateur;
+		string nom;
+		string prenom;
+		int type;
 
 	public:
 		Utilisateur();
 		~Utilisateur();
-		Utilisateur(string, string, int);
-		string getNomUtilisateur();
-		string getPrenomUtilisateur();
-		int getTypeUtilisateur();
-		void setTypeUtilisateur(int);
-		void printUtilisateur();
+		Utilisateur(const string&, const string&, int);
+		virtual string getNom() const;
+		virtual void setNom(const string&);
+		virtual string getPrenom() const;
+		virtual void setPrenom(const string&);
+		virtual int getType();
+		virtual void setType(int);
+		virtual void print()=0;
 		
 	};
 
 	class Administrateur : public Utilisateur {
 	private:
-		string usernameAdmin;
-		string passwordAdmin;
+		string identifiant;
+		string pass;
 	public:
-		Administrateur(string, string, string, string);
+		Administrateur(const string&, const string&, const string&, const string&);
 		~Administrateur();
+		string getIdentifiant() const;
+		void setIdentifiant(const string&);
+		string getPass() const;
+		void setPass(const string&);
 
-		void printAdmin();
-		string getUsernameAdmin();
-		void setUsernameAdmin(string);
-		string getPasswordAdmin();
-		void setPasswordAdmin(string);
+		void print();
 
 	};
 
-	class Adherent : public Utilisateur {
+	class Abonne : public Utilisateur {
 	private:
-		string adresseAdh;
-		string numtelAdh;
-		short nbLivreMaxAdh;
+		string adresse;
+		string numtel;
+		short nbLivreMax;
 	public:
-		Adherent();
-		~Adherent();
-		Adherent(string, string, string, string, short);
+		Abonne();
+		~Abonne();
+		Abonne(const string&, const string&, const string&, const string&, short);
 		void print();
-		string getAdresseAdh();
-		void setAdresseAdh(string);
-		string getNumTelAdh();
-		void setNumTelAdh(string);
-		short getNbLivreMaxAdh();
-		void setNbLivreMaxAdh(short);
+		string getAdresse() const;
+		void setAdresse(const string&);
+		string getNumTel() const;
+		void setNumTel(const string&);
+		short getNbLivreMax();
+		void setNbLivreMax(short);
 	};

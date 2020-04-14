@@ -1,41 +1,39 @@
 #include "livre.h"
 
 Livre::Livre(){
-        nomLivre = "";
-        auteurLivre = "";
-        editeurLivre = "";
-        resumeLivre = "";
-        isbnLivre = "";
-        libre = true;
-        compteur = 0;
-    }
+    nom, auteur, editeur, resume, isbn = "";
+    libre = true;
+    compteur = 0;
+}
     Livre::~Livre() {};
 
-    Livre::Livre(string nom, string auteur, string editeur, string resume, string isbn, Categorie cat){
-        nomLivre = nom;
-        auteurLivre = auteur;
-        editeurLivre = editeur;
-        resumeLivre = resume;
-        isbnLivre = isbn;
-        catLivre = cat;
+    Livre::Livre(const string &nom, const string &auteur, const string &editeur, const string &resume, const string &isbn, const Categorie &cat){
+        this->nom = nom;
+        this->auteur = auteur;
+        this->editeur = editeur;
+        this->resume = resume;
+        this->isbn = isbn;
+        this->cat = cat;
         libre = true;
         static size_t compte;
         ++compte;
         Livre::compteur = compte;
         static vector<string> listeLivres;
+        // additionne le nom, l'auteur et l'éditeur dans un string
         string concat;
         if (!(nom == "" || auteur == "" | editeur == "")) {
             concat = nom + " - " + auteur + " - " + editeur + "\n";
         }
+        // puis l'ajoute a la liste des livres
         listeLivres.push_back(concat);
         Livre::liste = listeLivres;
 
     }
 
     // affiche les données du livre
-    void Livre::printLivre() {
-        cout << nomLivre << " de " << auteurLivre << " paru chez " << editeurLivre << " (ISBN: " << isbnLivre << ") Type: " << catLivre.getNomCat() << endl
-        << "Appartient a la bibliotheque " << catLivre.getBibliothequeCat().getNomBiblio() << endl << "Resume: " << resumeLivre << endl;
+    void Livre::printLivre() const {
+        cout << nom << " de " << auteur << " paru chez " << editeur << " (ISBN: " << isbn << ") Type: " << cat.getNom() << endl
+        << "Appartient a la bibliotheque " << cat.getBibliotheque().getNom() << endl << "Resume: " << resume << endl;
     }
 
     // affiche la liste des livres possédés par la bibliotheque (empruntés ou non)
@@ -48,61 +46,61 @@ Livre::Livre(){
     }
 
     // nom du livre
-    string Livre::getNomLivre() {
-	    return nomLivre;
+    string Livre::getNom() const {
+	    return nom;
     }
-    void Livre::setNomLivre(string nom) {
-	    this->nomLivre = nom;
+    void Livre::setNom(const string &nom) {
+	    this->nom = nom;
     }
 
     // auteur
-    string Livre::getAuteurLivre() {
-    	return auteurLivre;
+    string Livre::getAuteur() const {
+    	return auteur;
     }
-    void Livre::setAuteurLivre(string auteur) {
-    	this->auteurLivre = auteur;
+    void Livre::setAuteur(const string &auteur) {
+    	this->auteur = auteur;
     }
 
     // editeur
-    string Livre::getEditeurLivre() {
-    	return editeurLivre;
+    string Livre::getEditeur() const {
+    	return editeur;
     }
-    void Livre::setEditeurLivre(string editeur) {
-    	this->editeurLivre = editeur;
+    void Livre::setEditeur(const string &editeur) {
+    	this->editeur = editeur;
     }
 
     // resume
-    string Livre::getResumeLivre() {
-    	return resumeLivre;
+    string Livre::getResume() const {
+    	return resume;
     }
-    void Livre::setResumeLivre(string resume) {
-    	this->resumeLivre = resume;
+    void Livre::setResume(const string &resume) {
+    	this->resume = resume;
     }
 
     // isbn (identifiant unique d'un livre)
-    string Livre::getIsbnLivre() {
-    	return isbnLivre;
+    string Livre::getIsbn() const {
+    	return isbn;
     }
-    void Livre::setIsbnLivre(string isbn) {
-    	this->isbnLivre = isbn;
+    void Livre::setIsbn(const string &isbn) {
+    	this->isbn = isbn;
     }
 
     // son état (si il est emprunté ou non)
-    bool Livre::getLibre(){
+    bool Livre::getLibre() const {
         if(libre == 1)
             return "Le livre est disponible a l'emprunt!";
         else return "Le livre n est actuellement pas disponible.";
     }
-    void Livre::setLibre(bool emprunt){
+    void Livre::setLibre(const bool &emprunt){
         libre = emprunt;
     }
 
     // son genre
-    Categorie Livre::getCatLivre() {
-    	return catLivre;
+    Categorie Livre::getCat() const {
+    	return cat;
     }
-    void Livre::setCatLivre(Categorie cat) {
-    	catLivre = cat;
+    void Livre::setCat(const Categorie &cat) {
+    	this->cat = cat;
     }
      
     // le nombre de fois où la classe a été instanciée
@@ -113,12 +111,12 @@ Livre::Livre(){
     // rédéfinition de l'affichage de l'objet
     ostream& operator<<(ostream& out, Livre l)
     {
-        out << l.getNomLivre() << " (" << l.getAuteurLivre() << " - " << l.getIsbnLivre() << ")";
+        out << l.getNom() << " (" << l.getAuteur() << " - " << l.getIsbn() << ")";
         return out;
     }
 
     // pour pouvoir l'afficher dans une chaine de caractère
-    string Livre::to_string(Livre l)
+    string Livre::to_string(const Livre &l)
     {
         ostringstream ss;
         ss << l;
