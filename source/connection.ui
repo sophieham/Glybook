@@ -24,9 +24,7 @@
    <string notr="true">QLineEdit[echoMode=&quot;2&quot;] {
     lineedit-password-character: 9679;
 }
-QLabel{
-color:white;
-}</string>
+</string>
   </property>
   <property name="iconSize">
    <size>
@@ -85,6 +83,9 @@ color:white;
          <pointsize>15</pointsize>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
+       </property>
        <property name="text">
         <string>Identifiant</string>
        </property>
@@ -122,6 +123,9 @@ border-radius: 6px;
         <font>
          <pointsize>15</pointsize>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
        </property>
        <property name="text">
         <string>Mot de passe</string>
@@ -192,6 +196,9 @@ border-radius: 6px;
       <italic>true</italic>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
     <property name="text">
      <string>Connexion panel Glybook</string>
     </property>
@@ -234,7 +241,7 @@ QPushButton#btnConnect:pressed {
 QPushButton#btnConnect:hover {
 	background-color: rgb(99, 100, 96);
     color:white;
-    border-style: inset;
+    border-style: outset;
 }</string>
     </property>
     <property name="text">

@@ -5,6 +5,8 @@
 #include <QtSql>
 #include <QMessageBox>
 
+#include "user.h"
+
 namespace Ui {
 class accountDialog;
 }
@@ -14,7 +16,7 @@ class accountDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit accountDialog(const int &id, QWidget *parent = nullptr);
+    explicit accountDialog(const int &id, const User &connected, QWidget *parent = nullptr);
     ~accountDialog();
 
 
@@ -38,6 +40,8 @@ private:
 
     QString username;
     short rank;
+
+    User connected;
 };
 
 #endif // ACCOUNTDIAL_H

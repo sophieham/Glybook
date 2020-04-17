@@ -1,9 +1,9 @@
 #include "accountdialog.h"
 #include "ui_accountdialog.h"
 
-accountDialog::accountDialog(const int &id, QWidget *parent) :
+accountDialog::accountDialog(const int &id, const User &connected, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::accountDialog), id(id)
+    ui(new Ui::accountDialog), id(id), connected(connected)
 {
     ui->setupUi(this);
     if(ui->adm_RB->isChecked()){
@@ -20,14 +20,13 @@ accountDialog::accountDialog(const int &id, QWidget *parent) :
         ui->lNameEdit->setText(displayQry.value(1).toString());
         ui->fNameEdit->setText(displayQry.value(2).toString());
         ui->userEdit->setText(getUsername());
-        ui->passEdit->setText(displayQry.value(4).toString());
         ui->addressEdit->setText(displayQry.value(7).toString());
         ui->phoneEdit->setText(displayQry.value(8).toString());
         ui->resvLimitEdit->setText(displayQry.value(9).toString());
-        if(displayQry.value(5).toInt()==1){
+        qDebug() << displayQry.value(5).toString();
+        if(connected.getType()==1){
             ui->adm_RB->setChecked(true);
             setRank(1);
-
         }
         else {
             ui->sub_RB->setChecked(true);
@@ -50,7 +49,7 @@ void accountDialog::on_dialogButton_accepted()
     QString fName = ui->fNameEdit->text();
     QString lName = ui->lNameEdit->text();
     setUsername(ui->userEdit->text());
-    QString pass = hashPass(ui->passEdit->text());
+    QString pass = ui->passEdit->text();
     QString address = ui->addressEdit->text();
     QString phone = ui->phoneEdit->text();
     int limit =  ui->resvLimitEdit->text().toInt();
@@ -58,32 +57,36 @@ void accountDialog::on_dialogButton_accepted()
 
 
     QSqlQuery updateSubDb;
-    if(ui->sub_RB->isChecked()){
-        setRank(0);
-        updateSubDb.prepare("UPDATE `u_subscriber` SET `address` = :address, `phone` = :phone, `max_books` = :limit WHERE `u_subscriber`.`subscriber_username` = :user ");
-        updateSubDb.bindValue(":address", address);
-        updateSubDb.bindValue(":phone", phone);
-        updateSubDb.bindValue(":limit", limit);
-        updateSubDb.bindValue(":user", getUsername());
-    }
+        if(ui->sub_RB->isChecked()){
+            setRank(0);
+            updateSubDb.prepare("UPDATE `u_subscriber` SET `address` = :address, `phone` = :phone, `max_books` = :limit WHERE `u_subscriber`.`subscriber_username` = :user ");
+            updateSubDb.bindValue(":address", address);
+            updateSubDb.bindValue(":phone", phone);
+            updateSubDb.bindValue(":limit", limit);
+            updateSubDb.bindValue(":user", getUsername());
+        }
 
-    QSqlQuery updateDb;
-    updateDb.prepare("UPDATE `users` SET `lastName` = :lName, `firstName` = :fName, `pass` = :pass, `rank` = :rank WHERE `users`.`id` = :id");
-    updateDb.bindValue(":lName", lName);
-    updateDb.bindValue(":fName", fName);
-    updateDb.bindValue(":pass", pass);
-    updateDb.bindValue(":rank", getRank());
-    updateDb.bindValue(":id", id);
+        QSqlQuery updateDb;
+        if(!(pass.isEmpty())){
+            updateDb.prepare("UPDATE `users` SET `lastName` = :lName, `firstName` = :fName, `pass` = :pass, `rank` = :rank WHERE `users`.`id` = :id");
+            updateDb.bindValue(":pass", hashPass(pass));
+        }
+        else{
+            updateDb.prepare("UPDATE `users` SET `lastName` = :lName, `firstName` = :fName, `rank` = :rank WHERE `users`.`id` = :id");
+        }
+        updateDb.bindValue(":lName", lName);
+        updateDb.bindValue(":fName", fName);
+        updateDb.bindValue(":rank", getRank());
+        updateDb.bindValue(":id", id);
 
 
-    if(updateDb.exec()){
-        updateSubDb.exec();
-        QMessageBox::information(this, "Sucess!", "Account has been modified!");
-        emit refresh(true);
-        this->close();
-    }
-
-    }
+        if(updateDb.exec()){
+            updateSubDb.exec();
+            QMessageBox::information(this, "Sucess!", "Account has been modified!");
+            emit refresh(true);
+            this->close();
+        }
+}
 
 
 QString accountDialog::hashPass(QString text){

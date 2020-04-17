@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>650</width>
-    <height>699</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,6 +22,27 @@
   <property name="windowIcon">
    <iconset resource="resource.qrc">
     <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+	color: white;
+	border-radius: 8px;
+	background-color:rgb(115, 116, 111);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color:rgb(105, 106, 101);
+    padding: 6px;
+}
+QPushButton:pressed {
+    border-style: inset;
+}
+
+QPushButton:hover {
+	background-color: rgb(99, 100, 96);
+    color:white;
+    border-style: outset;
+}</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -391,6 +412,29 @@
     </item>
    </layout>
   </widget>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>651</width>
+     <height>701</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/icons/bg_account.jpg);
+background-position: right center;</string>
+   </property>
+   <property name="resizeAnchor">
+    <enum>QGraphicsView::NoAnchor</enum>
+   </property>
+  </widget>
+  <zorder>graphicsView</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>gridLayoutWidget</zorder>
+  <zorder>horizontalLayoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

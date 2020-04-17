@@ -20,6 +20,32 @@
    <iconset resource="resource.qrc">
     <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QGroupBox::title{
+	color:white;
+}
+
+QPushButton {
+	color: white;
+	border-radius: 8px;
+	background-color: rgb(131, 131, 131);
+    border-style: outset;
+    border-width: 2px;
+    border-color:rgb(115, 115, 115);
+    padding: 6px;
+}
+QPushButton:pressed {
+    border-style: inset;
+}
+
+QPushButton:hover {
+	background-color: rgb(115, 115, 115);
+    color:white;
+    border-style: outset;
+}
+
+</string>
+  </property>
   <widget class="QLabel" name="pageTitle">
    <property name="geometry">
     <rect>
@@ -42,6 +68,9 @@
    </property>
    <property name="whatsThis">
     <string>what</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
    </property>
    <property name="text">
     <string>Book information</string>
@@ -83,6 +112,9 @@
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
    <property name="text">
     <string>Name of the book</string>
    </property>
@@ -110,20 +142,26 @@
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
       <property name="text">
        <string>Publication year</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="labelEditor">
+    <item row="3" column="1">
+     <widget class="QLabel" name="year">
       <property name="font">
        <font>
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
       <property name="text">
-       <string>Editeur</string>
+       <string>His birth year</string>
       </property>
      </widget>
     </item>
@@ -133,6 +171,9 @@
        <font>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
       </property>
       <property name="text">
        <string>Reserved</string>
@@ -146,6 +187,9 @@
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
       <property name="text">
        <string>Genre</string>
       </property>
@@ -158,8 +202,26 @@
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
       <property name="text">
-       <string>Auteur</string>
+       <string>Author</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="genre">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
+      <property name="text">
+       <string>His genre</string>
       </property>
      </widget>
     </item>
@@ -169,6 +231,9 @@
        <font>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
       </property>
       <property name="text">
        <string>His name</string>
@@ -182,32 +247,11 @@
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
       <property name="text">
        <string>His editor</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLabel" name="genre">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>His genre</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QLabel" name="year">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>His birth year</string>
       </property>
      </widget>
     </item>
@@ -218,8 +262,26 @@
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
       <property name="text">
        <string>No</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="labelEditor">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
+      <property name="text">
+       <string>Publisher</string>
       </property>
      </widget>
     </item>
@@ -246,6 +308,9 @@
       <height>281</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: black;</string>
+    </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
     </property>
@@ -254,6 +319,9 @@
     </property>
     <property name="plainText">
      <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra nibh cras pulvinar mattis nunc sed blandit libero. Elit sed vulputate mi sit. Suspendisse ultrices gravida dictum fusce. Mauris sit amet massa vitae tortor condimentum lacinia. Ornare massa eget egestas purus viverra. Dignissim enim sit amet venenatis. Vestibulum mattis ullamcorper velit sed ullamcorper. Quam quisque id diam vel quam elementum pulvinar etiam non. Amet dictum sit amet justo donec enim. Libero id faucibus nisl tincidunt eget nullam. Scelerisque varius morbi enim nunc faucibus a pellentesque sit amet. At erat pellentesque adipiscing commodo elit.\n\nEnim tortor at auctor urna nunc. Nisl nisi scelerisque eu ultrices vitae auctor. Morbi tristique senectus et netus et. Morbi tempus iaculis urna id volutpat lacus laoreet. Lectus proin nibh nisl condimentum id venenatis a condimentum. Fermentum et sollicitudin ac orci phasellus egestas. Iaculis nunc sed augue lacus viverra vitae. Vel fringilla est ullamcorper eget nulla facilisi. Elit sed vulputate mi sit amet mauris commodo quis. Sagittis eu volutpat odio facilisis mauris. Mi in nulla posuere sollicitudin aliquam ultrices. Cras pulvinar mattis nunc sed blandit. Sit amet porttitor eget dolor morbi non arcu. Tellus in hac habitasse platea dictumst vestibulum rhoncus est. Viverra aliquet eget sit amet tellus cras adipiscing enim eu.\n\nMassa sapien faucibus et molestie ac. Magna fringilla urna porttitor rhoncus dolor purus non enim. Dui vivamus arcu felis bibendum ut tristique et. Vel pretium lectus quam id. Facilisis leo vel fringilla est ullamcorper. In vitae turpis massa sed elementum tempus. Purus gravida quis blandit turpis cursus in. Faucibus turpis in eu mi bibendum neque egestas congue. Turpis egestas maecenas pharetra convallis. Porttitor rhoncus dolor purus non. Sagittis nisl rhoncus mattis rhoncus urna neque. Enim blandit volutpat maecenas volutpat blandit aliquam. Tortor posuere ac ut consequat semper viverra. Dictum varius duis at consectetur lorem donec massa sapien. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.\n\nAt tellus at urna condimentum mattis pellentesque. Id diam maecenas ultricies mi. Laoreet suspendisse interdum consectetur libero id faucibus. Rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Non tellus orci ac auctor. In ante metus dictum at tempor commodo. Arcu risus quis varius quam quisque. Lacus sed viverra tellus in. Condimentum vitae sapien pellentesque habitant morbi tristique senectus et. Ultricies mi quis hendrerit dolor magna eget. Ut tellus elementum sagittis vitae. Malesuada fames ac turpis egestas sed tempus urna. Nisi porta lorem mollis aliquam ut porttitor leo a diam. In arcu cursus euismod quis viverra nibh cras pulvinar mattis. Nisi lacus sed viverra tellus in hac habitasse platea. Auctor urna nunc id cursus metus. Viverra vitae congue eu consequat ac felis donec et odio.</string>
+    </property>
+    <property name="textInteractionFlags">
+     <set>Qt::NoTextInteraction</set>
     </property>
     <property name="backgroundVisible">
      <bool>true</bool>
@@ -266,7 +334,7 @@
      <x>50</x>
      <y>520</y>
      <width>541</width>
-     <height>66</height>
+     <height>74</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -311,6 +379,13 @@
      <height>51</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click me to add bookmark this book!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+border-color: transparent;</string>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -328,6 +403,27 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>1</y>
+     <width>651</width>
+     <height>601</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/icons/library.jpg);</string>
+   </property>
+  </widget>
+  <zorder>graphicsView</zorder>
+  <zorder>pageTitle</zorder>
+  <zorder>book</zorder>
+  <zorder>name</zorder>
+  <zorder>gridLayoutWidget</zorder>
+  <zorder>summaryBox</zorder>
+  <zorder>horizontalLayoutWidget</zorder>
+  <zorder>bookmark</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

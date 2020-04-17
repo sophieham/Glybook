@@ -37,10 +37,6 @@ QHeaderView::section:checked
     font-weight:bold;
 }
 
-QTableWidget::item::selected{
-	background-color:blue;
-}
-
 QTableWidget::item:selected:active {
     background: #e5f3ff;
 	color: black;

@@ -163,6 +163,6 @@ void manageAccounts::on_admBtn_2_clicked()
 void manageAccounts::refreshSlot(bool b){
     if(b){
       ui->accList->clearContents();
-      //displayAccountList();
+      displayAccountList();
     }
 }

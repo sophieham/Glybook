@@ -7,23 +7,23 @@
         <file>icons/livre.png</file>
         <file>icons/parametres.png</file>
         <file>icons/statistiques.png</file>
-        <file>icons/background.png</file>
         <file>icons/bg_conf.png</file>
         <file>icons/icone_user.png</file>
         <file>icons/user.png</file>
         <file>icons/cadenas.png</file>
-        <file>icons/glybook.png</file>
         <file>icons/icon_final.ico</file>
-        <file>icons/glybook_petit.png</file>
         <file>icons/clock.png</file>
         <file>icons/heart.png</file>
-        <file>icons/plus.png</file>
         <file>icons/save.png</file>
-        <file>icons/bg_library.jpg</file>
         <file>icons/library.jpg</file>
-        <file>icons/library_bg.jpg</file>
         <file>icons/fond.jpg</file>
+        <file>icons/tick.png</file>
+        <file>icons/ticked.png</file>
+        <file>icons/down_arrow.png</file>
+        <file>icons/up_arrow.png</file>
         <file>icons/down-arrow.png</file>
-        <file>icons/up-arrow.png</file>
+        <file>icons/bg_account.jpg</file>
+        <file>icons/bg_stats.jpg</file>
+        <file>icons/search.png</file>
     </qresource>
 </RCC>

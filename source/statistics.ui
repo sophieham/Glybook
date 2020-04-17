@@ -20,6 +20,27 @@
    <iconset resource="resource.qrc">
     <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+	color: white;
+	border-radius: 8px;
+	background-color:rgb(115, 116, 111);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color:rgb(105, 106, 101);
+    padding: 6px;
+}
+QPushButton:pressed {
+    border-style: inset;
+}
+
+QPushButton:hover {
+	background-color: rgb(99, 100, 96);
+    color:white;
+    border-style: outset;
+}</string>
+  </property>
   <widget class="QLabel" name="title">
    <property name="geometry">
     <rect>
@@ -50,8 +71,35 @@
      <height>371</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QHeaderView::section {
+    background-color: qlineargradient(spread:reflect, x1:1, y1:0.522, x2:1, y2:1, stop:0 rgba(140, 140, 140, 255), stop:0.502183 rgba(185, 185, 185, 255), stop:1 rgba(140, 140, 140, 255));
+    color: white;
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+}
+
+QHeaderView::section:checked
+{
+    font-weight:bold;
+}
+
+QTableWidget::item::selected{
+	background-color:blue;
+}
+
+QTableWidget::item:selected:active {
+    background: #e5f3ff;
+	color: black;
+}
+
+QTableWidget::item:hover {
+    background:  #e5f3ff;
+}
+</string>
+   </property>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>150</number>
+    <number>120</number>
    </attribute>
    <attribute name="horizontalHeaderStretchLastSection">
     <bool>false</bool>
@@ -79,12 +127,12 @@
      <x>312</x>
      <y>480</y>
      <width>161</width>
-     <height>28</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>9</pointsize>
     </font>
    </property>
    <property name="text">
@@ -97,12 +145,12 @@
      <x>130</x>
      <y>480</y>
      <width>171</width>
-     <height>28</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>9</pointsize>
     </font>
    </property>
    <property name="text">
@@ -120,8 +168,31 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>SegoeUI</family>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox{
+	color: #252424;
+    font-family: SegoeUI;
+    font-size: 12px;
+	border: 2px solid #8f8f91;
+	border-radius: 6px;
+}
+
+QComboBox::drop-down {
+    width: 18px;
+    border-left-color: rgb(68, 68, 68);
+    border-left-style: solid;
+}
+
+QComboBox::down-arrow {
+	margin-right:5px;
+    image: url(:/icons/down-arrow.png);
+	background-color: white;
+}
+</string>
    </property>
    <item>
     <property name="text">
@@ -139,6 +210,25 @@
     </property>
    </item>
   </widget>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>631</width>
+     <height>531</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/icons/bg_stats.jpg);</string>
+   </property>
+  </widget>
+  <zorder>graphicsView</zorder>
+  <zorder>title</zorder>
+  <zorder>statisticsTable</zorder>
+  <zorder>closeButton</zorder>
+  <zorder>exportButton</zorder>
+  <zorder>comboBox</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

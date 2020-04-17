@@ -213,7 +213,7 @@ void Glybook::on_action_bookReservationsHistory_triggered()
     else
         history = new accountHistory(*connectedUser, connectedUser->getUser());
     history->show();
-    connect(history, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
+    connect(history, SIGNAL(refresh(bool)), this, SLOT(refresh(bool)));
 }
 
 // ouvre la page settings dans le menu

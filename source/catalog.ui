@@ -17,6 +17,11 @@
    <iconset resource="resource.qrc">
     <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QLabel{
+	color: white;
+}</string>
+  </property>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
     <rect>
@@ -25,6 +30,29 @@
      <width>791</width>
      <height>621</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QHeaderView::section {
+    background-color: qlineargradient(spread:reflect, x1:1, y1:0.522, x2:1, y2:1, stop:0 rgba(140, 140, 140, 255), stop:0.502183 rgba(185, 185, 185, 255), stop:1 rgba(140, 140, 140, 255));
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+	color: white;
+}
+
+QHeaderView::section:checked
+{
+    font-weight:bold;
+}
+
+QTableWidget::item:selected:active {
+    background: #e5f3ff;
+	color:black;
+}
+
+QTableWidget::item:hover {
+    background:  #e5f3ff;
+}
+</string>
    </property>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>
@@ -68,9 +96,9 @@
   <widget class="QLabel" name="title">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>100</x>
      <y>-10</y>
-     <width>411</width>
+     <width>471</width>
      <height>71</height>
     </rect>
    </property>
@@ -90,11 +118,19 @@ Double click on a cell for more informations</string>
   <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>20</y>
-     <width>201</width>
-     <height>16</height>
+     <x>570</x>
+     <y>26</y>
+     <width>211</width>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
    </property>
    <property name="text">
     <string>Display booked books too</string>
@@ -104,15 +140,46 @@ Double click on a cell for more informations</string>
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>80</y>
+     <y>71</y>
      <width>601</width>
-     <height>22</height>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit#searchBar {
+border: 2px solid #8f8f91;
+border-radius: 6px;
+    background-image: url(:/icons/search.png);
+    background-repeat: no-repeat;
+    background-position: left;
+    color: #252424;
+    font-family: SegoeUI;
+    font-size: 12px;
+    padding: 0 0 0 20; /* left padding (last number) must be more than the icon's width */
+}</string>
    </property>
    <property name="placeholderText">
     <string>Search any book name</string>
    </property>
   </widget>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>1</y>
+     <width>801</width>
+     <height>751</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/icons/library.jpg);</string>
+   </property>
+  </widget>
+  <zorder>graphicsView</zorder>
+  <zorder>tableWidget</zorder>
+  <zorder>title</zorder>
+  <zorder>checkBox</zorder>
+  <zorder>searchBar</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

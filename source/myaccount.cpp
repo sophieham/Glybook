@@ -64,7 +64,7 @@ void myAccount::displayAccount(){
 
 void myAccount::on_modifyButton_clicked()
 {
-    accountDialog *dialog = new accountDialog(id);
+    accountDialog *dialog = new accountDialog(id, connected);
     dialog->show();
     connect(dialog, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
 }
