@@ -6,26 +6,12 @@ myAccount::myAccount(const User &connected, const QString &user, QWidget *parent
     ui(new Ui::myAccount), connected(connected), user(user)
 {
     ui->setupUi(this);
+    setFixedSize(650, 700);
+    setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
 
+    prepareAccount();
     displayAccount();
-    ui->lastName->setText(account.getLastName());
-    ui->firstName->setText(account.getFirstName());
-    ui->username->setText(account.getUser());
-    if(account.getType()==1){
-        ui->type->setText("Administrator");
-        ui->labelAddress->clear();
-        ui->labelPhone->clear();
-        ui->labelReservation->clear();
-    }
-    else{
-        ui->address->setText(account.getAddress());
-        ui->phone->setText(account.getPhoneNo());
-        ui->reservation->setText(QString::number(account.getLimit()));
-    }
 
-    if(account.getType()==1){
-        ui->historyButton->hide();
-    }
 }
 
 myAccount::~myAccount()
@@ -33,7 +19,7 @@ myAccount::~myAccount()
     delete ui;
 }
 
-void myAccount::displayAccount(){
+void myAccount::prepareAccount(){
     QSqlQuery query;
     query.prepare("SELECT * FROM users LEFT JOIN u_subscriber ON users.username = u_subscriber.subscriber_username WHERE username = :username");
     query.bindValue(":username", user);
@@ -55,10 +41,32 @@ void myAccount::displayAccount(){
     }
 }
 
+void myAccount::displayAccount(){
+    ui->lastName->setText(account.getLastName());
+    ui->firstName->setText(account.getFirstName());
+    ui->username->setText(account.getUser());
+    if(account.getType()==1){
+        ui->type->setText("Administrator");
+        ui->labelAddress->clear();
+        ui->labelPhone->clear();
+        ui->labelReservation->clear();
+    }
+    else{
+        ui->address->setText(account.getAddress());
+        ui->phone->setText(account.getPhoneNo());
+        ui->reservation->setText(QString::number(account.getLimit()));
+    }
+
+    if(account.getType()==1){
+        ui->historyButton->hide();
+    }
+}
+
 void myAccount::on_modifyButton_clicked()
 {
     accountDialog *dialog = new accountDialog(id);
     dialog->show();
+    connect(dialog, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
 }
 
 void myAccount::on_closeButton_clicked()
@@ -70,4 +78,13 @@ void myAccount::on_historyButton_clicked()
 {
     accountHistory *history = new accountHistory(connected, user);
     history->show();
+}
+
+void myAccount::refreshSlot(bool b){
+    if(b){
+        emit refresh(true);
+        prepareAccount();
+        displayAccount();
+    }
+    else this->close();
 }

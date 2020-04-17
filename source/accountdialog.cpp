@@ -5,7 +5,6 @@ accountDialog::accountDialog(const int &id, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::accountDialog), id(id)
 {
-    setRefresh(false);
     ui->setupUi(this);
     if(ui->adm_RB->isChecked()){
         ui->sub_RB->setChecked(false);
@@ -21,7 +20,7 @@ accountDialog::accountDialog(const int &id, QWidget *parent) :
         ui->lNameEdit->setText(displayQry.value(1).toString());
         ui->fNameEdit->setText(displayQry.value(2).toString());
         ui->userEdit->setText(getUsername());
-        ui->passEdit->setText(displayQry.value(2).toString());
+        ui->passEdit->setText(displayQry.value(4).toString());
         ui->addressEdit->setText(displayQry.value(7).toString());
         ui->phoneEdit->setText(displayQry.value(8).toString());
         ui->resvLimitEdit->setText(displayQry.value(9).toString());
@@ -35,7 +34,6 @@ accountDialog::accountDialog(const int &id, QWidget *parent) :
             setRank(0);
             ui->adm_RB->hide();
             ui->resvLimitEdit->setEnabled(false);
-            ui->removeAccButton->setEnabled(false);
         }
     }
 
@@ -81,6 +79,8 @@ void accountDialog::on_dialogButton_accepted()
     if(updateDb.exec()){
         updateSubDb.exec();
         QMessageBox::information(this, "Sucess!", "Account has been modified!");
+        emit refresh(true);
+        this->close();
     }
 
     }
@@ -110,35 +110,6 @@ short accountDialog::getRank() const
 void accountDialog::setRank(const short &number)
 {
     rank = number;
-}
-
-bool accountDialog::getRefresh()
-{
-    return refresh;
-}
-
-void accountDialog::setRefresh(bool r)
-{
-    refresh = r;
-}
-
-void accountDialog::on_removeAccButton_clicked()
-{
-
-    int confirmation= QMessageBox::warning(this, "Suppression d'un compte", "Etes vous sûr de vouloir supprimer "+getUsername()+"?", QMessageBox::Yes | QMessageBox::No);
-    if(confirmation == QMessageBox::Yes){
-
-        QSqlQuery delAccount;
-        QSqlError err = delAccount.lastError();
-        delAccount.exec("DELETE FROM `u_subscriber` WHERE `u_subscriber`.`subscriber_username` ='"+getUsername()+"'");
-        delAccount.exec("DELETE FROM `users` WHERE `users`.`username` ='"+getUsername()+"'");
-        if(delAccount.exec()){
-            QMessageBox::information(this, "Success!", "This account has been successfully deleted!");
-            setRefresh(true);
-            this->close();
-        }
-    }
-
 }
 
 void accountDialog::on_dialogButton_rejected()

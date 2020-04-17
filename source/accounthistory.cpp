@@ -6,6 +6,10 @@ accountHistory::accountHistory(const User &connected, const QString &user, QWidg
     ui(new Ui::accountHistory), connected(connected), user(user)
 {
     ui->setupUi(this);
+
+    setFixedSize(700, 500);
+    setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+
     displayHistory();
 }
 
@@ -52,6 +56,7 @@ void accountHistory::on_reservationView_cellDoubleClicked(int row, int column)
     else if(column==1){
          bookInformation *book = new bookInformation(connected, ui->reservationView->item(row, 1)->text());
          book->show();
+         connect(book, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
     }
 }
 
@@ -79,4 +84,10 @@ void accountHistory::on_exportButton_clicked()
 void accountHistory::on_closeButton_clicked()
 {
     this->close();
+}
+
+void accountHistory::refreshSlot(bool b){
+    if(b){
+        emit refresh(true);
+    }
 }

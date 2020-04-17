@@ -83,6 +83,9 @@ else()
     catalog.cpp
     catalog.h
     catalog.ui
+    statistics.cpp
+    statistics.h
+    statistics.ui
   )
 endif()
 

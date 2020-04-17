@@ -6,6 +6,10 @@ bookInformation::bookInformation(const User &connected, const QString &isbn, QWi
     ui(new Ui::bookInformation), connected(connected), isbn(isbn)
 {
     ui->setupUi(this);
+
+    setFixedSize(650, 600);
+    setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+
     displayBook();
         ui->name->setText(book.getName());
         ui->author->setText(book.getAuthor());
@@ -46,7 +50,6 @@ void bookInformation::displayBook(){
         book.setPublisher(query.value(4).toString());
         book.setYear(query.value(5).toInt());
         book.setBooked(query.value(6).toInt());
-        qDebug() << query.value(6).toInt();
         book.setSummary(query.value(7).toString());
     }
     else{
@@ -72,6 +75,7 @@ void bookInformation::on_reserveButton_clicked()
                 resv.addReservation();
 
                 QMessageBox::information(this, "Success!", "Book reserved!");
+                emit refresh(true);
             }
             else {
                 QMessageBox::critical(this, "Erreur!", "Vous ne pouvez pas emprunter ce livre, il n'est plus disponible ou alors vous assez trop emprunté");
@@ -88,10 +92,21 @@ void bookInformation::on_closeButton_clicked()
 void bookInformation::on_bookmark_clicked()
 {
     QSqlQuery query;
-    query.prepare("INSERT INTO `b_bookmarks` (`favID`, `bookID`, `userID`, `timestamp`) VALUES (NULL, :isbn, :user, current_timestamp())");
-    query.bindValue(":isbn", book.getIsbn());
-    query.bindValue(":user", connected.getUser());
-    if(query.exec())
-        QMessageBox::information(this, "Add to favorite", "You have bookmarked this book");
+    query.exec("SELECT * FROM `b_bookmarks` WHERE bookID = '"+book.getIsbn()+"' AND userID = '"+connected.getUser()+"'");
+    if(query.next()){
+        query.prepare("DELETE FROM `b_bookmarks` WHERE bookID= :book AND userID= :user");
+        query.bindValue(":book", book.getIsbn());
+        query.bindValue(":user", connected.getUser());
+        if(query.exec())
+            QMessageBox::information(this, "Add to favorite", "You have delete this book from your bookmarks");
+    }
+    else{
+        query.prepare("INSERT INTO `b_bookmarks` (`favID`, `bookID`, `userID`, `timestamp`) VALUES (NULL, :isbn, :user, current_timestamp())");
+        query.bindValue(":isbn", book.getIsbn());
+        query.bindValue(":user", connected.getUser());
+        if(query.exec())
+            QMessageBox::information(this, "Add to favorite", "You have bookmarked this book");
+    }
 
+    emit refresh(true);
 }

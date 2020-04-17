@@ -170,18 +170,14 @@
    <layout class="QHBoxLayout" name="allButtonBox_3">
     <item>
      <widget class="QDialogButtonBox" name="dialogButton">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="standardButtons">
        <set>QDialogButtonBox::Close|QDialogButtonBox::Save</set>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="removeAccButton">
-      <property name="text">
-       <string>Supprimer compte</string>
       </property>
      </widget>
     </item>
@@ -281,6 +277,32 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>341</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/icons/background.png);</string>
+   </property>
+  </widget>
+  <zorder>graphicsView</zorder>
+  <zorder>verticalLayoutWidget</zorder>
+  <zorder>lNameEdit</zorder>
+  <zorder>phoneEdit</zorder>
+  <zorder>addressEdit</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>passEdit</zorder>
+  <zorder>resvLimitEdit</zorder>
+  <zorder>fNameEdit</zorder>
+  <zorder>userEdit</zorder>
+  <zorder>adm_RB</zorder>
+  <zorder>sub_RB</zorder>
+  <zorder>picture</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

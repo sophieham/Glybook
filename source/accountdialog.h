@@ -24,21 +24,17 @@ public:
     short getRank() const;
     void setRank(const short &);
 
-    bool getRefresh();
-    void setRefresh(bool);
+signals:
+    void refresh(bool);
 
 private slots:
     void on_dialogButton_accepted();
-
-    void on_removeAccButton_clicked();
 
     void on_dialogButton_rejected();
 
 private:
     Ui::accountDialog *ui;
     int id;
-
-    bool refresh;
 
     QString username;
     short rank;

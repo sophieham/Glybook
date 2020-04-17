@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>852</width>
-    <height>615</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,12 @@
     <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character: 9679;
+}
+QLabel{
+color:white;
+}</string>
   </property>
   <property name="iconSize">
    <size>
@@ -55,6 +60,9 @@
      <property name="rowWrapPolicy">
       <enum>QFormLayout::DontWrapRows</enum>
      </property>
+     <property name="labelAlignment">
+      <set>Qt::AlignCenter</set>
+     </property>
      <property name="formAlignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
@@ -78,7 +86,10 @@
         </font>
        </property>
        <property name="text">
-        <string>Nom d'utilisateur</string>
+        <string>Identifiant</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -191,7 +202,7 @@ border-radius: 6px;
    <widget class="QPushButton" name="btnConnect">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>270</x>
       <y>390</y>
       <width>271</width>
       <height>41</height>
@@ -206,25 +217,24 @@ border-radius: 6px;
      <enum>Qt::LeftToRight</enum>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-    border: 2px solid #8f8f91;
-    border-radius: 6px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
-    min-width: 80px;
+     <string notr="true">QPushButton#btnConnect {
+	color: white;
+	border-radius: 8px;
+	background-color:rgb(115, 116, 111);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color:rgb(105, 106, 101);
+    padding: 6px;
+}
+QPushButton#btnConnect:pressed {
+    border-style: inset;
 }
 
-QPushButton:pressed {
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
-}
-
-QPushButton:flat {
-    border: none; /* no border for a flat push button */
-}
-
-QPushButton:default {
-    border-color: navy; /* make the default button prominent */
+QPushButton#btnConnect:hover {
+	background-color: rgb(99, 100, 96);
+    color:white;
+    border-style: inset;
 }</string>
     </property>
     <property name="text">
@@ -255,15 +265,17 @@ QPushButton:default {
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>-5</x>
-      <y>-89</y>
-      <width>871</width>
-      <height>711</height>
+      <x>0</x>
+      <y>0</y>
+      <width>800</width>
+      <height>700</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/icons/background.png) ;
-background-position: left bottom;</string>
+     <string notr="true">background-image: url(:/icons/library.jpg);
+background-repeat: no-repeat;
+background-position: top center;
+</string>
     </property>
    </widget>
    <zorder>graphicsView</zorder>

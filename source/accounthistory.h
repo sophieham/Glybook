@@ -28,12 +28,17 @@ public:
 
     void displayHistory();
 
+signals:
+    void refresh(bool);
+
 private slots:
     void on_reservationView_cellDoubleClicked(int row, int column);
 
     void on_exportButton_clicked();
 
     void on_closeButton_clicked();
+
+    void refreshSlot(bool);
 
 private:
     Ui::accountHistory *ui;

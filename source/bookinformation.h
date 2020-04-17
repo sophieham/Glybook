@@ -22,6 +22,10 @@ public:
 
     void displayBook();
     void setButton();
+
+signals:
+    void refresh(bool);
+
 private slots:
     void on_reserveButton_clicked();
 

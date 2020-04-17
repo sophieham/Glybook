@@ -20,6 +20,9 @@ public:
 
     void displayBookData();
 
+signals:
+    void refresh(bool);
+
 private slots:
     void on_send_pushButton_clicked();
 

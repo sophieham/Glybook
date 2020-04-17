@@ -20,6 +20,9 @@ public:
     explicit myAccount(const User &connected, const QString &user = NULL, QWidget *parent = nullptr);
     ~myAccount();
 
+signals:
+    void refresh(bool);
+
 private slots:
     void on_modifyButton_clicked();
 
@@ -27,7 +30,11 @@ private slots:
 
     void on_historyButton_clicked();
 
+    void prepareAccount();
+
     void displayAccount();
+
+    void refreshSlot(bool);
 
 private:
     Ui::myAccount *ui;

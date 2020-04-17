@@ -22,6 +22,9 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
+signals:
+    void refresh(bool);
+
 private slots:
     void on_saveButton_clicked();
 

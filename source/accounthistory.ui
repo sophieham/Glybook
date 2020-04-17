@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>718</width>
-    <height>511</height>
+    <width>700</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
     <rect>
      <x>0</x>
      <y>10</y>
-     <width>721</width>
+     <width>701</width>
      <height>32</height>
     </rect>
    </property>
@@ -50,6 +50,9 @@
         <pointsize>15</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
       <property name="text">
        <string>Booking history</string>
       </property>
@@ -73,9 +76,9 @@
   <widget class="QTableWidget" name="reservationView">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>4</x>
      <y>60</y>
-     <width>721</width>
+     <width>691</width>
      <height>361</height>
     </rect>
    </property>
@@ -84,11 +87,35 @@
      <pointsize>11</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QHeaderView::section {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #616161, stop: 0.5 #505050,
+                                      stop: 0.6 #434343, stop:1 #656565);
+    color: white;
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+}
+
+QHeaderView::section:checked
+{
+    background-color: red;
+}
+
+/* style the sort indicator */
+QHeaderView::down-arrow {
+    image: url(down_arrow.png);
+}
+
+QHeaderView::up-arrow {
+    image: url(up_arrow.png);
+}</string>
+   </property>
    <property name="editTriggers">
     <set>QAbstractItemView::NoEditTriggers</set>
    </property>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>179</number>
+    <number>172</number>
    </attribute>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>
@@ -117,26 +144,16 @@
   <widget class="QWidget" name="horizontalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>70</x>
      <y>439</y>
-     <width>701</width>
+     <width>581</width>
      <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <spacer name="horizontalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
+    <property name="spacing">
+     <number>35</number>
+    </property>
     <item>
      <widget class="QPushButton" name="exportButton">
       <property name="sizePolicy">
@@ -149,6 +166,13 @@
        <font>
         <pointsize>11</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;
+border-radius: 8px;
+text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+background: #ffb922;
+padding: 5;</string>
       </property>
       <property name="text">
        <string>Export</string>
@@ -168,26 +192,37 @@
         <pointsize>11</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;
+border-radius: 8px;
+text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+background: #ffb922;
+padding: 5;</string>
+      </property>
       <property name="text">
        <string>Close</string>
       </property>
      </widget>
     </item>
-    <item>
-     <spacer name="horizontalSpacer_5">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
    </layout>
   </widget>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>701</width>
+     <height>501</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/icons/background.png);</string>
+   </property>
+  </widget>
+  <zorder>graphicsView</zorder>
+  <zorder>horizontalLayoutWidget</zorder>
+  <zorder>reservationView</zorder>
+  <zorder>horizontalLayoutWidget_2</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

@@ -12,6 +12,7 @@
 #include "bookinformation.h"
 #include "catalog.h"
 #include "settings.h"
+#include "statistics.h"
 
 namespace Ui {
 class Glybook;
@@ -27,6 +28,7 @@ public:
 
     void setupAccount();
     void setupLibrary();
+    void checkBookings();
     void fillBookingWidget();
     void fillRecentWidget();
     void fillBookmarkWidget();
@@ -53,6 +55,8 @@ private slots:
     void on_recentTable_doubleClicked(const QModelIndex &index);
 
     void on_bookmarksList_doubleClicked(const QModelIndex &index);
+
+    void refresh(bool);
 
 private:
     Ui::Glybook *ui;

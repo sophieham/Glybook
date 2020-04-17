@@ -7,6 +7,9 @@ settings::settings(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setFixedSize(830, 430);
+    setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+
     fillForm();
 }
 
@@ -47,7 +50,6 @@ void settings::fillTable(const QString &selected){
 
 void settings::on_saveButton_clicked()
 {
-    qDebug() << ui->typeComboBox->currentIndex();
     if(!((ui->libraryNameLineEdit->text().isEmpty() && ui->addressLineEdit->text().isEmpty()) || ui->typeComboBox->currentIndex()==0)){
         QSqlQuery update;
         update.prepare("INSERT INTO settings VALUES(current_timestamp(), :name, :address, :type, :message)");
@@ -57,6 +59,7 @@ void settings::on_saveButton_clicked()
         update.bindValue(":message", ui->changeNewsTextEdit->toPlainText());
         if(update.exec()){
             QMessageBox::information(this, "Success!", "Settings have been saved!");
+            emit refresh(true);
         }
         else {
             QMessageBox::critical(this, "Error...", "Data couldn't be saved. Retry later.");

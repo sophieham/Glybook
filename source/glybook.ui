@@ -20,6 +20,46 @@
    <iconset resource="resource.qrc">
     <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QGroupBox::title{
+color:white;
+}
+
+QHeaderView::section {
+    background-color: qlineargradient(spread:reflect, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(29, 81, 131, 255), stop:0.502183 rgba(42, 121, 195, 255), stop:1 rgba(29, 81, 131, 255));
+    color: white;
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+}
+
+QHeaderView::section:checked
+{
+    font-weight:bold;
+}
+
+QTableWidget::item::selected{
+	background-color:blue;
+}
+
+QTableWidget::item:selected:active {
+    background: #e5f3ff;
+	color: black;
+}
+
+QTableWidget::item:hover {
+    background:  #e5f3ff;
+}
+
+/* style the sort indicator */
+QHeaderView::down-arrow {
+	image: url(:/icons/down-arrow.png);
+}
+
+QHeaderView::up-arrow {
+    image: url(:/icons/up-arrow.png);
+}
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="lbl_connected">
     <property name="geometry">
@@ -53,15 +93,37 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>120</y>
+      <y>110</y>
       <width>521</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>15</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton#catalogButton {
+	color: white;
+	border-radius: 8px;
+	background-color: rgb(29, 81, 131);
+    border-style: outset;
+    border-width: 2px;
+    border-color:rgb(24, 70, 113);
+    padding: 6px;
+}
+QPushButton#catalogButton:pressed {
+    border-style: inset;
+}
+
+QPushButton#catalogButton:hover {
+	background-color: rgb(23, 66, 106);
+    color:white;
+    border-style: inset;
+}
+
+</string>
     </property>
     <property name="text">
      <string>Browse catalog</string>
@@ -76,8 +138,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
     <property name="text">
-     <string>22 rue de la liberté, 13000 MARSEILLE</string>
+     <string>A default address</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -92,13 +157,20 @@
       <height>181</height>
      </rect>
     </property>
+    <property name="palette">
+     <palette>
+      <active/>
+      <inactive/>
+      <disabled/>
+     </palette>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
      </font>
     </property>
     <property name="title">
-     <string>Last bookings</string>
+     <string>3 Last bookings</string>
     </property>
     <widget class="QTableWidget" name="bookingTable">
      <property name="geometry">
@@ -151,6 +223,13 @@
       <height>441</height>
      </rect>
     </property>
+    <property name="palette">
+     <palette>
+      <active/>
+      <inactive/>
+      <disabled/>
+     </palette>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
@@ -178,6 +257,9 @@
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
       <number>120</number>
+     </attribute>
+     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+      <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderStretchLastSection">
       <bool>true</bool>
@@ -208,6 +290,13 @@
       <height>231</height>
      </rect>
     </property>
+    <property name="palette">
+     <palette>
+      <active/>
+      <inactive/>
+      <disabled/>
+     </palette>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
@@ -233,6 +322,9 @@
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
+     <property name="isWrapping" stdset="0">
+      <bool>true</bool>
+     </property>
     </widget>
    </widget>
    <widget class="QLabel" name="title">
@@ -249,8 +341,11 @@
       <pointsize>15</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
     <property name="text">
-     <string>Welcome to the library Belgade</string>
+     <string>Welcome to the default library</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -264,6 +359,13 @@
       <width>1271</width>
       <height>91</height>
      </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active/>
+      <inactive/>
+      <disabled/>
+     </palette>
     </property>
     <property name="font">
      <font>
@@ -282,8 +384,11 @@
        <height>81</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: white;</string>
+     </property>
      <property name="text">
-      <string>Ajouter un bouton pour changer ce texte! Et changer les deux titres du haut dans les paramètres!</string>
+      <string>Default text</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -293,6 +398,29 @@
      </property>
     </widget>
    </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>-5</x>
+      <y>-9</y>
+      <width>1411</width>
+      <height>791</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">/*background-image: url(:/icons/background.png);*/
+background-image: url(:/icons/fond.jpg);</string>
+    </property>
+   </widget>
+   <zorder>graphicsView</zorder>
+   <zorder>lbl_connected</zorder>
+   <zorder>catalogButton</zorder>
+   <zorder>address</zorder>
+   <zorder>bookingsBox</zorder>
+   <zorder>recentBox</zorder>
+   <zorder>bookmarkBox</zorder>
+   <zorder>title</zorder>
+   <zorder>newsBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -302,6 +430,18 @@
      <width>1400</width>
      <height>26</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenu {
+    border: 1px solid black;
+}
+
+QMenu::item {
+    background-color: transparent;}
+
+QMenu::item:selected { /* when user selects item using mouse or keyboard */
+    background-color: rgb(29, 81, 131);
+}</string>
    </property>
    <widget class="QMenu" name="menuAdmin">
     <property name="enabled">
@@ -320,6 +460,9 @@
     <addaction name="actionStatistics"/>
    </widget>
    <widget class="QMenu" name="menuParam_tres">
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="title">
      <string>My account</string>
     </property>

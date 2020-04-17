@@ -47,9 +47,9 @@ void bookDialog::displayBookData(){
 // détermine si il s'agit d'une modification ou d'un ajout et envoie les données à la bdd
 void bookDialog::on_send_pushButton_clicked()
 {
-    int free=0;
+    int booked=1;
     if(ui->freeCheckBox->isChecked())
-        free=1;
+        booked=0;
 
     if(ui->authorList->currentIndex() >= 2 && ui->publisherList->currentIndex() >= 2 && ui->genreList->currentIndex() >= 2){
         if(ui->send_pushButton->text()=="Apply changes"){
@@ -57,7 +57,7 @@ void bookDialog::on_send_pushButton_clicked()
             modifyQuery.prepare("SELECT @id_author := authorID FROM b_author WHERE b_author.name= :author;"
                                 "SELECT @id_publisher := publisherID FROM b_publisher WHERE b_publisher.name = :publisher; "
                                 "SELECT @id_genre := genreID FROM b_genre WHERE b_genre.name = :genre; "
-                                "UPDATE `books` SET `name`=:name, `authorID`= @id_author, `publisherID`= @id_publisher, `genreID`= @id_genre, `year_publication`= :year, `summary`= :summary, `free`= :free WHERE isbn=:isbn");
+                                "UPDATE `books` SET `name`=:name, `authorID`= @id_author, `publisherID`= @id_publisher, `genreID`= @id_genre, `year_publication`= :year, `summary`= :summary, `booked`= :free WHERE isbn=:isbn");
             modifyQuery.bindValue(":isbn", id);
             modifyQuery.bindValue(":name", ui->nameLineEdit->text());
             modifyQuery.bindValue(":author", ui->authorList->currentText());
@@ -65,7 +65,7 @@ void bookDialog::on_send_pushButton_clicked()
             modifyQuery.bindValue(":genre", ui->genreList->currentText());
             modifyQuery.bindValue(":year", ui->publicationYearLineEdit->text());
             modifyQuery.bindValue(":summary", ui->summaryTextEdit->toPlainText());
-            modifyQuery.bindValue(":free", free);
+            modifyQuery.bindValue(":free", booked);
             if(modifyQuery.exec()){
                 QMessageBox::information(this, "Success", "Book has been modified!");
                 this->close();
@@ -76,19 +76,19 @@ void bookDialog::on_send_pushButton_clicked()
             addQuery.prepare("SELECT @id_author := authorID FROM b_author WHERE b_author.name=:author; "
                              "SELECT @id_publisher := publisherID FROM b_publisher WHERE b_publisher.name = :publisher; "
                              "SELECT @id_genre := genreID FROM b_genre WHERE b_genre.name = :genre; "
-                             "INSERT INTO `books`(`ISBN`, `name`, `authorID`, `publisherID`, `genreID`, `year_publication`, `summary`, `free`) VALUES (:isbn, :name ,@id_author, @id_publisher, @id_genre, :year, :summary, :free)");
+                             "INSERT INTO `books`(`ISBN`, `name`, `authorID`, `publisherID`, `genreID`, `year_publication`, `summary`, `booked`, `timestamp`) VALUES (:isbn, :name ,@id_author, @id_publisher, @id_genre, :year, :summary, :free, current_timestamp())");
             addQuery.bindValue(":isbn", ui->isbnLineEdit->text());
             addQuery.bindValue(":name", ui->nameLineEdit->text());
             addQuery.bindValue(":author", ui->authorList->currentText());
-            qDebug() << "author:" << ui->authorList->currentText();
             addQuery.bindValue(":publisher", ui->publisherList->currentText());
             addQuery.bindValue(":genre", ui->genreList->currentText());
             addQuery.bindValue(":year", ui->publicationYearLineEdit->text());
             addQuery.bindValue(":summary", ui->summaryTextEdit->toPlainText());
-            addQuery.bindValue(":free", free);
+            addQuery.bindValue(":free", booked);
             if(addQuery.exec()){
                 QMessageBox::information(this, "Success", "Book has been added!");
                 this->close();
+                emit refresh(true);
             }
         }
     }
