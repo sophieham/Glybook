@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QtSql>
 #include <QMessageBox>
+#include <QKeyEvent>
 
 #include "myaccount.h"
 
@@ -23,6 +24,8 @@ public:
     void displayAccountList();
     QString hashPass(QString);
 
+    void keyPressEvent(QKeyEvent *event);
+
 private slots:
     void on_accList_doubleClicked(const QModelIndex &index);
 
@@ -32,6 +35,7 @@ private slots:
 
     void on_admBtn_2_clicked();
 
+    void refreshSlot(bool);
 
 private:
     Ui::manageAccounts *ui;

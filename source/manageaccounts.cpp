@@ -7,6 +7,9 @@ manageAccounts::manageAccounts(const User &connected, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setFixedSize(900, 700);
+    setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+
     displayAccountList();
 }
 
@@ -45,7 +48,7 @@ void manageAccounts::on_accList_doubleClicked(const QModelIndex &index)
     int row = index.row();
     myAccount *showAccount = new myAccount(connected, ui->accList->item(row, 3)->text());
     showAccount->show();
-                        // METTRE A JOUR LE TABLEAU UNE FOIS LA MODIFICATION FAITE!!!!
+    connect(showAccount, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
 }
 
 QString manageAccounts::hashPass(QString text){
@@ -88,7 +91,7 @@ void manageAccounts::on_addAccBtn_clicked()
         addToDb.bindValue(":username", username);
         addToDb.bindValue(":pass", pass);
         addToDb.bindValue(":rank", rank);
-        if (!(addToDb.exec()) && ui->admBtn_2->isChecked()){
+        if (addToDb.exec() && ui->admBtn_2->isChecked()){
             QMessageBox::information(this, "Success!", "The new administrator has been added to database!");
             return;
         }
@@ -102,20 +105,41 @@ void manageAccounts::on_addAccBtn_clicked()
             addToDb.bindValue(":limit", limit);
             if(addToDb.exec()){
                 QMessageBox::information(this, "Sucess!", "The new subscriber has been added to the database!");
+                return;
             }
         }
         // si la partie abonné n'est pas bien remplie
-        else{
+        else {
             QMessageBox::critical(this, "Error!", "Please fill all the fields!");
         }
     }
-    // si les autres infos sont mal remplie
+    // si les autres infos sont mal remplies
     else{
-        QMessageBox::critical(this, "Error!", "Please fill all the fields!");
+        QMessageBox::critical(this, "Error!", "Please fill first name, last name username and password fields!");
     }
 
     ui->accList->clearContents();
     displayAccountList();
+}
+
+void manageAccounts::keyPressEvent(QKeyEvent *event){
+    if(event->key() == Qt::Key_Delete && connected.getType()==1){ // si on appuie sur delete et qu'on est admin
+        int row = ui->accList->currentRow();
+        int answer = QMessageBox::warning(this, "Delete a user", "Are you sure to delete "+ui->accList->item(row, 3)->text()+"? \nNote that you can only delete a account that is unused.", QMessageBox::Yes | QMessageBox::No);
+        if(answer == QMessageBox::Yes){
+            QSqlQuery delAccount;
+            delAccount.exec("DELETE FROM `u_subscriber` WHERE `u_subscriber`.`subscriber_username` ='"+ui->accList->item(row, 1)->text()+"'");
+            delAccount.exec("DELETE FROM `users` WHERE `users`.`username` ='"+ui->accList->item(row, 3)->text()+"'");
+            if(delAccount.exec()){
+                QMessageBox::information(this, "Success!", "This account has been successfully deleted!");
+                ui->accList->clearContents();
+                displayAccountList();
+            }
+            else{
+                QMessageBox::critical(this, "Something went wrong...", "This account can't be deleted. It has active bookings and bookmarks");
+            }
+        }
+    }
 }
 
 // décoche l'autre bouton et rend modifiable certains champs propre a l'abonné
@@ -134,4 +158,11 @@ void manageAccounts::on_admBtn_2_clicked()
     ui->limitTxt_2->setEnabled(false);
     ui->phoneTxt_2->setEnabled(false);
     ui->addressTxt_2->setEnabled(false);
+}
+
+void manageAccounts::refreshSlot(bool b){
+    if(b){
+      ui->accList->clearContents();
+      //displayAccountList();
+    }
 }
