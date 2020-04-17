@@ -6,7 +6,11 @@ Catalog::Catalog(const User &connected, QWidget *parent) :
     ui(new Ui::Catalog), connected(connected)
 {
     ui->setupUi(this);
-    displayBookList();
+
+    setFixedSize(800, 750);
+    setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+
+    displayBookList(0);
 
 }
 
@@ -16,14 +20,24 @@ Catalog::~Catalog()
 }
 
 //affiche la liste des livres disponibles
-void Catalog::displayBookList(){
+void Catalog::displayBookList(int checked){
     // amélioration: barre de recherche par nom/auteur et tri par catégorie
     // mettre a jour le tableau une fois les actions faites
     QSqlQuery q;
-    q.exec("SELECT count(ISBN) FROM books WHERE booked=0");
-    q.first();
-    ui->tableWidget->setRowCount(q.value(0).toInt());
-    q.exec("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID WHERE booked=0");
+    if(checked==0){
+        q.exec("SELECT count(ISBN) FROM books WHERE booked=0 "+search);
+        q.first();
+        ui->tableWidget->setRowCount(q.value(0).toInt());
+        q.exec("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID WHERE booked=0 "+search);
+    }
+    else{
+        search.replace("AND", "WHERE");
+        q.exec("SELECT count(ISBN) FROM books "+search);
+        q.first();
+        ui->tableWidget->setRowCount(q.value(0).toInt());
+        q.exec("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID "+search);
+
+    }
     int row = 0;
     for(q.first(); q.isValid(); q.next(), ++row){
         ui->tableWidget->setItem(row, 0, new QTableWidgetItem(q.value(0).toString())); // isbn
@@ -35,7 +49,6 @@ void Catalog::displayBookList(){
         ui->tableWidget->setItem(row, 6, new QTableWidgetItem(q.value(6).toString())); // summary
     }
     ui->tableWidget->hideColumn(6); // cache la colonne summary (contenu trop gros)
-    ui->tableWidget->verticalHeader()->setVisible(false); // hide row numbers
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch); // aggrandit la colonne nom pour prendre toute la place restante
 }
 
@@ -49,7 +62,8 @@ void Catalog::keyPressEvent(QKeyEvent *event){
             if(deleteBook.exec()){
                 QMessageBox::information(this, "Success!", "The book "+ui->tableWidget->item(row, 1)->text()+" has been successfully deleted!");
                 ui->tableWidget->clearContents();
-                displayBookList();
+                displayBookList(0);
+                emit refresh(true);
             }
         }
     }
@@ -61,4 +75,31 @@ void Catalog::on_tableWidget_doubleClicked(const QModelIndex &index)
     int row = index.row();
     bookInformation *info = new bookInformation(connected, ui->tableWidget->item(row, 0)->text());
     info->show();
+    connect(info, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
+}
+
+void Catalog::on_checkBox_stateChanged(int state)
+{
+    displayBookList(state);
+    ui->searchBar->clear();
+}
+
+void Catalog::on_searchBar_textChanged(const QString &text)
+{
+    if(!(text=="")){
+        search="AND books.name LIKE '%"+text+"%'";
+        ui->tableWidget->clearContents();
+        displayBookList(ui->checkBox->isChecked());
+    }
+    else{
+        search=text;
+        ui->tableWidget->clearContents();
+        displayBookList(ui->checkBox->isChecked());
+    }
+}
+
+void Catalog::refreshSlot(bool b){
+    if(b){
+        emit refresh(true);
+    }
 }

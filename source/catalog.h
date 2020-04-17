@@ -21,17 +21,28 @@ public:
     explicit Catalog(const User &connected, QWidget *parent = nullptr);
     ~Catalog();
 
-    void displayBookList();
+    void displayBookList(int checked);
 
     void keyPressEvent(QKeyEvent *event);
 
+signals:
+    void refresh(bool);
+
 private slots:
     void on_tableWidget_doubleClicked(const QModelIndex &index);
+
+    void on_checkBox_stateChanged(int arg1);
+
+    void on_searchBar_textChanged(const QString &arg1);
+
+    void refreshSlot(bool);
 
 private:
     Ui::Catalog *ui;
 
     User connected;
+
+    QString search;
 };
 
 #endif // CATALOG_H
