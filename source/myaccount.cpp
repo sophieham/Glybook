@@ -19,6 +19,8 @@ myAccount::~myAccount()
     delete ui;
 }
 
+// récupere les données du compte par la base de données
+// paremetre l'objet account avec ces donnees
 void myAccount::prepareAccount(){
     QSqlQuery query;
     query.prepare("SELECT * FROM users LEFT JOIN u_subscriber ON users.username = u_subscriber.subscriber_username WHERE username = :username");
@@ -41,27 +43,25 @@ void myAccount::prepareAccount(){
     }
 }
 
+// affiche les informations du compte selon le type de compte
 void myAccount::displayAccount(){
     ui->lastName->setText(account.getLastName());
     ui->firstName->setText(account.getFirstName());
     ui->username->setText(account.getUser());
     if(account.getType()==1){
         ui->type->setText("Administrator");
-        ui->labelAddress->clear();
-        ui->labelPhone->clear();
-        ui->labelReservation->clear();
+        ui->labelReservation->hide();
+        ui->historyButton->hide();
     }
     else{
         ui->address->setText(account.getAddress());
         ui->phone->setText(account.getPhoneNo());
         ui->reservation->setText(QString::number(account.getLimit()));
     }
-
-    if(account.getType()==1){
-        ui->historyButton->hide();
-    }
 }
 
+// actions lors du clic sur "modifier"
+// ouvre une page pour modifier ce compte
 void myAccount::on_modifyButton_clicked()
 {
     accountDialog *dialog = new accountDialog(id, connected);
@@ -69,17 +69,23 @@ void myAccount::on_modifyButton_clicked()
     connect(dialog, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
 }
 
+// ferme la page
 void myAccount::on_closeButton_clicked()
 {
     this->close();
 }
 
+// actions lors du clic sur "historique"
+// ouvre l'historique de reservations de ce compte
 void myAccount::on_historyButton_clicked()
 {
     accountHistory *history = new accountHistory(connected, user);
     history->show();
 }
 
+// actions lorsqu'un signal est recu
+// renvoi un signal au tableau de bord
+// actualise cette page
 void myAccount::refreshSlot(bool b){
     if(b){
         emit refresh(true);

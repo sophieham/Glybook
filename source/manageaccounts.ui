@@ -335,8 +335,20 @@ QPushButton:hover {
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
       <property name="text">
-       <string>Add a new user</string>
+       <string>Add a new user </string>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
       </property>
      </widget>
     </item>

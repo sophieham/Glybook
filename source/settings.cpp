@@ -18,16 +18,47 @@ settings::~settings()
     delete ui;
 }
 
+// rempli le formulaire avec les paramètres enrengistrés sur la base de données
 void settings::fillForm(){
     QSqlQuery query;
     query.exec("SELECT * FROM settings");
-    query.last();
+    query.last(); // ne prend que la dernière modification
     ui->libraryNameLineEdit->setText(query.value(1).toString());
     ui->addressLineEdit->setText(query.value(2).toString());
     ui->typeComboBox->setLineEdit(new QLineEdit(query.value(3).toString()));
     ui->changeNewsTextEdit->setPlainText(query.value(4).toString());
 }
 
+// actions lors du clic sur le bouton "save"
+// sauvegarde de nouveaux parametres dans la base de donnée
+// envoie un signal pour rafraichir le tableau de bord
+void settings::on_saveButton_clicked()
+{
+    if(!((ui->libraryNameLineEdit->text().isEmpty() && ui->addressLineEdit->text().isEmpty()) || ui->typeComboBox->currentIndex()==0)){
+        QSqlQuery update;
+        update.prepare("INSERT INTO settings VALUES(current_timestamp(), :name, :address, :type, :message)");
+        update.bindValue(":name", ui->libraryNameLineEdit->text());
+        update.bindValue(":address", ui->addressLineEdit->text());
+        update.bindValue(":type", ui->typeComboBox->currentText());
+        update.bindValue(":message", ui->changeNewsTextEdit->toPlainText());
+        if(update.exec()){
+            QMessageBox::information(this, "Success!", "Settings have been saved!");
+            emit refresh(true);
+        }
+        else {
+            QMessageBox::critical(this, "Error...", "Data couldn't be saved. Retry later.");
+        }
+    }
+    else QMessageBox::critical(this, "Error!", "Please fill all the fields");
+}
+
+// actions quand un élément de la liste deroulante a été séléctionné
+void settings::on_comboBox_currentIndexChanged(const QString &selected)
+{
+    fillTable(selected);
+}
+
+// rempli le tableau en fonction du type de données qui a été séléctionné
 void settings::fillTable(const QString &selected){
     QString type=selected;
     if(selection.indexOf("_")==-1){
@@ -48,32 +79,8 @@ void settings::fillTable(const QString &selected){
     }
 }
 
-void settings::on_saveButton_clicked()
-{
-    if(!((ui->libraryNameLineEdit->text().isEmpty() && ui->addressLineEdit->text().isEmpty()) || ui->typeComboBox->currentIndex()==0)){
-        QSqlQuery update;
-        update.prepare("INSERT INTO settings VALUES(current_timestamp(), :name, :address, :type, :message)");
-        update.bindValue(":name", ui->libraryNameLineEdit->text());
-        update.bindValue(":address", ui->addressLineEdit->text());
-        update.bindValue(":type", ui->typeComboBox->currentText());
-        update.bindValue(":message", ui->changeNewsTextEdit->toPlainText());
-        if(update.exec()){
-            QMessageBox::information(this, "Success!", "Settings have been saved!");
-            emit refresh(true);
-        }
-        else {
-            QMessageBox::critical(this, "Error...", "Data couldn't be saved. Retry later.");
-        }
-    }
-    else QMessageBox::critical(this, "Error!", "Please fill all the fields");
-
-}
-
-void settings::on_comboBox_currentIndexChanged(const QString &selected)
-{
-    fillTable(selected);
-}
-
+// supprime la cellule séléctionnée en appuyant sur la touche "Delete"
+// ne peut supprimer uniquement une donnée qui n'a pas été utilisée
 void settings::keyPressEvent(QKeyEvent *event){
     if(event->key()==Qt::Key_Delete){
         int row = ui->tableWidget->currentRow();

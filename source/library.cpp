@@ -15,10 +15,6 @@
 
     }
 
-    QString Library::print() const{
-        return("Library (" + getType() + ") " + getName() + " situee " + getAddress());
-    }
-
     QString Library::getName() const {
         return name;
     }

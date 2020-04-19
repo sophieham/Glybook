@@ -73,6 +73,8 @@ void Glybook::setupAccount(){
     }
 }
 
+// vérifie si des réservations se terminent aujourd'hui et remet les livres en reservation
+// on suppose que les livres n'ont jamais été réclamés si la reservation se termine
 void Glybook::checkBookings(){
     QSqlQuery check;
     check.exec("SELECT bookID FROM `reservations` WHERE end_date=CURRENT_DATE AND checked=0");

@@ -18,9 +18,7 @@
     <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">QLabel{
-	color: white;
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
@@ -107,6 +105,9 @@ QTableWidget::item:hover {
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
    <property name="text">
     <string>Catalog 
 Double click on a cell for more informations</string>
@@ -118,10 +119,10 @@ Double click on a cell for more informations</string>
   <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>560</x>
      <y>26</y>
-     <width>211</width>
-     <height>20</height>
+     <width>231</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
@@ -130,7 +131,23 @@ Double click on a cell for more informations</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: white;</string>
+    <string notr="true">QCheckBox{
+color: white;
+}
+
+QCheckBox::indicator {
+    width: 30px;
+    height: 30px;
+}
+
+QCheckBox::indicator:unchecked {
+    image: url(:/icons/tick.png);
+}
+
+QCheckBox::indicator:checked {
+    
+	image: url(:/icons/ticked.png);
+}</string>
    </property>
    <property name="text">
     <string>Display booked books too</string>

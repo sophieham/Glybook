@@ -14,7 +14,7 @@ Reservation::Reservation(User sub, Book book) {
         endDate = getDatePlusDays(14);
         subscriber = sub;
         lentBook = book;
-        book.setBooked(1);
+        book.setBooked(1); // défini le livre comme reservé
 
         ++count;
         Reservation::counter = count;
@@ -86,7 +86,7 @@ void Reservation::setEndDate(QString endDate) {
     this->endDate = endDate;
 }
 
-// ajoute l'emprunt a la bdd, rend le livre emprunté et décremente la limite de livre empruntables pour l'emprunteur
+// ajoute l'emprunt a la bdd, rend le livre emprunté et décremente la limite de réservation pour celui qui vient de reserver
 void Reservation::addReservation()
 {
     QSqlQuery q;

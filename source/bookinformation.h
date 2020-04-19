@@ -33,6 +33,8 @@ private slots:
 
     void on_bookmark_clicked();
 
+    void refreshSlot(bool);
+
 private:
     Ui::bookInformation *ui;
 

@@ -135,8 +135,21 @@ QTableWidget::item:hover {
      <pointsize>9</pointsize>
     </font>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
    <property name="text">
-    <string>Close</string>
+    <string>Close </string>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/close.png</normaloff>:/icons/close.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
    </property>
   </widget>
   <widget class="QPushButton" name="exportButton">
@@ -153,8 +166,15 @@ QTableWidget::item:hover {
      <pointsize>9</pointsize>
     </font>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
    <property name="text">
-    <string>Export</string>
+    <string>Export </string>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/download.png</normaloff>:/icons/download.png</iconset>
    </property>
   </widget>
   <widget class="QComboBox" name="comboBox">
@@ -220,7 +240,26 @@ QComboBox::down-arrow {
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/icons/bg_stats.jpg);</string>
+    <string notr="true">background-image: url(:/icons/bg_book.jpg);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>81</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resource.qrc">:/icons/statistiques.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
   <zorder>graphicsView</zorder>
@@ -229,6 +268,7 @@ QComboBox::down-arrow {
   <zorder>closeButton</zorder>
   <zorder>exportButton</zorder>
   <zorder>comboBox</zorder>
+  <zorder>label</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

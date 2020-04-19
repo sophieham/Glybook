@@ -16,6 +16,8 @@ Dialog::~Dialog()
     delete ui;
 }
 
+// action quand le bouton "save" est cliqué
+// envoie les données a la page de connexion pour etablir la premiere connexion
 void Dialog::on_pushButton_clicked()
 {
     QStringList data;

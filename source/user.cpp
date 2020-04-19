@@ -21,7 +21,6 @@ User::User(QString user, QString pass, QString lName, QString fName, short type)
     address = "";
     phone = "";
     bLimit = 0;
-
 }
 
 //Subscriber
@@ -110,8 +109,8 @@ void User::setPhoneNo(QString phone) {
 // retourne le nombre de livre max que l'adherent peut emprunter
 int User::getLimit() {
     return bLimit;
-
 }
+
 void User::setLimit(int *bLimit) {
     this->bLimit = *bLimit;
     QSqlQuery userToDb;

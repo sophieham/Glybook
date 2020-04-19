@@ -99,6 +99,9 @@ QHeaderView::up-arrow {
       <pointsize>15</pointsize>
      </font>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton#catalogButton {
 	color: white;
@@ -123,6 +126,12 @@ QPushButton#catalogButton:hover {
     </property>
     <property name="text">
      <string>Browse catalog</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
     </property>
    </widget>
    <widget class="QLabel" name="address">
@@ -368,20 +377,26 @@ QPushButton#catalogButton:hover {
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="title">
      <string>News</string>
     </property>
     <widget class="QLabel" name="message">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>20</x>
        <y>10</y>
-       <width>1161</width>
+       <width>1231</width>
        <height>81</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: white;</string>
+      <string notr="true">color: white;
+    background-image: url(:/icons/news.png);
+    background-repeat: no-repeat;
+    background-position: left;</string>
      </property>
      <property name="text">
       <string>Default text</string>

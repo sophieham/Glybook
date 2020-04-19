@@ -30,11 +30,13 @@ Login::~Login()
     delete ui;
 }
 
+// slot qui recoit les données d'initialisation (si il y aucun compte dans la bdd)
+// crée un compte avec les données et affiche un message si tout s'est bien passé
 void Login::receiveFirstData(QStringList data){
     QString fName = data[0];
     QString lName = data[1];
     QString user = data[2];
-    QString pass = hashPass(data[3]);
+    QString pass = cryptoHashClass::hashPass(data[3]);
 
     QSqlQuery addToDb;
     addToDb.prepare("INSERT INTO `users` (`id`, `lastName`, `firstName`, `username`, `pass`, `rank`) VALUES (NULL, :lName, :fName, :user, :pass, 1)");
@@ -49,17 +51,13 @@ void Login::receiveFirstData(QStringList data){
     }
 }
 
-QString Login::hashPass(QString text){
-    QByteArray hash = QCryptographicHash::hash(text.toUtf8(), QCryptographicHash::Sha256);
-    QString pass=hash.toHex();
-    return pass;
-}
-
-
+// actions lors du clic sur connection
+// verifie si un utilisateur correspond a la combinaison et ouvre le tableau de bord
+// sinon affiche un message d'erreur
 void Login::on_btnConnect_clicked()
 {
     QString user =  ui->textUser->text();
-    QString pass = hashPass(ui->textPass->text());
+    QString pass = cryptoHashClass::hashPass(ui->textPass->text());
 
     if(!user.isEmpty()){
         QSqlQuery query("SELECT * FROM `users` WHERE username= '"+user+"' AND pass = '"+pass+"'");

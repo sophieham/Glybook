@@ -15,7 +15,6 @@ using namespace std;
         Library();
         Library(QString, QString, QString);
         ~Library();
-        QString print() const;
         QString getName() const;
         QString getAddress() const;
         QString getType() const;

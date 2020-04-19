@@ -17,11 +17,23 @@
    <iconset resource="resource.qrc">
     <normaloff>:/icons/icon_final.ico</normaloff>:/icons/icon_final.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QLineEdit {
+border: 2px solid #8f8f91;
+border-radius: 6px;
+   /* background-image: url(:/icons/search.png);
+    background-repeat: no-repeat;
+    background-position: left;*/
+    color: #252424;
+   /* font-family: SegoeUI;*/
+    font-size: 12px;
+}</string>
+  </property>
   <widget class="QLabel" name="label_init">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>40</y>
+     <y>30</y>
      <width>401</width>
      <height>41</height>
     </rect>
@@ -32,7 +44,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Initialisation du logiciel</string>
+    <string>Initialization</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -41,49 +53,69 @@
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>40</x>
      <y>100</y>
-     <width>361</width>
-     <height>116</height>
+     <width>321</width>
+     <height>104</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
     <item row="0" column="0">
      <widget class="QLabel" name="lblF_NameA">
-      <property name="text">
-       <string>Prénom</string>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="lblL_NameA">
       <property name="text">
-       <string>Nom</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="lblUserA">
-      <property name="text">
-       <string>Nom d'utilisateur</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="lblPassA">
-      <property name="text">
-       <string>Mot de passe</string>
+       <string>First Name</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
      <widget class="QLineEdit" name="txtF_NameA"/>
     </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="lblL_NameA">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Last Name</string>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="1">
      <widget class="QLineEdit" name="txtL_NameA"/>
     </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="lblUserA">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Username</string>
+      </property>
+     </widget>
+    </item>
     <item row="2" column="1">
      <widget class="QLineEdit" name="txtUserA"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="lblPassA">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Password</string>
+      </property>
+     </widget>
     </item>
     <item row="3" column="1">
      <widget class="QLineEdit" name="txtPassA">
@@ -100,14 +132,43 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>129</x>
      <y>250</y>
-     <width>80</width>
-     <height>25</height>
+     <width>141</width>
+     <height>31</height>
     </rect>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	color: white;
+	border-radius: 8px;
+	background-color: rgb(131, 131, 131);
+    border-style: outset;
+    border-width: 2px;
+    border-color:rgb(115, 115, 115);
+    padding: 6px;
+}
+QPushButton:pressed {
+    border-style: inset;
+}
+
+QPushButton:hover {
+	background-color: rgb(115, 115, 115);
+    color:white;
+    border-style: outset;
+}
+
+</string>
+   </property>
    <property name="text">
-    <string>Ok</string>
+    <string>Continue </string>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
    </property>
   </widget>
   <widget class="QGraphicsView" name="graphicsView">

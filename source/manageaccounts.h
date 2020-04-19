@@ -8,7 +8,6 @@
 
 #include "myaccount.h"
 
-
 namespace Ui {
 class manageAccounts;
 }

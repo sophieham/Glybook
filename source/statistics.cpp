@@ -15,6 +15,18 @@ Statistics::~Statistics()
     delete ui;
 }
 
+// prend en compte les changements de la barre de choix et définit les données a afficher dans le tableau
+void Statistics::on_comboBox_currentIndexChanged(int index)
+{
+    ui->statisticsTable->clearContents();
+    if(index==1){
+        displayList("reservations");
+    }
+    if(index==2){
+        displayList("b_bookmarks");
+    }
+}
+
 // affiche les données du tableau en fonction de ce qui a été sélectionné
 void Statistics::displayList(const QString &selected){
     if(selected=="reservations"){
@@ -36,7 +48,7 @@ void Statistics::displayList(const QString &selected){
 
 }
 
-// exporte les données du tableau sous forme de csv ou de txt
+// exporte les données du tableau sélectionné sous forme de csv ou de txt
 void Statistics::on_exportButton_clicked()
 {
     QString filename = QFileDialog::getSaveFileName(this, "Export", "Statistics ("+QDate::currentDate().toString("dd-MM-yyyy")+")", "CSV files (.csv);;Text files (*.txt);;Any Files (*)", 0, 0); // getting the filename (full path)
@@ -56,22 +68,11 @@ void Statistics::on_exportButton_clicked()
             QMessageBox::information(this, "Success!", "Statistics data has been exported!");
         }
     }
-
 }
 
+// ferme la page
 void Statistics::on_closeButton_clicked()
 {
     this->close();
 }
 
-// prend en compte les changements de la barre de choix et définit les données a afficher dans le tableau
-void Statistics::on_comboBox_currentIndexChanged(int index)
-{
-    ui->statisticsTable->clearContents();
-    if(index==1){
-        displayList("reservations");
-    }
-    if(index==2){
-        displayList("b_bookmarks");
-    }
-}

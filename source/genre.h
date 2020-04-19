@@ -14,7 +14,6 @@ using namespace std;
         ~Genre();
         Genre(QString, QString, Library);
         Genre(QString nom);
-        void print();
         QString getName() const;
         void setName(QString const);
         QString getDescription() const;

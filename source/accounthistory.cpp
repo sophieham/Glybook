@@ -18,6 +18,7 @@ accountHistory::~accountHistory()
     delete ui;
 }
 
+// recupere l'historique a partir de la base de donnée et l'affiche dans un tableau
 void accountHistory::displayHistory(){
     QSqlQuery q;
     QSqlQuery count;
@@ -46,6 +47,10 @@ void accountHistory::displayHistory(){
     }
 }
 
+
+// action lors du double clic sur une colonne
+// appui sur un nom d'utilisateur => ouvre le profil associé
+// appui sur un identifiant de livre => ouvre la profil du livre associé
 void accountHistory::on_reservationView_cellDoubleClicked(int row, int column)
 {
     QString information = ui->reservationView->item(row, column)->text();
@@ -60,6 +65,8 @@ void accountHistory::on_reservationView_cellDoubleClicked(int row, int column)
     }
 }
 
+// actions lors de l'appui sur exporter
+// propose d'enrengistrer les données sur son ordinateur sous format csv ou txt
 void accountHistory::on_exportButton_clicked()
 {
     QString filename = QFileDialog::getSaveFileName(this, "Export", "bookhistory ("+QDate::currentDate().toString("dd-MM-yyyy")+")", "CSV files (.csv);;Text files (*.txt);;Any Files (*)", 0, 0); // getting the filename (full path)
@@ -81,13 +88,16 @@ void accountHistory::on_exportButton_clicked()
     }
 }
 
+// lors du clic sur close
 void accountHistory::on_closeButton_clicked()
 {
     this->close();
 }
 
+// actions quand une fenetre qui depend de celle-ci est modifiée
 void accountHistory::refreshSlot(bool b){
     if(b){
+        // renvoi un signal pour modifier le tableau de bord (glybook.cpp)
         emit refresh(true);
     }
 }

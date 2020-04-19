@@ -11,10 +11,6 @@
         this->name = name;
     }
 
-    void Genre::print(){
-        QString(name+ "(" +description + ") de " + library.getName());
-    }
-
     QString Genre::getName() const{
         return name;
     }
@@ -30,7 +26,7 @@
         this->description = description;
     }
 
-
+    // retourne la bibliotheque auquel appartient la catégorie
     Library Genre::getLibrary() const{
         return library;
     }

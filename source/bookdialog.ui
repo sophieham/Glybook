@@ -10,6 +10,12 @@
     <height>550</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Calibri</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Glybook ~ Dialog</string>
   </property>
@@ -25,7 +31,7 @@ border-radius: 6px;
     background-repeat: no-repeat;
     background-position: left;*/
     color: #252424;
-    font-family: SegoeUI;
+   /* font-family: SegoeUI;*/
     font-size: 12px;
 }
 
@@ -1466,6 +1472,12 @@ QComboBox::down-arrow {
     </item>
     <item row="2" column="1">
      <widget class="QComboBox" name="authorList">
+      <property name="font">
+       <font>
+        <family>SegoeUI</family>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
       <property name="styleSheet">
        <string notr="true"/>
       </property>
@@ -2876,7 +2888,7 @@ QComboBox::down-arrow {
        </font>
       </property>
       <property name="text">
-       <string>Publication year</string>
+       <string>Publication date</string>
       </property>
      </widget>
     </item>
@@ -3885,11 +3897,18 @@ QCheckBox::indicator:checked {
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
       <property name="styleSheet">
        <string notr="true"/>
       </property>
       <property name="text">
-       <string>Add a new book</string>
+       <string>Add a new book </string>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/green_valid.png</normaloff>:/icons/green_valid.png</iconset>
       </property>
      </widget>
     </item>
@@ -3906,11 +3925,18 @@ QCheckBox::indicator:checked {
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
       <property name="styleSheet">
        <string notr="true"/>
       </property>
       <property name="text">
-       <string>Close</string>
+       <string>Close </string>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/icons/close.png</normaloff>:/icons/close.png</iconset>
       </property>
      </widget>
     </item>

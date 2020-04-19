@@ -25,12 +25,6 @@ Book::Book(){
         booked = false;
     }
 
-    // affiche les donn?es du livre
-    void Book::printLivre() {
-        QString(name + " de " + author + " paru chez " + publisher + " (ISBN: " + isbn + ") Type: " + genre.getName()
-        + "Appartient a la bibliotheque " + genre.getLibrary().getName() + "Resume: " + summary);
-    }
-
     // nom du livre
     QString Book::getName() const {
         return name;
@@ -71,7 +65,7 @@ Book::Book(){
         this->isbn = isbn;
     }
 
-    // son ?tat (si il est emprunt? ou non)
+    // son état (si il est reservé ou non)
     bool Book::isBooked() const{
         return booked;
     }
@@ -79,6 +73,7 @@ Book::Book(){
         this->booked = booked;
     }
 
+    // modifie l'état de reservation dans la base de donnée
     void Book::updateBooking(bool b){
         if(b){
             QSqlQuery bookToDb("UPDATE `books` SET `booked` = '1' WHERE `books`.`ISBN` = '"+getIsbn()+"' ");

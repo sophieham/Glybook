@@ -11,6 +11,7 @@
 #include "reservation.h"
 #include "initialization.h"
 #include "glybook.h"
+#include "cryptohashclass.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class connexion; }
@@ -23,8 +24,6 @@ class Login : public QMainWindow
 public:
     Login(QWidget *parent = nullptr);
     ~Login();
-
-    QString hashPass(QString);
 
 private slots:
     void receiveFirstData(QStringList);

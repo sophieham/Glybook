@@ -55,6 +55,8 @@ else()
     initialization.cpp
     initialization.h
     initialization.ui
+    cryptohashclass.cpp
+    cryptohashclass.h
     glybook.cpp
     glybook.h
     glybook.ui

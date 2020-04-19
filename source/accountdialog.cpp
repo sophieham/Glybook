@@ -23,7 +23,6 @@ accountDialog::accountDialog(const int &id, const User &connected, QWidget *pare
         ui->addressEdit->setText(displayQry.value(7).toString());
         ui->phoneEdit->setText(displayQry.value(8).toString());
         ui->resvLimitEdit->setText(displayQry.value(9).toString());
-        qDebug() << displayQry.value(5).toString();
         if(connected.getType()==1){
             ui->adm_RB->setChecked(true);
             setRank(1);
@@ -43,6 +42,8 @@ accountDialog::~accountDialog()
     delete ui;
 }
 
+// appui sur le bouton "Save"
+// enregistre les données du formulaire dans la base de donnée et affiche un message si tout s'est bien passé
 void accountDialog::on_dialogButton_accepted()
 {
 
@@ -69,7 +70,7 @@ void accountDialog::on_dialogButton_accepted()
         QSqlQuery updateDb;
         if(!(pass.isEmpty())){
             updateDb.prepare("UPDATE `users` SET `lastName` = :lName, `firstName` = :fName, `pass` = :pass, `rank` = :rank WHERE `users`.`id` = :id");
-            updateDb.bindValue(":pass", hashPass(pass));
+            updateDb.bindValue(":pass", cryptoHashClass::hashPass(pass));
         }
         else{
             updateDb.prepare("UPDATE `users` SET `lastName` = :lName, `firstName` = :fName, `rank` = :rank WHERE `users`.`id` = :id");
@@ -86,13 +87,6 @@ void accountDialog::on_dialogButton_accepted()
             emit refresh(true);
             this->close();
         }
-}
-
-
-QString accountDialog::hashPass(QString text){
-    QByteArray hash = QCryptographicHash::hash(text.toUtf8(), QCryptographicHash::Sha256);
-    QString pass=hash.toHex();
-    return pass;
 }
 
 QString accountDialog::getUsername() const

@@ -21,8 +21,7 @@ Catalog::~Catalog()
 
 //affiche la liste des livres disponibles
 void Catalog::displayBookList(int checked){
-    // amélioration: barre de recherche par nom/auteur et tri par catégorie
-    // mettre a jour le tableau une fois les actions faites
+    // amélioration: ajouter la recherche par auteur ou par genre
     QSqlQuery q;
     if(checked==0){
         q.exec("SELECT count(ISBN) FROM books WHERE booked=0 "+search);
@@ -52,9 +51,9 @@ void Catalog::displayBookList(int checked){
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch); // aggrandit la colonne nom pour prendre toute la place restante
 }
 
-// gestion de l'appui sur delete pour supprimer un livre du tableau (uniquement pour les admins)
+// gestion de l'appui sur delete pour supprimer la cellule selectionnée (uniquement pour les admins)
 void Catalog::keyPressEvent(QKeyEvent *event){
-    if(event->key() == Qt::Key_Delete && connected.getType()==1){ // si on appuie sur delete et qu'on est admin
+    if(event->key() == Qt::Key_Delete && connected.getType()==1){
         int row = ui->tableWidget->currentRow();
         int answer = QMessageBox::warning(this, "Delete a book", "Are you sure to delete "+ui->tableWidget->item(row, 1)->text()+"?", QMessageBox::Yes | QMessageBox::No);
         if(answer == QMessageBox::Yes){
@@ -78,12 +77,17 @@ void Catalog::on_tableWidget_doubleClicked(const QModelIndex &index)
     connect(info, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
 }
 
+// actions quand la checkbox change d'etat
+// remet a zero la liste des livres et la barre de recherche
 void Catalog::on_checkBox_stateChanged(int state)
 {
     displayBookList(state);
     ui->searchBar->clear();
 }
 
+// actions quand quelquechose est entré dans la barre de recherche
+// recherche dynamiquement dans tous les titres si ils correspondent a la recherche
+// si la barre de recherche est vide le tableau est remis à son etat normal
 void Catalog::on_searchBar_textChanged(const QString &text)
 {
     if(!(text=="")){
@@ -98,8 +102,10 @@ void Catalog::on_searchBar_textChanged(const QString &text)
     }
 }
 
+// actions quand on recoit un signal refresh
 void Catalog::refreshSlot(bool b){
     if(b){
+        // on signale qu'il y a une modification et que la page principale doit etre raffraichie
         emit refresh(true);
     }
 }

@@ -145,6 +145,10 @@ QComboBox::down-arrow {
  	color: #252424;
     font-family: SegoeUI;
     font-size: 12px;
+    background-image: url(:/icons/news.png);
+	background-color: white;
+    background-repeat: no-repeat;
+    background-position: center;
 }</string>
       </property>
      </widget>

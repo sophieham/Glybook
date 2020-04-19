@@ -33,6 +33,7 @@ void bookDialog::displayBookData(){
     }
 
     QSqlQuery displayQry("SELECT * FROM books WHERE isbn='"+id+"'");
+    // si l'identifiant du livre existe deja dans la base de donnée on considère ça comme une modification
     if(displayQry.next()){
         ui->send_pushButton->setText("Apply changes");
         ui->isbnLineEdit->setText(id);
@@ -68,10 +69,11 @@ void bookDialog::on_send_pushButton_clicked()
             modifyQuery.bindValue(":free", booked);
             if(modifyQuery.exec()){
                 QMessageBox::information(this, "Success", "Book has been modified!");
+                emit refresh(true);
                 this->close();
             }
         }
-        if(ui->send_pushButton->text()=="Add a new book" && !(ui->nameLineEdit->text().isEmpty() && ui->publicationYearLineEdit->text().isEmpty())){
+        if(ui->send_pushButton->text()=="Add a new book " && !(ui->nameLineEdit->text().isEmpty() && ui->publicationYearLineEdit->text().isEmpty())){
             QSqlQuery addQuery;
             addQuery.prepare("SELECT @id_author := authorID FROM b_author WHERE b_author.name=:author; "
                              "SELECT @id_publisher := publisherID FROM b_publisher WHERE b_publisher.name = :publisher; "
@@ -98,6 +100,7 @@ void bookDialog::on_send_pushButton_clicked()
 }
 
 // actions lorsque "ajouter un nouvel auteur" est sélectionné
+// ouvre un page permettant d'ajouter le nom d'un auteur
 void bookDialog::on_authorList_activated(int index)
 {
     if(index==1){
@@ -119,6 +122,7 @@ void bookDialog::on_authorList_activated(int index)
 }
 
 // actions lorsque "ajouter un nouvel editeur" est sélectionné
+// ouvre un page permettant d'ajouter le nom d'un editeur
 void bookDialog::on_publisherList_activated(int index)
 {
     if(index==1){
@@ -140,6 +144,7 @@ void bookDialog::on_publisherList_activated(int index)
 }
 
 // actions lorsque "ajouter un nouveau genre" est sélectionné
+// ouvre un page permettant d'ajouter le nom d'un genre
 void bookDialog::on_genreList_activated(int index)
 {
     if(index==1){
@@ -160,6 +165,7 @@ void bookDialog::on_genreList_activated(int index)
     }
 }
 
+// ferme la page
 void bookDialog::on_close_pushButton_clicked()
 {
     this->close();

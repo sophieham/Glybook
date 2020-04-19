@@ -25,5 +25,27 @@
         <file>icons/bg_account.jpg</file>
         <file>icons/bg_stats.jpg</file>
         <file>icons/search.png</file>
+        <file>icons/green_valid.png</file>
+        <file>icons/valid.png</file>
+        <file>icons/book.png</file>
+        <file>icons/close.png</file>
+        <file>icons/download.png</file>
+        <file>icons/news.png</file>
+        <file>icons/add.png</file>
+        <file>icons/bookmark.png</file>
+        <file>icons/bookmarked.png</file>
+        <file>icons/books.png</file>
+        <file>icons/genre.png</file>
+        <file>icons/publisher.png</file>
+        <file>icons/time.png</file>
+        <file>icons/author.png</file>
+        <file>icons/booked.png</file>
+        <file>icons/bg_book.jpg</file>
+        <file>icons/address.png</file>
+        <file>icons/phone.png</file>
+        <file>icons/lock.png</file>
+        <file>icons/limit.png</file>
+        <file>icons/users.png</file>
+        <file>icons/type.png</file>
     </qresource>
 </RCC>

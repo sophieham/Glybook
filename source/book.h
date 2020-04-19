@@ -18,7 +18,6 @@ using namespace std;
         Book();
         ~Book();
         Book(QString name, QString author, QString publisher, QString summary, QString isbn, Genre genreName, int year);
-        void printLivre();
         QString getName() const;
         void setName(QString const);
         QString getAuthor() const;

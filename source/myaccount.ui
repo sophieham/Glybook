@@ -247,6 +247,13 @@ QPushButton:hover {
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/icons/type.png);
+background-repeat: no-repeat;
+background-position: left;
+padding: 4 4 4 48;
+</string>
+      </property>
       <property name="text">
        <string>Type of account</string>
       </property>
@@ -283,6 +290,14 @@ QPushButton:hover {
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/icons/limit.png);
+background-repeat: no-repeat;
+background-position: left;
+padding: 4 4 4 48;
+
+</string>
+      </property>
       <property name="text">
        <string>Reservation limit</string>
       </property>
@@ -307,6 +322,13 @@ QPushButton:hover {
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/icons/phone.png);
+background-repeat: no-repeat;
+background-position: left;
+padding: 4 4 4 48;
+</string>
+      </property>
       <property name="text">
        <string>Phone number</string>
       </property>
@@ -320,7 +342,7 @@ QPushButton:hover {
        </font>
       </property>
       <property name="text">
-       <string/>
+       <string>Not known</string>
       </property>
      </widget>
     </item>
@@ -344,6 +366,14 @@ QPushButton:hover {
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/icons/users.png);
+background-repeat: no-repeat;
+background-position: left;
+padding: 4 4 4 48;
+
+</string>
+      </property>
       <property name="text">
        <string>Username</string>
       </property>
@@ -356,6 +386,13 @@ QPushButton:hover {
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/icons/address.png);
+background-repeat: no-repeat;
+background-position: left;
+padding: 4 4 4 48;
+</string>
+      </property>
       <property name="text">
        <string>Address</string>
       </property>
@@ -367,6 +404,13 @@ QPushButton:hover {
        <font>
         <pointsize>12</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/icons/lock.png);
+background-repeat: no-repeat;
+background-position: left;
+padding: 4 4 4 48;
+</string>
       </property>
       <property name="text">
        <string>Password</string>
@@ -393,7 +437,7 @@ QPushButton:hover {
        </font>
       </property>
       <property name="text">
-       <string/>
+       <string>Not known</string>
       </property>
      </widget>
     </item>

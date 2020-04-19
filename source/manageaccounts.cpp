@@ -51,12 +51,6 @@ void manageAccounts::on_accList_doubleClicked(const QModelIndex &index)
     connect(showAccount, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
 }
 
-QString manageAccounts::hashPass(QString text){
-    QByteArray hash = QCryptographicHash::hash(text.toUtf8(), QCryptographicHash::Sha256);
-    QString pass=hash.toHex();
-    return pass;
-}
-
 // actions pour le clic sur "ajouter un utilisateur"
 // ajoute un compte (abonné ou admin) à la base de donnée si tous les champs sont remplis
 // recharge le tableau des comptes
@@ -66,7 +60,7 @@ void manageAccounts::on_addAccBtn_clicked()
     QString lName = ui->lNameTxt_2->text();
     QString fName = ui->fNameTxt_2->text();
     QString username = ui->userTxt_2->text();
-    QString pass = hashPass(ui->passTxt_2->text());
+    QString pass = cryptoHashClass::hashPass(ui->passTxt_2->text());
     QString address = ui->addressTxt_2->text();
     QString phone = ui->phoneTxt_2->text();
     int limit = ui->limitTxt_2->text().toInt();
@@ -93,6 +87,8 @@ void manageAccounts::on_addAccBtn_clicked()
         addToDb.bindValue(":rank", rank);
         if (addToDb.exec() && ui->admBtn_2->isChecked()){
             QMessageBox::information(this, "Success!", "The new administrator has been added to database!");
+            ui->accList->clearContents();
+            displayAccountList();
             return;
         }
 
@@ -105,6 +101,8 @@ void manageAccounts::on_addAccBtn_clicked()
             addToDb.bindValue(":limit", limit);
             if(addToDb.exec()){
                 QMessageBox::information(this, "Sucess!", "The new subscriber has been added to the database!");
+                ui->accList->clearContents();
+                displayAccountList();
                 return;
             }
         }
@@ -117,18 +115,18 @@ void manageAccounts::on_addAccBtn_clicked()
     else{
         QMessageBox::critical(this, "Error!", "Please fill first name, last name username and password fields!");
     }
-
-    ui->accList->clearContents();
-    displayAccountList();
 }
 
+// supprime le compte selectionné en appuyant sur la touche delete
+// ne peut pas supprimer des comptes qui ont deja une activité (reservations ou favoris)
+// affiche un message et actualise la page si ça s'est bien passé
 void manageAccounts::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Delete && connected.getType()==1){ // si on appuie sur delete et qu'on est admin
         int row = ui->accList->currentRow();
         int answer = QMessageBox::warning(this, "Delete a user", "Are you sure to delete "+ui->accList->item(row, 3)->text()+"? \nNote that you can only delete a account that is unused.", QMessageBox::Yes | QMessageBox::No);
         if(answer == QMessageBox::Yes){
             QSqlQuery delAccount;
-            delAccount.exec("DELETE FROM `u_subscriber` WHERE `u_subscriber`.`subscriber_username` ='"+ui->accList->item(row, 1)->text()+"'");
+            delAccount.exec("DELETE FROM `u_subscriber` WHERE `u_subscriber`.`subscriber_username` ='"+ui->accList->item(row, 3)->text()+"'");
             delAccount.exec("DELETE FROM `users` WHERE `users`.`username` ='"+ui->accList->item(row, 3)->text()+"'");
             if(delAccount.exec()){
                 QMessageBox::information(this, "Success!", "This account has been successfully deleted!");

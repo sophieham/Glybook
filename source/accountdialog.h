@@ -6,6 +6,7 @@
 #include <QMessageBox>
 
 #include "user.h"
+#include "cryptohashclass.h"
 
 namespace Ui {
 class accountDialog;
@@ -20,7 +21,7 @@ public:
     ~accountDialog();
 
 
-    QString hashPass(QString text);
+
     QString getUsername() const;
     void setUsername(const QString &);
     short getRank() const;
