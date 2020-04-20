@@ -129,8 +129,8 @@ void Glybook::on_bookingTable_doubleClicked(const QModelIndex &index)
 // remplit le tableau avec les 10 derniers ajouts de livres
 void Glybook::fillRecentWidget(){
     ui->recentTable->verticalHeader()->setVisible(false);
-    ui->recentTable->setRowCount(10);
-    QSqlQuery query("SELECT ISBN, books.name, b_genre.name FROM `books` INNER JOIN b_genre ON b_genre.genreID = books.genreID ORDER BY timestamp DESC LIMIT 10 ");
+    ui->recentTable->setRowCount(12);
+    QSqlQuery query("SELECT ISBN, books.name, b_genre.name FROM `books` INNER JOIN b_genre ON b_genre.genreID = books.genreID ORDER BY timestamp DESC LIMIT 12 ");
     query.exec();
 
     int row=0;

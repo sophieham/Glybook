@@ -93,6 +93,7 @@ void bookInformation::on_reserveButton_clicked()
 
                 QMessageBox::information(this, "Success!", "Booked!");
                 emit refresh(true);
+                this->close();
             }
             else {
                 QMessageBox::critical(this, "Erreur!", "You cannot book it, it is not available or you reach your booking limits");
