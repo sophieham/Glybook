@@ -275,7 +275,7 @@ padding: 4 4 4 48;
        <string notr="true">color: white;</string>
       </property>
       <property name="text">
-       <string>No</string>
+       <string>Available</string>
       </property>
      </widget>
     </item>

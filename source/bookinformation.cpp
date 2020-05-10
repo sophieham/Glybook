@@ -42,7 +42,7 @@ void bookInformation::setButton(){
 // si le livre est déjà réservé le bouton reserver est inutilisable
 void bookInformation::displayBook(){
     QSqlQuery query;
-    query.prepare("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, booked, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID WHERE isbn=:id");
+    query.prepare("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, booked, summary, lent FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID WHERE isbn=:id");
     query.bindValue(":id", isbn);
     query.exec();
     if(query.first()){
@@ -52,12 +52,11 @@ void bookInformation::displayBook(){
         book.setGenre(query.value(3).toString());
         book.setPublisher(query.value(4).toString());
         book.setYear(query.value(5).toInt());
-        book.setBooked(query.value(6).toInt());
+        book.setBooked(query.value(6).toInt()||query.value(8).toInt());
         book.setSummary(query.value(7).toString());
     }
     else{
-        QSqlError e = query.lastError();
-        qDebug() << e;
+        qDebug() << "ERROR!" << query.lastError().text();
     }
 
     ui->name->setText(book.getName());
@@ -67,13 +66,13 @@ void bookInformation::displayBook(){
     ui->year->setText(QString::number(book.getYear()));
     ui->summary->setPlainText(book.getSummary());
     if(book.isBooked()==1){ // pas libre
-        ui->reserved->setText("Yes");
+        ui->reserved->setText("Not available");
         ui->reserveButton->setEnabled(false);
     }
 }
 
 // actions lors de l'appui sur le bouton réserver
-// commence une réservation pour 14 jours si l'utilisateur peut réserver
+// commence une réservation pour 7 jours si l'utilisateur peut réserver
 void bookInformation::on_reserveButton_clicked()
 {
     if(connected.getType()){
@@ -87,9 +86,9 @@ void bookInformation::on_reserveButton_clicked()
             if (!(book.isBooked()) && (connected.getLimit() > 0)) {
                 resv.setLentBook(book);
                 resv.setSubscriber(connected);
-                resv.setEndDate(resv.getDatePlusDays(14));
+                resv.setEndDate(resv.getDatePlusDays(7));
                 resv.setStartDate(resv.getDateNow());
-                resv.addReservation();
+                resv.saveDb();
 
                 QMessageBox::information(this, "Success!", "Booked!");
                 emit refresh(true);

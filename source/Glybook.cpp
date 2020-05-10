@@ -84,6 +84,13 @@ void Glybook::checkBookings(){
                "(SELECT bookID FROM `reservations` WHERE end_date = CURRENT_DATE LIMIT 1);"
                "UPDATE reservations SET checked=1 WHERE end_date=CURRENT_DATE");
     }
+    check.exec("SELECT isbn FROM `loans` WHERE return_date=CURRENT_DATE AND checked=0");
+    while(check.next()){
+        QSqlQuery q;
+        q.exec("UPDATE books SET `booked` = 0 WHERE books.ISBN = "
+               "(SELECT bookID FROM `loans` WHERE end_date = CURRENT_DATE LIMIT 1);"
+               "UPDATE loans SET checked=1 WHERE end_date=CURRENT_DATE");
+    }
 }
 
 // ouvre le catalogue des livres
@@ -121,6 +128,7 @@ void Glybook::fillBookingWidget(){
 void Glybook::on_bookingTable_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
+    // ouvre l'historique de l'utilisateur en question
     accountHistory *history = new accountHistory(*connectedUser, ui->bookingTable->item(row, 3)->text());
     history->show();
     connect(history, SIGNAL(refresh(bool)), this, SLOT(refresh(bool)));
@@ -183,6 +191,13 @@ void Glybook::on_actionAddBook_triggered()
     dialog->setModal(true);
     dialog->show();
     connect(dialog, SIGNAL(refresh(bool)), this, SLOT(refresh(bool)));
+}
+
+// ouvre un formulaire pour ajouter un nouveau livre
+void Glybook::on_actionNewLoan_triggered()
+{
+    LoanDialog *dialog = new LoanDialog();
+    dialog->show();
 }
 
 // ouvre une page de gestion d'utilisateurs

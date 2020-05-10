@@ -18,8 +18,8 @@ using namespace std;
 	public:
         User();
         ~User();
-        User(QString user, QString pass, QString lName, QString fName, short);
-        User(QString user, QString pass, QString lName, QString fName, short, QString address, QString phone, int *bLimit);
+        User(QString user, QString pass, QString lName, QString fName, short type); // type = rank
+        User(QString user, QString pass, QString lName, QString fName, short type, QString address, QString phone, int *bLimit);
         QString getUser() const;
         void setUser(const QString);
         QString getPswd() const;
