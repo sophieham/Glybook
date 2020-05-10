@@ -88,9 +88,6 @@ else()
     statistics.cpp
     statistics.h
     statistics.ui
-    loandialog.cpp
-    loandialog.h
-    loandialog.ui
   )
 endif()
 

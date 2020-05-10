@@ -24,10 +24,10 @@ void Catalog::displayBookList(int checked){
     // amélioration: ajouter la recherche par auteur ou par genre
     QSqlQuery q;
     if(checked==0){
-        q.exec("SELECT count(ISBN) FROM books WHERE booked=0 AND lent=0 "+search);
+        q.exec("SELECT count(ISBN) FROM books WHERE booked=0 "+search);
         q.first();
         ui->tableWidget->setRowCount(q.value(0).toInt());
-        q.exec("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID WHERE booked=0 AND lent=0 "+search);
+        q.exec("SELECT ISBN, books.name, b_author.name, b_genre.name, b_publisher.name, year_publication, summary FROM books INNER JOIN b_author ON b_author.authorID = books.authorID INNER JOIN b_publisher ON b_publisher.publisherID = books.publisherID INNER JOIN b_genre ON b_genre.genreID = books.genreID WHERE booked=0 "+search);
     }
     else{
         search.replace("AND", "WHERE");

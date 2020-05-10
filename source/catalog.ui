@@ -52,12 +52,6 @@ QTableWidget::item:hover {
 }
 </string>
    </property>
-   <property name="editTriggers">
-    <set>QAbstractItemView::NoEditTriggers</set>
-   </property>
-   <property name="alternatingRowColors">
-    <bool>true</bool>
-   </property>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>
    </attribute>
@@ -156,7 +150,7 @@ QCheckBox::indicator:checked {
 }</string>
    </property>
    <property name="text">
-    <string>Display unavailable books too</string>
+    <string>Display booked books too</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="searchBar">

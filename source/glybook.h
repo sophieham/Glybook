@@ -7,7 +7,6 @@
 #include "user.h"
 #include "manageaccounts.h"
 #include "bookdialog.h"
-#include "loandialog.h"
 #include "accounthistory.h"
 #include "myaccount.h"
 #include "bookinformation.h"
@@ -36,8 +35,6 @@ public:
 
 private slots:
     void on_actionAddBook_triggered();
-
-    void on_actionNewLoan_triggered();
 
     void on_actionManageAcc_triggered();
 

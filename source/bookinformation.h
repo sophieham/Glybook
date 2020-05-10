@@ -42,7 +42,7 @@ private:
 
     QString isbn;
 
-    Booking resv;
+    Reservation resv;
     Book book;
 };
 

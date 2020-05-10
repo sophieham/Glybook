@@ -1,6 +1,7 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
+#include <iostream>
 #include <QString>
 using namespace std;
 

@@ -4,16 +4,16 @@
 #include "book.h"
 #include "user.h"
 #include <iterator>
+//#include <QMap>
 #include <QSql>
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QVariant>
-#include <QMessageBox>
 
 using namespace std;
 
     class Reservation {
-    protected:
+    private:
         QString startDate;
         QString endDate;
         User subscriber;
@@ -24,33 +24,17 @@ using namespace std;
         Reservation();
         ~Reservation();
         Reservation(User, Book);
-        virtual QString getDateNow();
-        virtual QString getDatePlusDays(int n);
-        virtual void printBooking();
-        virtual QString getStartDate() const;
-        virtual void setStartDate(QString const);
-        virtual QString getEndDate() const;
-        virtual void setEndDate(QString const);
-        virtual User getSubscriber() const;
-        virtual void setSubscriber(User const);
-        virtual Book getLentBook() const;
-        virtual void setLentBook(Book const);
-        virtual size_t getOccurence() const;
-        virtual void saveDb()=0;
-    };
-
-    class Booking : public Reservation {
-    public:
-        Booking();
-        Booking(User, Book);
-        ~Booking();
-        void saveDb();
-    };
-
-    class Loan : public Reservation {
-    public:
-        Loan();
-        Loan(User, Book);
-        ~Loan();
-        void saveDb();
+        QString getDateNow();
+        QString getDatePlusDays(int n);
+        void printBorrow();
+        QString getStartDate() const;
+        void setStartDate(QString const);
+        QString getEndDate() const;
+        void setEndDate(QString const);
+        User getSubscriber() const;
+        void setSubscriber(User const);
+        Book getLentBook() const;
+        void setLentBook(Book const);
+        size_t getOccurence() const;
+        void addReservation();
     };

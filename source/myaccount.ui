@@ -299,7 +299,7 @@ padding: 4 4 4 48;
 </string>
       </property>
       <property name="text">
-       <string>Remaining bookings</string>
+       <string>Reservation limit</string>
       </property>
      </widget>
     </item>

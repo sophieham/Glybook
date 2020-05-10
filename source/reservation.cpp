@@ -64,8 +64,8 @@ void Reservation::setLentBook(Book b) {
     this->lentBook = b;
 }
 
-// affiche les données liés à la réservation
-void Reservation::printBooking(){
+// affiche les données liés à l'emprunt
+void Reservation::printBorrow(){
     QString ("Emprunt: " + lentBook.getName() + " par " + subscriber.getFirstName() + " " + subscriber.getLastName() + " le " + getStartDate() + ", a rendre avant le " + getEndDate());
 }
 
@@ -86,20 +86,8 @@ void Reservation::setEndDate(QString endDate) {
     this->endDate = endDate;
 }
 
-Booking::Booking(){
-
-}
-
-Booking::~Booking(){
-
-}
-
-Booking::Booking(User sub, Book book) : Reservation::Reservation(sub, book) {
-
-}
-
-// ajoute la réservation a la bdd, rend le livre emprunté et décremente la limite de réservation pour celui qui vient de reserver
-void Booking::saveDb()
+// ajoute l'emprunt a la bdd, rend le livre emprunté et décremente la limite de réservation pour celui qui vient de reserver
+void Reservation::addReservation()
 {
     QSqlQuery q;
     q.prepare("INSERT INTO `reservations` (`reservationID`, `username`, `bookID`, `start_date`, `end_date`) VALUES (NULL, :user, :book, :start, :end)  ");
@@ -112,32 +100,4 @@ void Booking::saveDb()
     lentBook.updateBooking(1);
     subscriber.setLimit(new int(subscriber.getLimit()-1));
 
-}
-
-Loan::Loan(){
-
-}
-
-Loan::~Loan(){
-
-}
-
-Loan::Loan(User sub, Book book) : Reservation::Reservation(sub, book){
-
-}
-
-// ajoute l'emprunt a la bdd et on rend le livre emprunté
-void Loan::saveDb()
-{
-    QSqlQuery q;
-    q.prepare("INSERT INTO `loans` (`loanID`, `username`, `isbn`, `start_date`, `return_date`) VALUES (NULL, :user, :isbn, :start, :end) ");
-    q.bindValue(":user", subscriber.getUser());
-    q.bindValue(":isbn", lentBook.getIsbn());
-    q.bindValue(":start", startDate);
-    q.bindValue(":end", endDate);
-
-    if(q.exec()){
-        q.exec("UPDATE `books` SET `lent` = '1' WHERE `books`.`ISBN` = '"+lentBook.getIsbn()+"'");
-    }
-    else qDebug() << "ERROR!" << q.lastError().text();
 }

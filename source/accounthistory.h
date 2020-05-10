@@ -26,16 +26,13 @@ public:
     explicit accountHistory(const User &connected, const QString &user=NULL, QWidget *parent = nullptr);
     ~accountHistory();
 
-    void displayBookingHistory();
-    void displayLoanHistory();
+    void displayHistory();
 
 signals:
     void refresh(bool);
 
 private slots:
     void on_reservationView_cellDoubleClicked(int row, int column);
-
-    void on_reservationView_2_cellDoubleClicked(int row, int column);
 
     void on_exportButton_clicked();
 

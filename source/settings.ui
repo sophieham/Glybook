@@ -351,11 +351,8 @@ QPushButton:hover {
       <height>261</height>
      </rect>
     </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::NoEditTriggers</set>
-    </property>
     <attribute name="horizontalHeaderVisible">
-     <bool>false</bool>
+     <bool>true</bool>
     </attribute>
     <attribute name="horizontalHeaderDefaultSectionSize">
      <number>349</number>

@@ -465,7 +465,6 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
      <string>Administration</string>
     </property>
     <addaction name="actionAddBook"/>
-    <addaction name="actionNewLoan"/>
     <addaction name="separator"/>
     <addaction name="actionManageAcc"/>
     <addaction name="actionSettings"/>
@@ -546,17 +545,7 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
      <normaloff>:/icons/clock.png</normaloff>:/icons/clock.png</iconset>
    </property>
    <property name="text">
-    <string>Booking and loan history</string>
-   </property>
-  </action>
-  <action name="actionMake_a_new_loan">
-   <property name="text">
-    <string>Make a new loan</string>
-   </property>
-  </action>
-  <action name="actionNewLoan">
-   <property name="text">
-    <string>Make a new loan</string>
+    <string>Book reservations history</string>
    </property>
   </action>
  </widget>
