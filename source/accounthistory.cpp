@@ -10,7 +10,11 @@ accountHistory::accountHistory(const User &connected, const QString &user, QWidg
     setFixedSize(700, 500);
     setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
 
-    displayHistory();
+    displayBookingHistory();
+    displayLoanHistory();
+
+    ui->tabWidget->setTabText(0, "Booking");
+    ui->tabWidget->setTabText(1, "Loan");
 }
 
 accountHistory::~accountHistory()
@@ -19,7 +23,7 @@ accountHistory::~accountHistory()
 }
 
 // recupere l'historique a partir de la base de donnée et l'affiche dans un tableau
-void accountHistory::displayHistory(){
+void accountHistory::displayBookingHistory(){
     QSqlQuery q;
     QSqlQuery count;
     if(connected.getType()==1 && user.isNull()){
@@ -47,6 +51,34 @@ void accountHistory::displayHistory(){
     }
 }
 
+// recupere l'historique a partir de la base de donnée et l'affiche dans un tableau
+void accountHistory::displayLoanHistory(){
+    QSqlQuery q;
+    QSqlQuery count;
+    if(connected.getType()==1 && user.isNull()){
+        count.prepare("SELECT count(*) FROM loans");
+        q.prepare("SELECT * FROM loans");
+    }
+    else {
+        count.prepare("SELECT count(*) FROM loans WHERE username = :user");
+        count.bindValue(":user", user);
+        q.prepare("SELECT * FROM loans WHERE username = :user");
+        q.bindValue(":user", user);
+    }
+    count.exec();
+    count.first();
+    ui->reservationView_2->setRowCount(count.value(0).toInt());
+
+    q.exec();
+    int row = 0;
+
+    for(q.first(); q.isValid(); q.next(), ++row){
+       ui->reservationView_2->setItem(row, 0, new QTableWidgetItem(q.value(1).toString())); // username
+       ui->reservationView_2->setItem(row, 1, new QTableWidgetItem(q.value(2).toString())); // isbn
+       ui->reservationView_2->setItem(row, 2, new QTableWidgetItem(q.value(3).toString())); // start
+       ui->reservationView_2->setItem(row, 3, new QTableWidgetItem(q.value(4).toString())); // end
+    }
+}
 
 // action lors du double clic sur une colonne
 // appui sur un nom d'utilisateur => ouvre le profil associé
@@ -65,6 +97,20 @@ void accountHistory::on_reservationView_cellDoubleClicked(int row, int column)
     }
 }
 
+void accountHistory::on_reservationView_2_cellDoubleClicked(int row, int column)
+{
+    QString information = ui->reservationView_2->item(row, column)->text();
+    if(column==0){
+         myAccount *acc = new myAccount(connected, information);
+         acc->show();
+    }
+    else if(column==1){
+         bookInformation *book = new bookInformation(connected, ui->reservationView_2->item(row, 1)->text());
+         book->show();
+         connect(book, SIGNAL(refresh(bool)), this, SLOT(refreshSlot(bool)));
+    }
+}
+
 // actions lors de l'appui sur exporter
 // propose d'enrengistrer les données sur son ordinateur sous format csv ou txt
 void accountHistory::on_exportButton_clicked()
@@ -74,16 +120,29 @@ void accountHistory::on_exportButton_clicked()
         QFile data(filename);
         if(data.open(QFile::WriteOnly |QFile::Truncate))
         {
-            int row=0;
             QTextStream out(&data);
-            QString columnsName = ui->reservationView->horizontalHeaderItem(0)->text()+";"+ui->reservationView->horizontalHeaderItem(1)->text()+";"+ui->reservationView->horizontalHeaderItem(2)->text()+";"+ui->reservationView->horizontalHeaderItem(3)->text()+"\n";
-            out << columnsName;
-            while (row < ui->reservationView->rowCount()) {
-                QString information = ui->reservationView->item(row, 0)->text()+";"+ui->reservationView->item(row, 1)->text()+";" +ui->reservationView->item(row, 2)->text()+";"+ ui->reservationView->item(row, 3)->text()+"\n";
-                out << information;
-                ++row;
+            qDebug() << ui->tabWidget->currentIndex();
+            if(ui->tabWidget->currentIndex()==0){
+                int row=0;
+                QString columnsName = ui->reservationView->horizontalHeaderItem(0)->text()+";"+ui->reservationView->horizontalHeaderItem(1)->text()+";"+ui->reservationView->horizontalHeaderItem(2)->text()+";"+ui->reservationView->horizontalHeaderItem(3)->text()+"\n";
+                out << columnsName;
+                while (row < ui->reservationView->rowCount()) {
+                   QString information = ui->reservationView->item(row, 0)->text()+";"+ui->reservationView->item(row, 1)->text()+";" +ui->reservationView->item(row, 2)->text()+";"+ ui->reservationView->item(row, 3)->text()+"\n";
+                   out << information;
+                   ++row;
+                }
             }
-            QMessageBox::information(this, "Success!", "Reservation data has been exported!");
+            else{
+                int row=0;
+                QString columnsName = ui->reservationView_2->horizontalHeaderItem(0)->text()+";"+ui->reservationView_2->horizontalHeaderItem(1)->text()+";"+ui->reservationView_2->horizontalHeaderItem(2)->text()+";"+ui->reservationView_2->horizontalHeaderItem(3)->text()+"\n";
+                out << columnsName;
+                while (row < ui->reservationView_2->rowCount()) {
+                    QString information = ui->reservationView_2->item(row, 0)->text()+";"+ui->reservationView_2->item(row, 1)->text()+";" +ui->reservationView_2->item(row, 2)->text()+";"+ ui->reservationView_2->item(row, 3)->text()+"\n";
+                    out << information;
+                    ++row;
+                }
+            QMessageBox::information(this, "Success!", "Data has been exported!");
+            }
         }
     }
 }
