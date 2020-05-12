@@ -73,23 +73,26 @@ void Glybook::setupAccount(){
     }
 }
 
-// vérifie si des réservations se terminent aujourd'hui et remet les livres en reservation
-// on suppose que les livres n'ont jamais été réclamés si la reservation se termine
+// vérifie si des réservations/emprunts se sont terminés depuis la dernière ouverture du programme et remet les livres disponibles
+// on suppose que les livres n'ont jamais été réclamés/pas empruntés si la reservation se termine
+// pareil pour simplifier on suppose que les emprunteurs ne rendent jamais les livres en retard
 void Glybook::checkBookings(){
     QSqlQuery check;
-    check.exec("SELECT bookID FROM `reservations` WHERE end_date=CURRENT_DATE AND checked=0");
+    check.exec("SELECT bookID FROM `reservations` WHERE end_date<CURRENT_DATE AND checked=0");
+
     while(check.next()){
         QSqlQuery q;
         q.exec("UPDATE books SET `booked` = 0 WHERE books.ISBN = "
-               "(SELECT bookID FROM `reservations` WHERE end_date = CURRENT_DATE LIMIT 1);"
-               "UPDATE reservations SET checked=1 WHERE end_date=CURRENT_DATE");
+               "(SELECT bookID FROM `reservations` WHERE end_date < CURRENT_DATE LIMIT 1);"
+               "UPDATE reservations SET checked=1 WHERE end_date<CURRENT_DATE");
     }
-    check.exec("SELECT isbn FROM `loans` WHERE return_date=CURRENT_DATE AND checked=0");
+
+    check.exec("SELECT isbn FROM `loans` WHERE return_date<CURRENT_DATE AND checked=0");
     while(check.next()){
         QSqlQuery q;
         q.exec("UPDATE books SET `booked` = 0 WHERE books.ISBN = "
-               "(SELECT bookID FROM `loans` WHERE end_date = CURRENT_DATE LIMIT 1);"
-               "UPDATE loans SET checked=1 WHERE end_date=CURRENT_DATE");
+               "(SELECT bookID FROM `loans` WHERE end_date < CURRENT_DATE LIMIT 1);"
+               "UPDATE loans SET checked=1 WHERE end_date<CURRENT_DATE");
     }
 }
 

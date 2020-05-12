@@ -555,6 +555,10 @@ QMenu::item:selected { /* when user selects item using mouse or keyboard */
    </property>
   </action>
   <action name="actionNewLoan">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/loan.png</normaloff>:/icons/loan.png</iconset>
+   </property>
    <property name="text">
     <string>Make a new loan</string>
    </property>

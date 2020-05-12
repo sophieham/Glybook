@@ -7,7 +7,7 @@ LoanDialog::LoanDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setFixedSize(680, 650);
+    setFixedSize(650, 590);
     setWindowFlags(Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
 
     displayBookList();
@@ -107,7 +107,6 @@ void LoanDialog::on_confirmBttn_clicked()
 
             // on effectue le prêt
             Loan loan(user, book);
-            qDebug() << ui->termSpinBox->value();
             loan.setEndDate(loan.getDatePlusDays(ui->termSpinBox->value()));
             loan.saveDb();
             QMessageBox::information(this, "Sucess!", "This loan has been added to the database!");

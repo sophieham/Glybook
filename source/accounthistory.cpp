@@ -13,8 +13,8 @@ accountHistory::accountHistory(const User &connected, const QString &user, QWidg
     displayBookingHistory();
     displayLoanHistory();
 
-    ui->tabWidget->setTabText(0, "Booking");
-    ui->tabWidget->setTabText(1, "Loan");
+    ui->tabWidget->setTabText(0, "  Booking  ");
+    ui->tabWidget->setTabText(1, "  Loan  ");
 }
 
 accountHistory::~accountHistory()

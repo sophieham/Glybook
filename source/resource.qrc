@@ -47,5 +47,6 @@
         <file>icons/limit.png</file>
         <file>icons/users.png</file>
         <file>icons/type.png</file>
+        <file>icons/loan.png</file>
     </qresource>
 </RCC>
