@@ -9,7 +9,7 @@ Projet étudiant réalisé en C++. Application de gestion de bibliothèque
 * Possibilité de les emprunter une fois qu'ils viennent chercher le livre.
 * Gestion des prêts : on associe un livre, un utilisateur et cela pour une période définie
 
-N'oubliez pas d'importer la base de donnée qui est fournie et de paramétrer dbconnection.cpp. 
+Vous pouvez choisir de télécharger la version éxécutable prête à l'emploi (dossier exe) ou télécharger les fichiers source, dans ce cas là n'oubliez pas d'importer la base de donnée qui est fournie et de paramétrer dbconnection.cpp. 
 
 Exemples de comptes administrateurs (user:pass)
 > adele.beaujolie:123
