@@ -20,3 +20,6 @@ Exemples de compte utilisateurs
 > alice.mireault:123
 >
 > gregoire.podeso:123
+
+Un petit aperçu?
+![images](https://user-images.githubusercontent.com/44404051/99543897-fdddfa00-29b3-11eb-8ec9-e54e25f50b20.png)
