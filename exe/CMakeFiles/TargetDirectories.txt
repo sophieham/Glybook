@@ -1,4 +1,0 @@
-C:/Users/Sophie/Documents/build-Glybook-Desktop_Qt_5_14_1_MinGW_32_bit-Release/CMakeFiles/edit_cache.dir
-C:/Users/Sophie/Documents/build-Glybook-Desktop_Qt_5_14_1_MinGW_32_bit-Release/CMakeFiles/Glybook.dir
-C:/Users/Sophie/Documents/build-Glybook-Desktop_Qt_5_14_1_MinGW_32_bit-Release/CMakeFiles/rebuild_cache.dir
-C:/Users/Sophie/Documents/build-Glybook-Desktop_Qt_5_14_1_MinGW_32_bit-Release/CMakeFiles/Glybook_autogen.dir

@@ -410,7 +410,7 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`ID`, `name_library`, `address`, `type`, `news_message`) VALUES
 ('2020-04-20 22:50:12', 'Charles XVIII', '13 avenue Charles de Gaulle 69005 LYON', 'Community', 'Bienvenue! La bibliothèque sera fermée pour cause de travaux entre le 27 avril et le 31 avril. Vous pouvez toujours réserver des livres pas les venir les récupérer à ces dates. '),
-('2020-05-09 18:33:15', 'Charles XVIII', '13 avenue Charles de Gaulle 69005 LYON', 'Community', 'Bienvenue! La bibliothèque sera fermée pour cause de travaux entre le 27 avril et le 31 avril. Vous pouvez toujours réserver des livres mais pas les venir les récupérer à ces dates. ');
+('2020-05-09 18:33:15', 'Los Angeles Central Library', '630 W 5th St, Los Angeles, CA 90071', 'Community', 'Bookings are open!');
 
 -- --------------------------------------------------------
 
