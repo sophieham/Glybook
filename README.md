@@ -9,11 +9,8 @@ Projet étudiant réalisé en C++ à l'aide de Qt. Application de gestion de bib
 * Possibilité de les emprunter une fois qu'ils viennent chercher le livre.
 * Gestion des prêts : on associe un livre, un utilisateur et cela pour une période définie
 
-<<<<<<< HEAD
 N'oubliez pas d'importer la base de donnée qui est fournie et de paramétrer dbconnection.cpp. Par défaut la connexion se fait avec ODBC.
-=======
-Vous pouvez choisir de télécharger la version éxécutable prête à l'emploi (dossier exe) ou télécharger les fichiers source, dans ce cas là n'oubliez pas d'importer la base de donnée qui est fournie et de paramétrer dbconnection.cpp. 
->>>>>>> e4e7d1d28bbc06828dce5149e2313783e3fa4463
+
 
 Exemples de comptes administrateurs (user:pass)
 > adele.beaujolie:123
